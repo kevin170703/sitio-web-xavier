@@ -18,6 +18,7 @@ import {
   IconArrowLeft,
   IconArrowRight,
   IconArrowUp,
+  IconDoor,
 } from "@tabler/icons-react";
 import InputData from "@/components/InputData";
 import InputDataIcon from "@/components/InputDataIcon";
@@ -25,6 +26,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import CardTestimonials from "@/components/CardTestimonials";
 import Link from "next/link";
+import InputRoom from "@/components/InputRoom";
 
 const variantsTestimonials = {
   enter: (direction: number) => {
@@ -184,28 +186,19 @@ export default function Home() {
           </p>
 
           {/* Search Form */}
-          <div className="bg-white rounded-lg p-6 flex flex-col md:flex-row gap-4 text-black max-w-[1000px] w-full">
-            <div className="flex-1">
-              <InputDataIcon
-                icon={<IconCalendarPlus className="size-8" />}
-                label="Check in"
-              />
-            </div>
-            <div className="flex-1">
-              <InputDataIcon
-                icon={<IconCalendarMinus className="size-8" />}
-                label="Check out"
-              />
-            </div>
-            <div className="flex-1">
-              <label className="block text-sm font-medium mb-1">Guests</label>
-              <select className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-[#f2b134]">
-                <option>1 Guest</option>
-                <option>2 Guests</option>
-                <option>3 Guests</option>
-                <option>4 Guests</option>
-              </select>
-            </div>
+          <div className="bg-white rounded-lg  flex justify-between px-10 py-4 items-center  text-black max-w-[1000px] w-full">
+            <InputDataIcon
+              icon={<IconCalendarPlus className="size-8" />}
+              label="Check in"
+            />
+
+            <InputDataIcon
+              icon={<IconCalendarMinus className="size-8" />}
+              label="Check out"
+            />
+
+            <InputRoom rooms={rooms} />
+
             <button className="bg-[#f2b134] text-white px-8 py-2 rounded hover:bg-[#e1a02d] transition-colors">
               Search
             </button>

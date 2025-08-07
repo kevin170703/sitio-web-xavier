@@ -33,16 +33,16 @@ export default function InputDataIcon({
   };
 
   return (
-    <div className="text-start w-max">
+    <div className="w-max bg-red-400 flex flex-col justify-center items-start relative">
       <div
-        className="flex justify-center items-center gap-2 cursor-pointer"
+        className="flex justify-center items-center gap-2 cursor-pointer bg-blue-400"
         onClick={handleClick}
       >
         <div className="size-8 text-primary">{icon}</div>
         <p className="text-lg font-medium">{label}</p>
       </div>
 
-      <p className="text-sm">
+      <p className="text-sm bg-amber-400">
         {selectedDate ? format(selectedDate, "dd MMM yyyy") : "Select date"}
       </p>
 
@@ -50,7 +50,6 @@ export default function InputDataIcon({
         selected={selectedDate}
         onChange={handleChange}
         ref={datepickerRef}
-        className="hidden"
       />
     </div>
   );
