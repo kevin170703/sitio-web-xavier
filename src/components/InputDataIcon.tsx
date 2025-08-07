@@ -33,23 +33,21 @@ export default function InputDataIcon({
   };
 
   return (
-    <div className="w-max bg-red-400 flex flex-col justify-center items-start relative">
+    <div className="w-max flex flex-col justify-center items-start relative">
       <div
-        className="flex justify-center items-center gap-2 cursor-pointer bg-blue-400"
+        className="flex justify-center items-center gap-2 cursor-pointer "
         onClick={handleClick}
       >
         <div className="size-8 text-primary">{icon}</div>
         <p className="text-lg font-medium">{label}</p>
       </div>
 
-      <p className="text-sm bg-amber-400">
-        {selectedDate ? format(selectedDate, "dd MMM yyyy") : "Select date"}
-      </p>
-
       <DatePicker
         selected={selectedDate}
         onChange={handleChange}
         ref={datepickerRef}
+        dateFormat="dd MMM yyyy" // <--- esta línea cambia el formato mostrado
+        className="text-sm outline-none cursor-pointer "
       />
     </div>
   );

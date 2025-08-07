@@ -27,7 +27,7 @@ export default function InputRoom({
 
   return (
     <div
-      className="text-start w-max relative  bg-red-400"
+      className="text-start w-max relative"
       onClick={() => setOpenSelecet(!openSelect)}
     >
       <div className="flex justify-center items-center gap-2 cursor-pointer">

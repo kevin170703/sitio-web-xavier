@@ -135,6 +135,57 @@ export default function Home() {
       main_image:
         "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
+    {
+      name: "comida 1",
+      price: 12,
+      main_image:
+        "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      name: "comida 2",
+      price: 9,
+      main_image:
+        "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+
+    {
+      name: "comida 1",
+      price: 12,
+      main_image:
+        "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      name: "comida 2",
+      price: 9,
+      main_image:
+        "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+
+    {
+      name: "comida 1",
+      price: 12,
+      main_image:
+        "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      name: "comida 2",
+      price: 9,
+      main_image:
+        "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+
+    {
+      name: "comida 1",
+      price: 12,
+      main_image:
+        "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
+    {
+      name: "comida 2",
+      price: 9,
+      main_image:
+        "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    },
   ];
 
   const testimoniasls = [
@@ -167,42 +218,52 @@ export default function Home() {
     setIndexTestimonial([indexTestimonial + newDirection, newDirection]);
   };
 
+  function slugify(text: string) {
+    return text
+      .toLowerCase()
+      .normalize("NFD") // Elimina acentos
+      .replace(/[\u0300-\u036f]/g, "") // Remueve caracteres diacríticos
+      .replace(/[^\w\s-]/g, "") // Elimina caracteres especiales
+      .replace(/\s+/g, "-") // Reemplaza espacios por guiones
+      .replace(/-+/g, "-"); // Evita múltiples guiones seguidos
+  }
+
   return (
     <div className="w-full min-h-screen flex flex-col justify-center items-center overflow-hidden">
       {/* Hero Section */}
       <section
-        className="w-full relative h-screen bg-cover bg-center"
+        className="w-full relative h-screen bg-cover bg-center flex flex-col justify-center items-center "
         style={{
           backgroundImage: `linear-gradient(rgba(242, 177, 52, 0.8), rgba(242, 177, 52, 0.8)), url('/images/bg-hero.jpg')`,
         }}
       >
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-4">
+        <div className=" text-white text-center ">
           <h1 className="text-8xl font-light mb-4 font-secondary">
             Les P'tits Lofts Du Lac
           </h1>
-          <p className="text-lg mb-12 w-full">
+          <p className="text-lg w-full">
             Luxury lakeside accommodation with stunning views and exceptional
             service
           </p>
+        </div>
 
-          {/* Search Form */}
-          <div className="bg-white rounded-lg  flex justify-between px-10 py-4 items-center  text-black max-w-[1000px] w-full">
-            <InputDataIcon
-              icon={<IconCalendarPlus className="size-8" />}
-              label="Check in"
-            />
+        {/* Search Form */}
+        <div className="bg-white rounded-lg absolute bottom-10  flex justify-between px-10 py-4 items-center  text-black max-w-[1000px] w-full">
+          <InputDataIcon
+            icon={<IconCalendarPlus className="size-8" />}
+            label="Check in"
+          />
 
-            <InputDataIcon
-              icon={<IconCalendarMinus className="size-8" />}
-              label="Check out"
-            />
+          <InputDataIcon
+            icon={<IconCalendarMinus className="size-8" />}
+            label="Check out"
+          />
 
-            <InputRoom rooms={rooms} />
+          <InputRoom rooms={rooms} />
 
-            <button className="bg-[#f2b134] text-white px-8 py-2 rounded hover:bg-[#e1a02d] transition-colors">
-              Search
-            </button>
-          </div>
+          <button className="bg-[#f2b134] text-white px-8 py-2 rounded hover:bg-[#e1a02d] transition-colors">
+            Search
+          </button>
         </div>
       </section>
 
@@ -241,7 +302,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Accommodation Section */}
+      {/* Rooms Section */}
       <section className="py-20 space-y-8">
         <div className="w-full text-center">
           <label className="text-2xl mb-6 font-secondary text-primary">
@@ -252,13 +313,17 @@ export default function Home() {
 
         <div className="flex justify-center items-center gap-2">
           {rooms.map((room) => (
-            <div key={room.name} className="relative w-[460px] aspect-square">
+            <Link
+              href={`detail-room/${slugify(room.name)}`}
+              key={room.name}
+              className="relative w-[460px] aspect-square group overflow-hidden active:scale-95 transition-all"
+            >
               <Image
                 src={room.main_image}
                 alt={`Room ${room.name}`}
                 width={500}
                 height={500}
-                className="object-cover absolute top-0 left-0 w-full h-full"
+                className="object-cover absolute top-0 left-0 w-full h-full group-hover:scale-110 transition-all duration-500"
               />
 
               <div className="relative z-10 w-full h-full flex flex-col justify-end items-center bg-gradient-to-t from-primary  to-transparent to-40% p-4 gap-2">
@@ -275,7 +340,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
@@ -309,7 +374,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Food Section */}
+      {/* Menu Section */}
       <section className="py-20 space-y-8">
         <div className="w-full text-center">
           <label className="text-2xl mb-6 font-secondary text-primary uppercase">
@@ -318,7 +383,8 @@ export default function Home() {
           <h2 className="text-5xl font-semibold mb-6">Menu</h2>
         </div>
 
-        <div className="flex justify-center items-center gap-2">
+        <div className="relative flex flex-wrap justify-center items-center gap-2 max-h-[930px] overflow-hidden">
+          <div className="absolute w-full h-full bg-gradient-to-t from-white  to-transparent to-50% z-20"></div>
           {menu.map((food) => (
             <div key={food.name} className="relative w-[460px] aspect-square">
               <Image
@@ -343,10 +409,13 @@ export default function Home() {
         </div>
 
         <div className="w-full flex justify-center items-center">
-          <button className="flex justify-center items-center gap-2 bg-primary text-white px-4 py-2 rounded-xl">
+          <Link
+            href={"/menu"}
+            className="flex justify-center items-center gap-2 bg-primary text-white px-4 py-2 rounded-xl hover:scale-105 transition-all active:scale-100"
+          >
             <IconSoup />
             View all
-          </button>
+          </Link>
         </div>
       </section>
 
