@@ -3,6 +3,7 @@ import { Poppins, Kaushan_Script, League_Spartan } from "next/font/google";
 import "./globals.css";
 import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
+import NavBar from "@/components/NavBar";
 
 const poppins = League_Spartan({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -36,6 +37,7 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className={`${poppins.variable} ${kaushan.variable} antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <NavBar />
           {children}
         </NextIntlClientProvider>
       </body>

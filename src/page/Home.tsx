@@ -270,23 +270,25 @@ export default function Home() {
       {/* About Us Section */}
       <section className="py-20  flex justify-center items-center gap-10 w-full max-w-[1300px]">
         <div className="text-xl w-full max-w-[60%]">
-          <label className="text-2xl mb-6 font-secondary text-primary">
+          <label className="text-2xl mb-6 font-secondary text-primary uppercase">
             ABOUT US
           </label>
-          <h2 className="text-5xl font-semibold mb-6">About Us</h2>
-          <p className="text-gray-600 mb-4 leading-relaxed">
+          <h2 className="text-5xl font-semibold mb-2">
+            Les P'tits Lofts Du Lac
+          </h2>
+          <p className="text-gray-600 mb-4">
             Welcome to Les P'tits Lofts Du Lac, where luxury meets comfort in
             the heart of nature. Our boutique accommodation offers stunning
             lakeside views and personalized service that makes every stay
             memorable.
           </p>
-          <p className="text-gray-600 mb-4 leading-relaxed">
+          <p className="text-gray-600 mb-4">
             Each of our carefully designed lofts combines modern amenities with
             rustic charm, creating the perfect retreat for couples and families
             alike. Experience the tranquility of lake life while enjoying
             world-class hospitality.
           </p>
-          <p className="text-gray-600 leading-relaxed">
+          <p className="text-gray-600">
             From sunrise coffee on your private balcony to evening dining at our
             lakeside restaurant, every moment at Les P'tits Lofts is designed to
             create lasting memories.
@@ -305,10 +307,12 @@ export default function Home() {
       {/* Rooms Section */}
       <section className="py-20 space-y-8">
         <div className="w-full text-center">
-          <label className="text-2xl mb-6 font-secondary text-primary">
-            OUR ROOMS
+          <label className="text-2xl mb-6 font-secondary text-primary uppercase">
+            our rooms
           </label>
-          <h2 className="text-5xl font-semibold mb-6">Accommodation</h2>
+          <h2 className="text-5xl font-semibold mb-6">
+            Rest, relax, and wake up inspired.
+          </h2>
         </div>
 
         <div className="flex justify-center items-center gap-2">
@@ -345,13 +349,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Benefits Section */}
+      {/* Comforts Section */}
       <section className="w-full py-20 space-y-20">
         <div className="w-full text-center">
           <label className="text-2xl mb-6 font-secondary text-primary uppercase">
-            Benefits
+            Comforts
           </label>
-          <h2 className="text-5xl font-semibold mb-6">Benefits</h2>
+          <h2 className="text-5xl font-semibold mb-6">
+            Little details that make your stay better.
+          </h2>
         </div>
 
         <div className="w-full flex justify-center items-center gap-40 ">
@@ -380,7 +386,9 @@ export default function Home() {
           <label className="text-2xl mb-6 font-secondary text-primary uppercase">
             our menu
           </label>
-          <h2 className="text-5xl font-semibold mb-6">Menu</h2>
+          <h2 className="text-5xl font-semibold mb-6">
+            Flavors that tell our story.
+          </h2>
         </div>
 
         <div className="relative flex flex-wrap justify-center items-center gap-2 max-h-[930px] overflow-hidden">
@@ -425,7 +433,9 @@ export default function Home() {
           <label className="text-2xl mb-6 font-secondary text-primary uppercase">
             testimonials
           </label>
-          <h2 className="text-5xl font-semibold mb-6">Testimonials</h2>
+          <h2 className="text-5xl font-semibold mb-6">
+            Stories from guests who felt at home.
+          </h2>
         </div>
 
         <motion.div className="w-full flex flex-col justify-center items-center gap-5 relative max-w-[1300px]">
@@ -477,9 +487,11 @@ export default function Home() {
       <section className="py-20 w-full flex flex-col justify-center items-center">
         <div className="w-full text-center">
           <label className="text-2xl mb-6 font-secondary text-primary uppercase">
-            testimonials
+            Spaces
           </label>
-          <h2 className="text-5xl font-semibold mb-6">Testimonials</h2>
+          <h2 className="text-5xl font-semibold mb-6">
+            Designed for moments worth remembering.
+          </h2>
         </div>
 
         <div className="grid md:grid-cols-3 gap-2 w-full max-w-[1840px]">
