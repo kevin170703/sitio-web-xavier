@@ -239,8 +239,8 @@ const Reserve: FC<ReserveProps> = ({
           </button>
 
           <p>
-            We're sorry, the room is not available on those dates. Please try
-            another date.
+            We&apos;re sorry, the room is not available on those dates. Please
+            try another date.
           </p>
         </div>
       )}

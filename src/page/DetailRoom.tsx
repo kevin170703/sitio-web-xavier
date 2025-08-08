@@ -49,10 +49,6 @@ export default function DetailRoom() {
     setRoom(room);
   }
 
-  useEffect(() => {
-    getRoom();
-  }, []);
-
   const formatDate = (date: Date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -140,6 +136,10 @@ export default function DetailRoom() {
     }
   };
 
+  useEffect(() => {
+    getRoom();
+  }, []);
+
   if (!room) return null;
   else
     return (
@@ -148,7 +148,7 @@ export default function DetailRoom() {
           <div className="w-full h-full bg-primary/50  text-white flex flex-col justify-center items-center gap-2 pt-30">
             <h1 className="text-5xl">{room?.room_type}</h1>
 
-            <h2 className="font-secondary">Les P'tits Lofts Du Lac</h2>
+            <h2 className="font-secondary">Les P&apos;tits Lofts Du Lac</h2>
           </div>
 
           <Image

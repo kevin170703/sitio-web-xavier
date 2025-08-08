@@ -1,8 +1,6 @@
 "use client";
 
 import {
-  IconChevronDown,
-  IconChevronUp,
   IconClockHour10Filled,
   IconExclamationMark,
   IconHome,
@@ -12,23 +10,13 @@ import {
   IconPhoneFilled,
   IconTrendingUp,
 } from "@tabler/icons-react";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
-import NavModal from "./NavModal";
-import ButtonReservations from "./ButtonReservations";
-
-interface Service {
-  name: string;
-  description: string;
-  slugify: string;
-}
 
 export default function NavBar() {
-  const t = useTranslations();
   const pathname = usePathname();
 
   const [openMenu, setOpenMenu] = useState(false);
@@ -36,8 +24,6 @@ export default function NavBar() {
   const [selectLink, setSelectLink] = useState("");
 
   const [scrolled, setScrolled] = useState(false);
-
-  const menuRef = useRef<HTMLDivElement | null>(null);
 
   const [viewServicesPhone, setViewServicesPhone] = useState<boolean>(false);
 
@@ -120,14 +106,10 @@ export default function NavBar() {
         </div>
 
         <div className="w-full flex justify-between items-center">
-          <div className="flex items-center justify-center gap-36 flex-1 max-2xl:pr-0 pl-[200px]">
+          <div className="flex items-center justify-center gap-36 flex-1 max-2xl:pr-0 ">
             <nav
-              className={`flex items-center space-x-10 text-sm max-lg:hidden ${
-                selectLink === "/"
-                  ? "text-black"
-                  : !scrolled
-                  ? "text-black"
-                  : "text-white"
+              className={`flex items-center space-x-10 text-sm max-lg:hidden${
+                selectLink === "/" && !scrolled ? "text-black" : "text-white"
               }`}
             >
               <Link
@@ -143,7 +125,7 @@ export default function NavBar() {
               </Link>
 
               <Link
-                href={"/"}
+                href={"/menu"}
                 className={`${
                   selectLink === "about"
                     ? " border-white"
@@ -155,7 +137,7 @@ export default function NavBar() {
               </Link>
 
               <Link
-                href={"/"}
+                href={"/#rooms"}
                 className={`${
                   selectLink === "about"
                     ? " border-white"
@@ -184,7 +166,7 @@ export default function NavBar() {
               Contact us
             </button>
 
-            <ButtonReservations scrolled={scrolled} />
+            {/* <ButtonReservations scrolled={scrolled} /> */}
 
             {/* <Link href={"/contact"}>
               <Button

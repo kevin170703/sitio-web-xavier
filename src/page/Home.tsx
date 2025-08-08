@@ -2,32 +2,20 @@
 
 import { useEffect, useState } from "react";
 import {
-  IconMenu2,
   IconWifi,
   IconGlass,
-  IconChevronLeft,
-  IconChevronRight,
-  IconStar,
-  IconStarFilled,
-  IconCalendarPlus,
-  IconCalendarMinus,
   IconUser,
-  IconCurrency,
   IconCurrencyDollar,
   IconSoup,
   IconArrowLeft,
   IconArrowRight,
   IconArrowUp,
-  IconDoor,
-  IconSearch,
 } from "@tabler/icons-react";
-import InputData from "@/components/InputData";
-import InputDataIcon from "@/components/InputDataIcon";
+
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import CardTestimonials from "@/components/CardTestimonials";
 import Link from "next/link";
-import InputRoom from "@/components/InputRoom";
 import axios from "axios";
 
 const variantsTestimonials = {
@@ -51,12 +39,12 @@ const variantsTestimonials = {
   },
 };
 
-type FormData = {
-  check_in_date: string | null; // "YYYY-MM-DD" o null
-  check_out_date: string | null;
-  occupancy: number;
-  room_id: number | null;
-};
+// type FormData = {
+//   check_in_date: string | null; // "YYYY-MM-DD" o null
+//   check_out_date: string | null;
+//   occupancy: number;
+//   room_id: number | null;
+// };
 
 interface RoomImage {
   id: number;
@@ -110,129 +98,6 @@ export interface MenuItem {
 }
 
 export default function Home() {
-  // const rooms = [
-  //   {
-  //     name: "Room detail",
-  //     main_image:
-  //       "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //     secondary_images: [
-  //       "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //       "https://images.unsplash.com/flagged/photo-1556438758-8d49568ce18e?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //     ],
-  //     price: 100,
-  //     capacity: 4,
-  //     description:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-  //   },
-  //   {
-  //     name: "Room2 detail",
-  //     main_image:
-  //       "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //     secondary_images: [
-  //       "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //       "https://images.unsplash.com/flagged/photo-1556438758-8d49568ce18e?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //     ],
-  //     price: 100,
-  //     capacity: 4,
-  //     description:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-  //   },
-
-  //   {
-  //     name: "Room2 detail",
-  //     main_image:
-  //       "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //     secondary_images: [
-  //       "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //       "https://images.unsplash.com/flagged/photo-1556438758-8d49568ce18e?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //     ],
-  //     price: 100,
-  //     capacity: 4,
-  //     description:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-  //   },
-
-  //   {
-  //     name: "Room2 detail",
-  //     main_image:
-  //       "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //     secondary_images: [
-  //       "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //       "https://images.unsplash.com/flagged/photo-1556438758-8d49568ce18e?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //     ],
-  //     price: 100,
-  //     capacity: 4,
-  //     description:
-  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-  //   },
-  // ];
-
-  // const menu = [
-  //   {
-  //     name: "comida 1",
-  //     price: 12,
-  //     main_image:
-  //       "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     name: "comida 2",
-  //     price: 9,
-  //     main_image:
-  //       "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     name: "comida 1",
-  //     price: 12,
-  //     main_image:
-  //       "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     name: "comida 2",
-  //     price: 9,
-  //     main_image:
-  //       "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-
-  //   {
-  //     name: "comida 1",
-  //     price: 12,
-  //     main_image:
-  //       "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     name: "comida 2",
-  //     price: 9,
-  //     main_image:
-  //       "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-
-  //   {
-  //     name: "comida 1",
-  //     price: 12,
-  //     main_image:
-  //       "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     name: "comida 2",
-  //     price: 9,
-  //     main_image:
-  //       "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-
-  //   {
-  //     name: "comida 1",
-  //     price: 12,
-  //     main_image:
-  //       "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  //   {
-  //     name: "comida 2",
-  //     price: 9,
-  //     main_image:
-  //       "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  //   },
-  // ];
-
   const testimoniasls = [
     {
       id: "1",
@@ -277,17 +142,17 @@ export default function Home() {
       .replace(/-+/g, "-"); // Evita múltiples guiones seguidos
   }
 
-  const [formData, setFormData] = useState<FormData>({
-    check_in_date: new Date().toISOString().split("T")[0],
-    check_out_date: new Date().toISOString().split("T")[0],
-    occupancy: 1,
-    room_id: null,
-  });
+  // const [formData, setFormData] = useState<FormData>({
+  //   check_in_date: new Date().toISOString().split("T")[0],
+  //   check_out_date: new Date().toISOString().split("T")[0],
+  //   occupancy: 1,
+  //   room_id: null,
+  // });
 
-  const handleSearch = () => {
-    console.log("Datos finales:", formData);
-    // Aquí puedes enviar `formData` a tu API
-  };
+  // const handleSearch = () => {
+  //   console.log("Datos finales:", formData);
+  //   // Aquí puedes enviar `formData` a tu API
+  // };
 
   async function getRooms(): Promise<void> {
     try {
@@ -347,7 +212,7 @@ export default function Home() {
       >
         <div className=" text-white text-center ">
           <h1 className="text-8xl font-light mb-4 font-secondary">
-            Les P'tits Lofts Du Lac
+            Les P&apos;tits Lofts Du Lac
           </h1>
           <p className="text-lg w-full">
             Luxury lakeside accommodation with stunning views and exceptional
@@ -356,7 +221,7 @@ export default function Home() {
         </div>
 
         {/* Search Form */}
-        <div className="bg-white rounded-lg absolute bottom-10  flex justify-between px-10 py-4 items-center  text-black max-w-[1000px] w-full">
+        {/* <div className="bg-white rounded-lg absolute bottom-10  flex justify-between px-10 py-4 items-center  text-black max-w-[1000px] w-full">
           <InputDataIcon
             onChange={(date) =>
               setFormData({
@@ -389,7 +254,7 @@ export default function Home() {
             <IconSearch className="size-5" />
             Search
           </button>
-        </div>
+        </div> */}
       </section>
 
       {/* About Us Section */}
@@ -399,11 +264,11 @@ export default function Home() {
             ABOUT US
           </label>
           <h2 className="text-5xl font-semibold mb-2">
-            Les P'tits Lofts Du Lac
+            Les P&apos;tits Lofts Du Lac
           </h2>
           <p className="text-gray-600 mb-4">
-            Welcome to Les P'tits Lofts Du Lac, where luxury meets comfort in
-            the heart of nature. Our boutique accommodation offers stunning
+            Welcome to Les P&apos;tits Lofts Du Lac, where luxury meets comfort
+            in the heart of nature. Our boutique accommodation offers stunning
             lakeside views and personalized service that makes every stay
             memorable.
           </p>
@@ -415,13 +280,15 @@ export default function Home() {
           </p>
           <p className="text-gray-600">
             From sunrise coffee on your private balcony to evening dining at our
-            lakeside restaurant, every moment at Les P'tits Lofts is designed to
-            create lasting memories.
+            lakeside restaurant, every moment at Les P&apos;tits Lofts is
+            designed to create lasting memories.
           </p>
         </div>
 
         <div className="relative w-[40%]">
-          <img
+          <Image
+            width={1900}
+            height={1900}
             src="/cozy-restaurant.png"
             alt="Restaurant interior"
             className="w-full h-96 object-cover rounded-lg shadow-lg"
@@ -430,7 +297,7 @@ export default function Home() {
       </section>
 
       {/* Rooms Section */}
-      <section className="py-20 space-y-8">
+      <section id="rooms" className="py-20 space-y-8">
         <div className="w-full text-center">
           <label className="text-2xl mb-6 font-secondary text-primary uppercase">
             our rooms
@@ -681,7 +548,7 @@ export default function Home() {
           <div className="flex justify-between items-center">
             <div className="space-y-2">
               <h2 className="font-secondary text-3xl">
-                Les P'tits Lofts Du Lac
+                Les P&apos;tits Lofts Du Lac
               </h2>
               <p className="text-lg leading-5">
                 1287 Maplewood Drive <br /> Toronto, ON M4B 1B3 <br /> Canada
@@ -761,7 +628,9 @@ export default function Home() {
           </div>
 
           <div className="mt-8 pt-8 text-center text-red-200 text-sm">
-            <p>&copy; 2024 Les P'tits Lofts Du Lac. All rights reserved.</p>
+            <p>
+              &copy; 2024 Les P&apos;tits Lofts Du Lac. All rights reserved.
+            </p>
           </div>
         </section>
       </footer>

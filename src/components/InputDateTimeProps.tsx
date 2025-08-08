@@ -6,7 +6,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 interface InputDateTimeProps {
-  label?: string;
   onChange?: (date: Date | null) => void;
   initialDate?: Date | null;
   value?: Date | null;
@@ -14,7 +13,6 @@ interface InputDateTimeProps {
 }
 
 export default function InputDateTime({
-  label = "Reservation",
   onChange,
   initialDate = new Date(),
   value,
@@ -23,7 +21,8 @@ export default function InputDateTime({
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     value ?? initialDate
   );
-  const datepickerRef = useRef<any>(null);
+
+  const datepickerRef = useRef<InstanceType<typeof DatePicker> | null>(null);
 
   // Sincronizar cuando cambie el value desde el padre
   useEffect(() => {

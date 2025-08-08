@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import DatePicker from "react-datepicker";
-import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 
 interface InputDataIconProps {
@@ -19,7 +18,8 @@ export default function InputDataIcon({
   initialDate = new Date(),
 }: InputDataIconProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(initialDate);
-  const datepickerRef = useRef<any>(null);
+
+  const datepickerRef = useRef<InstanceType<typeof DatePicker> | null>(null);
 
   const handleClick = () => {
     if (datepickerRef.current) {

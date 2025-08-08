@@ -1,32 +1,22 @@
 "use client";
 
-import InputData from "@/components/InputData";
-
 import {
-  IconBath,
-  IconBed,
   IconLoader2,
   IconLock,
   IconMapPin,
-  IconPaw,
-  IconPlug,
-  IconRulerMeasure,
   IconShare,
-  IconSmoking,
   IconSnowflake,
   IconSun,
   IconUser,
-  IconWheelchair,
   IconWifi,
-  IconWindow,
 } from "@tabler/icons-react";
+
 import Image from "next/image";
 
 import tables1 from "@/assets/tables/1.avif";
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Reserve from "@/components/Reserve";
 import InputDateTime from "@/components/InputDateTimeProps";
 import ReserveTable from "@/components/ReserveTable";
 
@@ -124,13 +114,6 @@ export default function DetailTable() {
     }
   }
 
-  const formatDate = (date: Date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}/${month}/${day}`;
-  };
-
   const [formData, setFormData] = useState<FormData>({
     check_in_date: new Date(Date.now() + 1 * 60 * 60 * 1000) // ahora + 1 hora
       .toISOString()
@@ -150,8 +133,6 @@ export default function DetailTable() {
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoaderSearch(true);
-
-    console.log(formData.check_in_date, "fecha que inicia");
 
     const checkInDate = new Date(formData.check_in_date);
     const checkOutDate = new Date(formData.check_out_date);
@@ -180,10 +161,10 @@ export default function DetailTable() {
         reservation_date,
         start_time,
         end_time,
-        occupancy: 1,
+        occupancy: formData.occupancy,
         table_id: tableSelected?.id,
       },
-      "data al backend"
+      "data al backend detailTable"
     );
 
     const { data } = await axios.post(
@@ -192,7 +173,7 @@ export default function DetailTable() {
         reservation_date,
         start_time,
         end_time,
-        occupancy: 1,
+        occupancy: formData.occupancy,
         table_id: tableSelected?.id,
       }
     );
@@ -214,6 +195,7 @@ export default function DetailTable() {
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (/^\d*$/.test(value) && value.length <= 2) {
+      console.log("entree", value);
       setFormData({ ...formData, occupancy: Number(value) });
     }
   };
@@ -270,7 +252,7 @@ export default function DetailTable() {
         <div className="w-full h-full bg-primary/50  text-white flex flex-col justify-center items-center gap-2 pt-30">
           <h1 className="text-5xl">Tables</h1>
 
-          <h2 className="font-secondary">Les P'tits Lofts Du Lac</h2>
+          <h2 className="font-secondary">Les P&apos;tits Lofts Du Lac</h2>
         </div>
 
         <Image
@@ -338,7 +320,9 @@ export default function DetailTable() {
                   >
                     {tables &&
                       tables.map((table) => (
-                        <option value={table.id}>{table.table_number}</option>
+                        <option key={table.id} value={table.id}>
+                          {table.table_number}
+                        </option>
                       ))}
                   </select>
                 </div>
@@ -382,9 +366,9 @@ export default function DetailTable() {
 
             <p className="text-black/60">
               Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book
+              industry. Lorem Ipsum has been the industry&apos;s standard dummy
+              text ever since the 1500s, when an unknown printer took a galley
+              of type and scrambled it to make a type specimen book
             </p>
           </div>
 

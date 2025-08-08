@@ -5,14 +5,10 @@ import { IconChevronDown, IconDoor } from "@tabler/icons-react";
 import React, { useState } from "react";
 
 interface InputDataIconProps {
-  label?: string;
   rooms: Room[];
 }
 
-export default function InputRoom({
-  label = "Room",
-  rooms,
-}: InputDataIconProps) {
+export default function InputRoom({ rooms }: InputDataIconProps) {
   const [openSelect, setOpenSelecet] = useState(false);
 
   const [roomSelect, setRoomSelect] = useState(rooms[0]);

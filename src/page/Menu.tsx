@@ -1,18 +1,9 @@
 "use client";
 
 import CardFood from "@/components/CardFood";
-import { IconCurrencyDollar } from "@tabler/icons-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
-interface Food {
-  name: string;
-  price: number;
-  main_image: string;
-  category: string;
-  description: string;
-}
 
 interface MenuItem {
   id: number;

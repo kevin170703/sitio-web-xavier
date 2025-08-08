@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins, Kaushan_Script, League_Spartan } from "next/font/google";
+import { Kaushan_Script, League_Spartan } from "next/font/google";
 import "./globals.css";
 import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
