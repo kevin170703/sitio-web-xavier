@@ -5,27 +5,27 @@ import React, { useState, useRef, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-interface InputDataIconProps {
+interface InputDateTimeProps {
   label?: string;
   onChange?: (date: Date | null) => void;
   initialDate?: Date | null;
-  value?: Date | null; // <-- nuevo prop
-  daysToAdd?: number;
+  value?: Date | null;
+  hoursToAdd?: number; // <-- en vez de daysToAdd
 }
 
-export default function InputData({
-  label = "Check in",
+export default function InputDateTime({
+  label = "Reservation",
   onChange,
   initialDate = new Date(),
   value,
-  daysToAdd = 0,
-}: InputDataIconProps) {
+  hoursToAdd = 0,
+}: InputDateTimeProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     value ?? initialDate
   );
   const datepickerRef = useRef<any>(null);
 
-  // Sincronizar cuando value cambie
+  // Sincronizar cuando cambie el value desde el padre
   useEffect(() => {
     if (value !== undefined) {
       setSelectedDate(value);
@@ -38,10 +38,11 @@ export default function InputData({
     }
   };
 
+  // Fecha mínima con horas sumadas
   const getMinDate = (): Date => {
     const date = new Date();
-    date.setHours(0, 0, 0, 0);
-    date.setDate(date.getDate() + daysToAdd);
+    date.setMinutes(0, 0, 0); // limpiar minutos y segundos
+    date.setHours(date.getHours() + hoursToAdd);
     return date;
   };
 
@@ -54,10 +55,7 @@ export default function InputData({
 
     const minDate = getMinDate();
 
-    const selected = new Date(date);
-    selected.setHours(0, 0, 0, 0);
-
-    if (selected < minDate) {
+    if (date < minDate) {
       setSelectedDate(minDate);
       onChange?.(minDate);
     } else {
@@ -72,11 +70,14 @@ export default function InputData({
         selected={selectedDate}
         onChange={handleChange}
         ref={datepickerRef}
-        dateFormat="yyyy/MM/dd"
-        placeholderText="aaaa/mm/dd"
+        dateFormat="yyyy/MM/dd HH:mm"
+        placeholderText="aaaa/mm/dd hh:mm"
         className="outline-none text-black/50 focus:text-black"
         calendarClassName="z-50"
         minDate={getMinDate()}
+        showTimeSelect
+        timeFormat="HH:mm"
+        timeIntervals={30} // cada media hora
       />
       <button
         type="button"

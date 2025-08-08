@@ -62,7 +62,7 @@ export default function CardFood({
             </div>
 
             <Link
-              href={""}
+              href={"/detail-table/1"}
               className="w-max flex justify-center items-center gap-2 bg-primary text-white px-4 py-2 rounded-xl hover:scale-105 transition-all active:scale-100"
             >
               Reserve a table

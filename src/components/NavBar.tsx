@@ -80,7 +80,7 @@ export default function NavBar() {
             ? "bg-primary text-white border-white py-4"
             : selectLink === "/" || selectLink === "/terms-of-use"
             ? "bg-white text-black py-4"
-            : "bg-transparent py-2"
+            : "bg-white text-black py-4"
         }
         
         `}
@@ -99,7 +99,7 @@ export default function NavBar() {
         <div
           className={`w-full mb-3 pb-2 flex justify-center items-center max-2xl:pr-0 gap-10 border-b border-[#ebebeb] max-lg:hidden ${
             scrolled && "hidden"
-          } ${selectLink === "/" ? "text-black" : "text-white"}`}
+          } ${selectLink === "/" ? "text-black" : "text-black"}`}
         >
           <div className="flex justify-start items-center gap-2">
             <IconClockHour10Filled className={`text-primary w-5 h-auto`} />
@@ -123,7 +123,11 @@ export default function NavBar() {
           <div className="flex items-center justify-center gap-36 flex-1 max-2xl:pr-0 pl-[200px]">
             <nav
               className={`flex items-center space-x-10 text-sm max-lg:hidden ${
-                selectLink === "/" && !scrolled ? "text-black" : "text-white"
+                selectLink === "/"
+                  ? "text-black"
+                  : !scrolled
+                  ? "text-black"
+                  : "text-white"
               }`}
             >
               <Link
@@ -241,7 +245,6 @@ export default function NavBar() {
                   } `}
               >
                 <IconTrendingUp className="w-6 h-6" stroke={1.5} />
-                {t("NavBar.linkServices")}
               </button>
             </div>
 
@@ -266,8 +269,6 @@ export default function NavBar() {
               }`}
             >
               <IconMessage className="w-6 h-6" stroke={1.5} />
-
-              {t("NavBar.linkContact")}
             </Link>
           </nav>
         </div>

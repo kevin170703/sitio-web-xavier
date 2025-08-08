@@ -1,9 +1,11 @@
 "use client";
 
 import InputData from "@/components/InputData";
+
 import {
   IconBath,
   IconBed,
+  IconLoader2,
   IconLock,
   IconMapPin,
   IconPaw,
@@ -19,7 +21,31 @@ import {
   IconWindow,
 } from "@tabler/icons-react";
 import Image from "next/image";
-import React, { useState } from "react";
+
+import tables1 from "@/assets/tables/1.avif";
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Reserve from "@/components/Reserve";
+import InputDateTime from "@/components/InputDateTimeProps";
+import ReserveTable from "@/components/ReserveTable";
+
+export interface Table {
+  id: number;
+  table_number: string;
+  capacity: number;
+  location: string;
+  status: "available" | "occupied" | "reserved"; // puedes ajustarlo según tus estados reales
+  created_at: string; // formato ISO
+  updated_at: string; // formato ISO
+}
+
+type FormData = {
+  check_in_date: string; // "YYYY-MM-DD" o null
+  check_out_date: string;
+  occupancy: number;
+  room_id: number;
+};
 
 const dataBackend = {
   name: "Table detail",
@@ -59,17 +85,196 @@ const dataBackend = {
 export default function DetailTable() {
   const [selectedImage, setSelectedImage] = useState(0);
 
+  const [tables, setTables] = useState<Table[] | null>(null);
+
+  const [copied, setCopied] = useState(false);
+
+  const [loaderSearch, setLoaderSearch] = useState(false);
+
+  const [roomAvailable, setRoomAvailable] = useState<null | boolean>(null);
+
+  const [tableSelected, setTableSelected] = useState<Table | null>(null);
+
+  const [dataReserve, setDataReserve] = useState({
+    reservation_date: "",
+    start_time: "",
+    end_time: "",
+    occupancy: 1,
+    table_id: tableSelected?.id,
+  });
+
+  async function getTables(): Promise<void> {
+    try {
+      const { data } = await axios.get(
+        "https://reservations-uty9.onrender.com/api/restaurant-tables"
+      );
+
+      const tables = data.data;
+
+      if (Array.isArray(tables)) {
+        setTables(tables);
+        setTableSelected(tables[0]);
+      } else {
+        console.warn("La API no devolvió un array:", tables);
+        setTables([]);
+      }
+    } catch (error) {
+      console.error("Error al obtener las habitaciones:", error);
+      setTables([]);
+    }
+  }
+
+  const formatDate = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}/${month}/${day}`;
+  };
+
+  const [formData, setFormData] = useState<FormData>({
+    check_in_date: new Date(Date.now() + 1 * 60 * 60 * 1000) // ahora + 1 hora
+      .toISOString()
+      .slice(0, 16), // formato yyyy-MM-ddTHH:mm (ideal si lo manejas como string)
+    check_out_date: new Date(Date.now() + 2 * 60 * 60 * 1000) // ahora + 2 horas
+      .toISOString()
+      .slice(0, 16),
+    occupancy: 1,
+    room_id: Number(2),
+  });
+
+  function changueTable(id: string) {
+    const table = tables?.find((table) => table.id === Number(id));
+    if (table) setTableSelected(table);
+  }
+
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoaderSearch(true);
+
+    console.log(formData.check_in_date, "fecha que inicia");
+
+    const checkInDate = new Date(formData.check_in_date);
+    const checkOutDate = new Date(formData.check_out_date);
+
+    const timeZone = "America/Toronto";
+
+    // Función para formatear la hora en HH:mm en zona horaria dada
+    const formatTimeInTZ = (date: Date, timeZone: string) => {
+      return new Intl.DateTimeFormat("en-CA", {
+        timeZone,
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      }).format(date);
+    };
+
+    const reservation_date = formData.check_in_date
+      .split("T")[0]
+      .replace(/\//g, "-");
+
+    const start_time = formatTimeInTZ(checkInDate, timeZone);
+    const end_time = formatTimeInTZ(checkOutDate, timeZone);
+
+    console.log(
+      {
+        reservation_date,
+        start_time,
+        end_time,
+        occupancy: 1,
+        table_id: tableSelected?.id,
+      },
+      "data al backend"
+    );
+
+    const { data } = await axios.post(
+      "https://reservations-uty9.onrender.com/api/restaurant-reservations/check-availability",
+      {
+        reservation_date,
+        start_time,
+        end_time,
+        occupancy: 1,
+        table_id: tableSelected?.id,
+      }
+    );
+
+    setDataReserve({
+      reservation_date,
+      start_time,
+      end_time,
+      occupancy: 1,
+      table_id: tableSelected?.id,
+    });
+
+    console.log(data, "data del backend");
+
+    setRoomAvailable(data.data.specific_table_available);
+    setLoaderSearch(false);
+  };
+
+  const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value) && value.length <= 2) {
+      setFormData({ ...formData, occupancy: Number(value) });
+    }
+  };
+
+  const handleCheckInChange = (date: Date | null) => {
+    if (!date) return;
+
+    const newCheckIn = date;
+
+    // Checkout exactamente 1 hora después del check-in
+    const newCheckOut = new Date(newCheckIn);
+    newCheckOut.setHours(newCheckOut.getHours() + 1);
+
+    setFormData({
+      ...formData,
+      check_in_date: newCheckIn.toISOString(),
+      check_out_date: newCheckOut.toISOString(),
+    });
+  };
+
+  const handleCheckOutChange = (date: Date | null) => {
+    if (!date) return;
+
+    const newCheckOut = date;
+
+    // Checkin exactamente 1 hora antes del check-out
+    const newCheckIn = new Date(newCheckOut);
+    newCheckIn.setHours(newCheckIn.getHours() - 1);
+
+    setFormData({
+      ...formData,
+      check_in_date: newCheckIn.toISOString(),
+      check_out_date: newCheckOut.toISOString(),
+    });
+  };
+
+  useEffect(() => {
+    getTables();
+  }, []);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // mensaje dura 2 segundos
+    } catch (err) {
+      console.error("Error al copiar: ", err);
+    }
+  };
+
   return (
     <main className="flex flex-col justify-center items-center text-black pb-20 gap-10">
-      <section className="w-full h-[30dvh] overflow-hidden relative flex justify-center items-center">
-        <div className="w-full h-full bg-primary/50  text-white flex flex-col justify-center items-center gap-2">
-          <h1 className="text-5xl">{dataBackend.name}</h1>
+      <section className="w-full h-[40dvh] overflow-hidden relative flex justify-center items-center">
+        <div className="w-full h-full bg-primary/50  text-white flex flex-col justify-center items-center gap-2 pt-30">
+          <h1 className="text-5xl">Tables</h1>
 
           <h2 className="font-secondary">Les P'tits Lofts Du Lac</h2>
         </div>
 
         <Image
-          src={dataBackend.main_image}
+          src={tables1}
           height={900}
           width={1920}
           alt="image detail"
@@ -81,27 +286,25 @@ export default function DetailTable() {
         {/* Fotos secundarias - Izquierda */}
         <div className="">
           <div className="grid grid-cols-4 lg:grid-cols-1 gap-2">
-            {[dataBackend.main_image, ...dataBackend.secondary_images].map(
-              (image, index) => (
-                <div
-                  key={index}
-                  className={`cursor-pointer rounded-2xl overflow-hidden border-2 transition-all ${
-                    selectedImage === index
-                      ? "border-[#F2B134]"
-                      : "border-transparent"
-                  }`}
-                  onClick={() => setSelectedImage(index)}
-                >
-                  <Image
-                    src={image || "/placeholder.svg"}
-                    alt={`Vista ${index + 1}`}
-                    width={150}
-                    height={150}
-                    className="w-[200px] h-[100px] object-cover aspect-2/1"
-                  />
-                </div>
-              )
-            )}
+            {[tables1].map((image, index) => (
+              <div
+                key={index}
+                className={`cursor-pointer rounded-2xl overflow-hidden border-2 transition-all ${
+                  selectedImage === index
+                    ? "border-[#F2B134]"
+                    : "border-transparent"
+                }`}
+                onClick={() => setSelectedImage(index)}
+              >
+                <Image
+                  src={image || "/placeholder.svg"}
+                  alt={`Vista ${index + 1}`}
+                  width={150}
+                  height={150}
+                  className="w-[200px] h-[100px] object-cover aspect-2/1"
+                />
+              </div>
+            ))}
           </div>
         </div>
 
@@ -126,7 +329,19 @@ export default function DetailTable() {
           <div className="w-full border border-black/8 rounded-3xl p-10">
             <div className="space-y-4 flex justify-between items-start w-full">
               <div className="space-y-4">
-                <h2 className="text-4xl">{dataBackend.name}</h2>
+                <div className="text-4xl flex justify-start items-center gap-2">
+                  <p>Table number:</p>
+                  <select
+                    name=""
+                    id=""
+                    onChange={(e) => changueTable(e.target.value)}
+                  >
+                    {tables &&
+                      tables.map((table) => (
+                        <option value={table.id}>{table.table_number}</option>
+                      ))}
+                  </select>
+                </div>
 
                 <div className="flex justify-start items-center gap-2 pb-4">
                   <IconMapPin className="size-6 text-primary" />
@@ -136,37 +351,41 @@ export default function DetailTable() {
                 </div>
               </div>
 
-              <div className="h-full flex justify-end items-start">
-                <button className="bg-secondary text-white rounded-full px-4 py-2">
-                  VIP table
+              <div>
+                <button
+                  onClick={handleCopy}
+                  className="flex justify-center items-center gap-4 border border-black/20 w-max px-4 py-2.5 rounded-full cursor-pointer"
+                >
+                  <IconShare className="text-primary size-6" />
+                  <p>{copied ? "Link copied!" : "Share"}</p>
                 </button>
               </div>
             </div>
 
             <div className="flex justify-between items-center border-t border-black/10 pt-5 mt-5">
               <div className="flex justify-start items-center gap-x-8 gap-y-6 flex-wrap">
-                {dataBackend.details.map((detail, index) => {
-                  const IconComponent = detail.icon;
-                  return (
-                    <div key={index} className="flex items-center gap-1">
-                      <IconComponent className="text-primary size-6" />
-                      <span>{detail.name}</span>
-                    </div>
-                  );
-                })}
-              </div>
+                <div className="flex items-center gap-1">
+                  <IconUser className="text-primary size-6" />
+                  <span>{tableSelected?.capacity} persons</span>
+                </div>
 
-              <button className="flex justify-center items-center gap-4 border border-black/20 w-max px-4 py-2.5 rounded-full ">
-                <IconShare className="text-primary size-6 " />
-                <p>Share</p>
-              </button>
+                <div className="flex items-center gap-1">
+                  <IconMapPin className="text-primary size-6" />
+                  <span>{tableSelected?.location} persons</span>
+                </div>
+              </div>
             </div>
           </div>
 
           <div className="space-y-2">
             <p className="text-2xl font-medium">Description</p>
 
-            <p className="text-black/60">{dataBackend.description}</p>
+            <p className="text-black/60">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book
+            </p>
           </div>
 
           <div className="w-full space-y-2">
@@ -188,22 +407,17 @@ export default function DetailTable() {
 
           <form
             action=""
+            onSubmit={(e) => handleSearch(e)}
             className="flex flex-col justify-center items-center gap-6"
           >
             <label htmlFor="" className="w-full h-max space-y-2">
-              <p>Name*</p>
+              <p>Number of people*</p>
               <input
                 type="text"
-                placeholder="Your name"
-                className="w-full border border-black/10 rounded-xl outline-none px-4 py-2"
-              />
-            </label>
-
-            <label htmlFor="" className="w-full h-max space-y-2">
-              <p>Number*</p>
-              <input
-                type="text"
-                placeholder="Your number"
+                placeholder={formData.occupancy.toString()}
+                required
+                onChange={(e) => handleNumberChange(e)}
+                value={formData.occupancy}
                 className="w-full border border-black/10 rounded-xl outline-none px-4 py-2"
               />
             </label>
@@ -211,21 +425,51 @@ export default function DetailTable() {
             <label htmlFor="" className="w-full h-max space-y-2">
               <p>Check in*</p>
 
-              <InputData />
+              <InputDateTime
+                onChange={handleCheckInChange}
+                value={new Date(formData.check_in_date)}
+                initialDate={new Date(formData.check_in_date)}
+              />
             </label>
 
             <label htmlFor="" className="w-full h-max space-y-2">
               <p>Check out*</p>
 
-              <InputData />
+              <InputDateTime
+                onChange={handleCheckOutChange}
+                value={new Date(formData.check_out_date)}
+                hoursToAdd={1}
+                initialDate={new Date(formData.check_out_date)}
+              />
             </label>
 
-            <button className="w-full rounded-full bg-primary text-white py-3 ">
-              check availability
+            <button
+              type="submit"
+              className="w-full rounded-full bg-primary text-white py-3 cursor-pointer flex justify-center items-center"
+            >
+              {loaderSearch ? (
+                <IconLoader2 className="animate-spin" />
+              ) : (
+                "check availability"
+              )}
             </button>
           </form>
         </section>
       </section>
+
+      {roomAvailable !== null && tableSelected !== null && (
+        <section className="fixed top-0 left-0 w-full h-full bg-black/50 backdrop-blur-lg flex flex-col justify-center items-center text-white p-6">
+          <ReserveTable
+            id={tableSelected.id.toString()}
+            number_persons={formData.occupancy}
+            date_reservations={dataReserve.reservation_date}
+            start_time={dataReserve.start_time}
+            end_time={dataReserve.end_time}
+            roomAvailable={roomAvailable}
+            setRoomAvailable={setRoomAvailable}
+          />
+        </section>
+      )}
     </main>
   );
 }

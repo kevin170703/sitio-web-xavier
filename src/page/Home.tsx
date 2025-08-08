@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   IconMenu2,
   IconWifi,
@@ -19,6 +19,7 @@ import {
   IconArrowRight,
   IconArrowUp,
   IconDoor,
+  IconSearch,
 } from "@tabler/icons-react";
 import InputData from "@/components/InputData";
 import InputDataIcon from "@/components/InputDataIcon";
@@ -27,6 +28,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import CardTestimonials from "@/components/CardTestimonials";
 import Link from "next/link";
 import InputRoom from "@/components/InputRoom";
+import axios from "axios";
 
 const variantsTestimonials = {
   enter: (direction: number) => {
@@ -49,144 +51,187 @@ const variantsTestimonials = {
   },
 };
 
+type FormData = {
+  check_in_date: string | null; // "YYYY-MM-DD" o null
+  check_out_date: string | null;
+  occupancy: number;
+  room_id: number | null;
+};
+
+interface RoomImage {
+  id: number;
+  image_url: string;
+  order: number;
+  room_id: number;
+}
+
+export interface Room {
+  id: number;
+  room_number: string;
+  room_type: string;
+  capacity: number;
+  number_of_beds: number;
+  has_wifi: boolean;
+  has_air_conditioning: boolean;
+  has_tv: boolean;
+  has_minibar: boolean;
+  has_balcony: boolean;
+  price_per_night: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+  images: RoomImage[];
+}
+
+interface MenuImage {
+  id: number;
+  image_url: string;
+  order: number;
+  menu_item_id: number;
+}
+
+interface MenuCategory {
+  id: number;
+  name: string;
+  description: string;
+  is_active: boolean;
+}
+
+export interface MenuItem {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  category_id: number;
+  category: MenuCategory;
+  created_at: string;
+  updated_at: string;
+  images: MenuImage[];
+}
+
 export default function Home() {
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  // const rooms = [
+  //   {
+  //     name: "Room detail",
+  //     main_image:
+  //       "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     secondary_images: [
+  //       "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //       "https://images.unsplash.com/flagged/photo-1556438758-8d49568ce18e?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     ],
+  //     price: 100,
+  //     capacity: 4,
+  //     description:
+  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+  //   },
+  //   {
+  //     name: "Room2 detail",
+  //     main_image:
+  //       "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     secondary_images: [
+  //       "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //       "https://images.unsplash.com/flagged/photo-1556438758-8d49568ce18e?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     ],
+  //     price: 100,
+  //     capacity: 4,
+  //     description:
+  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+  //   },
 
-  const testimonials = [
-    {
-      text: "We had such a great experience at this bed and breakfast! Sylvie and Gerry made us feel at home and took such great care of us. They were so helpful with recommendations and made our stay truly memorable.",
-      author: "Sarah M.",
-      rating: 5,
-    },
-    {
-      text: "Amazing location with beautiful views of the lake. The rooms are comfortable and the breakfast was delicious. Highly recommend!",
-      author: "John D.",
-      rating: 5,
-    },
-  ];
+  //   {
+  //     name: "Room2 detail",
+  //     main_image:
+  //       "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     secondary_images: [
+  //       "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //       "https://images.unsplash.com/flagged/photo-1556438758-8d49568ce18e?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     ],
+  //     price: 100,
+  //     capacity: 4,
+  //     description:
+  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+  //   },
 
-  const rooms = [
-    {
-      name: "Room detail",
-      main_image:
-        "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      secondary_images: [
-        "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "https://images.unsplash.com/flagged/photo-1556438758-8d49568ce18e?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      ],
-      price: 100,
-      capacity: 4,
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-    },
-    {
-      name: "Room2 detail",
-      main_image:
-        "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      secondary_images: [
-        "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "https://images.unsplash.com/flagged/photo-1556438758-8d49568ce18e?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      ],
-      price: 100,
-      capacity: 4,
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-    },
+  //   {
+  //     name: "Room2 detail",
+  //     main_image:
+  //       "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     secondary_images: [
+  //       "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //       "https://images.unsplash.com/flagged/photo-1556438758-8d49568ce18e?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //     ],
+  //     price: 100,
+  //     capacity: 4,
+  //     description:
+  //       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
+  //   },
+  // ];
 
-    {
-      name: "Room2 detail",
-      main_image:
-        "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      secondary_images: [
-        "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "https://images.unsplash.com/flagged/photo-1556438758-8d49568ce18e?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      ],
-      price: 100,
-      capacity: 4,
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-    },
+  // const menu = [
+  //   {
+  //     name: "comida 1",
+  //     price: 12,
+  //     main_image:
+  //       "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  //   {
+  //     name: "comida 2",
+  //     price: 9,
+  //     main_image:
+  //       "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  //   {
+  //     name: "comida 1",
+  //     price: 12,
+  //     main_image:
+  //       "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  //   {
+  //     name: "comida 2",
+  //     price: 9,
+  //     main_image:
+  //       "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
 
-    {
-      name: "Room2 detail",
-      main_image:
-        "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      secondary_images: [
-        "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "https://images.unsplash.com/flagged/photo-1556438758-8d49568ce18e?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      ],
-      price: 100,
-      capacity: 4,
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-    },
-  ];
+  //   {
+  //     name: "comida 1",
+  //     price: 12,
+  //     main_image:
+  //       "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  //   {
+  //     name: "comida 2",
+  //     price: 9,
+  //     main_image:
+  //       "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
 
-  const menu = [
-    {
-      name: "comida 1",
-      price: 12,
-      main_image:
-        "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      name: "comida 2",
-      price: 9,
-      main_image:
-        "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      name: "comida 1",
-      price: 12,
-      main_image:
-        "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      name: "comida 2",
-      price: 9,
-      main_image:
-        "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
+  //   {
+  //     name: "comida 1",
+  //     price: 12,
+  //     main_image:
+  //       "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  //   {
+  //     name: "comida 2",
+  //     price: 9,
+  //     main_image:
+  //       "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
 
-    {
-      name: "comida 1",
-      price: 12,
-      main_image:
-        "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      name: "comida 2",
-      price: 9,
-      main_image:
-        "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-
-    {
-      name: "comida 1",
-      price: 12,
-      main_image:
-        "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      name: "comida 2",
-      price: 9,
-      main_image:
-        "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-
-    {
-      name: "comida 1",
-      price: 12,
-      main_image:
-        "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      name: "comida 2",
-      price: 9,
-      main_image:
-        "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
+  //   {
+  //     name: "comida 1",
+  //     price: 12,
+  //     main_image:
+  //       "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  //   {
+  //     name: "comida 2",
+  //     price: 9,
+  //     main_image:
+  //       "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  //   },
+  // ];
 
   const testimoniasls = [
     {
@@ -213,6 +258,10 @@ export default function Home() {
     },
   ];
 
+  const [rooms, setRooms] = useState<Room[] | null>(null);
+
+  const [menu, setMenu] = useState<MenuItem[] | null>(null);
+
   const [[indexTestimonial, direction], setIndexTestimonial] = useState([0, 0]);
   const changueIndex = (newDirection: number) => {
     setIndexTestimonial([indexTestimonial + newDirection, newDirection]);
@@ -227,6 +276,65 @@ export default function Home() {
       .replace(/\s+/g, "-") // Reemplaza espacios por guiones
       .replace(/-+/g, "-"); // Evita múltiples guiones seguidos
   }
+
+  const [formData, setFormData] = useState<FormData>({
+    check_in_date: new Date().toISOString().split("T")[0],
+    check_out_date: new Date().toISOString().split("T")[0],
+    occupancy: 1,
+    room_id: null,
+  });
+
+  const handleSearch = () => {
+    console.log("Datos finales:", formData);
+    // Aquí puedes enviar `formData` a tu API
+  };
+
+  async function getRooms(): Promise<void> {
+    try {
+      const { data } = await axios.get(
+        "https://reservations-uty9.onrender.com/api/rooms"
+      );
+
+      const rooms = data.data;
+
+      if (Array.isArray(rooms)) {
+        setRooms(rooms);
+      } else {
+        console.warn("La API no devolvió un array:", rooms);
+        setRooms([]);
+      }
+    } catch (error) {
+      console.error("Error al obtener las habitaciones:", error);
+      setRooms([]);
+    }
+  }
+
+  async function getMenu(): Promise<void> {
+    try {
+      const { data } = await axios.get(
+        "https://reservations-uty9.onrender.com/api/menu-items"
+      );
+
+      console.log(data, "menuuu");
+
+      const menu = data.data;
+
+      if (Array.isArray(menu)) {
+        setMenu(menu);
+      } else {
+        console.warn("La API no devolvió un array:", menu);
+        setMenu([]);
+      }
+    } catch (error) {
+      console.error("Error al obtener el menú:", error);
+      setMenu([]);
+    }
+  }
+
+  useEffect(() => {
+    getRooms();
+    getMenu();
+  }, []);
 
   return (
     <div className="w-full min-h-screen flex flex-col justify-center items-center overflow-hidden">
@@ -250,18 +358,35 @@ export default function Home() {
         {/* Search Form */}
         <div className="bg-white rounded-lg absolute bottom-10  flex justify-between px-10 py-4 items-center  text-black max-w-[1000px] w-full">
           <InputDataIcon
+            onChange={(date) =>
+              setFormData({
+                ...formData,
+                check_in_date: date ? date.toISOString().split("T")[0] : "",
+              })
+            }
+            initialDate={new Date()}
             icon={<IconCalendarPlus className="size-8" />}
             label="Check in"
           />
 
           <InputDataIcon
+            onChange={(date) =>
+              setFormData({
+                ...formData,
+                check_out_date: date ? date.toISOString().split("T")[0] : "",
+              })
+            }
             icon={<IconCalendarMinus className="size-8" />}
             label="Check out"
           />
 
-          <InputRoom rooms={rooms} />
+          {rooms && <InputRoom rooms={rooms} />}
 
-          <button className="bg-[#f2b134] text-white px-8 py-2 rounded hover:bg-[#e1a02d] transition-colors">
+          <button
+            onClick={() => handleSearch()}
+            className="flex justify-center items-center gap-2 bg-primary text-white px-4 py-2 rounded-xl hover:scale-105 transition-all active:scale-100"
+          >
+            <IconSearch className="size-5" />
             Search
           </button>
         </div>
@@ -316,36 +441,37 @@ export default function Home() {
         </div>
 
         <div className="flex justify-center items-center gap-2">
-          {rooms.map((room) => (
-            <Link
-              href={`detail-room/${slugify(room.name)}`}
-              key={room.name}
-              className="relative w-[460px] aspect-square group overflow-hidden active:scale-95 transition-all"
-            >
-              <Image
-                src={room.main_image}
-                alt={`Room ${room.name}`}
-                width={500}
-                height={500}
-                className="object-cover absolute top-0 left-0 w-full h-full group-hover:scale-110 transition-all duration-500"
-              />
+          {rooms &&
+            rooms.map((room) => (
+              <Link
+                href={`detail-room/${slugify(room.id.toString())}`}
+                key={room.room_type}
+                className="relative w-[460px] aspect-square group overflow-hidden active:scale-95 transition-all"
+              >
+                <Image
+                  src={room.images[0].image_url}
+                  alt={`Room ${room.room_type}`}
+                  width={500}
+                  height={500}
+                  className="object-cover absolute top-0 left-0 w-full h-full group-hover:scale-110 transition-all duration-500"
+                />
 
-              <div className="relative z-10 w-full h-full flex flex-col justify-end items-center bg-gradient-to-t from-primary  to-transparent to-40% p-4 gap-2">
-                <p className="text-white text-3xl">{room.name}</p>
-                <div className="flex justify-center items-center gap-8">
-                  <div className="flex justify-center items-center  text-white">
-                    <IconUser className="size-6" />
-                    <p className="text-xl">{room.capacity}</p>
-                  </div>
+                <div className="relative z-10 w-full h-full flex flex-col justify-end items-center bg-gradient-to-t from-primary  to-transparent to-40% p-4 gap-2">
+                  <p className="text-white text-3xl">{room.room_type}</p>
+                  <div className="flex justify-center items-center gap-8">
+                    <div className="flex justify-center items-center  text-white">
+                      <IconUser className="size-6" />
+                      <p className="text-xl">{room.capacity}</p>
+                    </div>
 
-                  <div className="flex justify-center items-center  text-white">
-                    <IconCurrencyDollar className="size-6" />
-                    <p className="text-xl">{room.price}</p>
+                    <div className="flex justify-center items-center  text-white">
+                      <IconCurrencyDollar className="size-6" />
+                      <p className="text-xl">{room.price_per_night}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
         </div>
       </section>
 
@@ -393,27 +519,28 @@ export default function Home() {
 
         <div className="relative flex flex-wrap justify-center items-center gap-2 max-h-[930px] overflow-hidden">
           <div className="absolute w-full h-full bg-gradient-to-t from-white  to-transparent to-50% z-20"></div>
-          {menu.map((food) => (
-            <div key={food.name} className="relative w-[460px] aspect-square">
-              <Image
-                src={food.main_image}
-                alt={`food ${food.name}`}
-                width={500}
-                height={500}
-                className="object-cover absolute top-0 left-0 w-full h-full"
-              />
+          {menu &&
+            menu.map((food) => (
+              <div key={food.name} className="relative w-[460px] aspect-square">
+                <Image
+                  src={food.images[0].image_url}
+                  alt={`food ${food.name}`}
+                  width={500}
+                  height={500}
+                  className="object-cover absolute top-0 left-0 w-full h-full"
+                />
 
-              <div className="relative z-10 w-full h-full flex flex-col justify-end items-center bg-gradient-to-t from-primary  to-transparent to-40% p-4 gap-2">
-                <p className="text-white text-3xl">{food.name}</p>
-                <div className="flex justify-center items-center gap-8">
-                  <div className="flex justify-center items-center  text-white">
-                    <IconCurrencyDollar className="size-6" />
-                    <p className="text-xl">{food.price}</p>
+                <div className="relative z-10 w-full h-full flex flex-col justify-end items-center bg-gradient-to-t from-primary  to-transparent to-40% p-4 gap-2">
+                  <p className="text-white text-3xl">{food.name}</p>
+                  <div className="flex justify-center items-center gap-8">
+                    <div className="flex justify-center items-center  text-white">
+                      <IconCurrencyDollar className="size-6" />
+                      <p className="text-xl">{food.price}</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
 
         <div className="w-full flex justify-center items-center">
