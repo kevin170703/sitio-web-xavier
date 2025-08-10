@@ -1,6 +1,7 @@
 "use client";
 
 import InputData from "@/components/InputData";
+
 import {
   IconCarFan,
   IconDeviceTv,
