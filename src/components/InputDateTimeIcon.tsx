@@ -1,34 +1,33 @@
 "use client";
 
-import { IconCalendarPlus, IconCalendarWeek } from "@tabler/icons-react";
 import React, { useState, useRef, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-interface InputDataIconProps {
+interface InputDateTimeProps {
   onChange?: (date: Date | null) => void;
   initialDate?: Date | null;
-  value?: Date | null; // <-- nuevo prop
-  daysToAdd?: number;
+  value?: Date | null;
+  hoursToAdd?: number; // <-- en vez de daysToAdd
   icon: React.ReactNode;
   text: string;
 }
 
-export default function InputDataIcon({
+export default function InputDateTimeIcon({
   onChange,
   initialDate = new Date(),
   value,
-  daysToAdd = 0,
+  hoursToAdd = 0,
   icon,
   text,
-}: InputDataIconProps) {
+}: InputDateTimeProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     value ?? initialDate
   );
 
   const datepickerRef = useRef<InstanceType<typeof DatePicker> | null>(null);
 
-  // Sincronizar cuando value cambie
+  // Sincronizar cuando cambie el value desde el padre
   useEffect(() => {
     if (value !== undefined) {
       setSelectedDate(value);
@@ -41,10 +40,11 @@ export default function InputDataIcon({
     }
   };
 
+  // Fecha mínima con horas sumadas
   const getMinDate = (): Date => {
     const date = new Date();
-    date.setHours(0, 0, 0, 0);
-    date.setDate(date.getDate() + daysToAdd);
+    date.setMinutes(0, 0, 0); // limpiar minutos y segundos
+    date.setHours(date.getHours() + hoursToAdd);
     return date;
   };
 
@@ -57,10 +57,7 @@ export default function InputDataIcon({
 
     const minDate = getMinDate();
 
-    const selected = new Date(date);
-    selected.setHours(0, 0, 0, 0);
-
-    if (selected < minDate) {
+    if (date < minDate) {
       setSelectedDate(minDate);
       onChange?.(minDate);
     } else {
@@ -71,7 +68,7 @@ export default function InputDataIcon({
 
   return (
     <div
-      className="w-[120px] flex  justify-center items-center relative gap-3"
+      className="w-[160px] flex  justify-center items-center relative gap-3"
       onClick={handleClick}
     >
       <div className="size-8 text-black opacity-30">{icon}</div>
@@ -80,15 +77,19 @@ export default function InputDataIcon({
         onClick={handleClick}
       >
         <p className="text-base">{text}</p>
+
         <DatePicker
           selected={selectedDate}
           onChange={handleChange}
           ref={datepickerRef}
-          dateFormat="yyyy/MM/dd"
-          placeholderText="aaaa/mm/dd"
-          className="outline-none w-[120px] text-lg font-medium -mt-1"
+          dateFormat="yyyy/MM/dd HH:mm"
+          placeholderText="aaaa/mm/dd hh:mm"
+          className="outline-none text-black font-medium w-[120px] -mt-1"
           calendarClassName="z-50"
           minDate={getMinDate()}
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={30} // cada media hora
         />
       </div>
     </div>

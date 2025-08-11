@@ -1,6 +1,8 @@
+import { Room } from "@/page/Home";
 import { IconX } from "@tabler/icons-react";
-import axios from "axios";
 import { useState, FC, FormEvent } from "react";
+import CardRoomRecomended from "./CardRoomRecomended";
+import axios from "axios";
 
 interface ReserveProps {
   roomAvailable: boolean | null;
@@ -8,8 +10,8 @@ interface ReserveProps {
   checkin: string;
   checkout: string;
   roomName: string;
-  roomDescription?: string;
   price: string;
+  avilabelRooms: Room[];
   setRoomAvailable: React.Dispatch<React.SetStateAction<boolean | null>>;
 }
 
@@ -20,9 +22,15 @@ const Reserve: FC<ReserveProps> = ({
   checkout,
   price,
   roomName,
-  roomDescription,
   setRoomAvailable,
+  avilabelRooms,
 }) => {
+  const [dataRoom, setDataRoom] = useState({
+    id: id,
+    roomName: roomName,
+    price: price,
+  });
+
   const [fullName, setFullName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [telefono, setTelefono] = useState<string>("");
@@ -104,14 +112,28 @@ const Reserve: FC<ReserveProps> = ({
     }
 
     const reservaData = {
-      roomId: id,
-      roomName,
+      roomId: dataRoom.id,
+      roomName: dataRoom.roomName,
       checkin,
       checkout,
       fullName,
       email,
       telefono,
     };
+
+    console.log(
+      {
+        customer_full_name: reservaData.fullName,
+        customer_email: reservaData.email,
+        customer_phone: reservaData.telefono,
+        room_id: Number(reservaData.roomId),
+        check_in_date: reservaData.checkin.replace(/\//g, "-"),
+        check_out_date: reservaData.checkout.replace(/\//g, "-"),
+        total_amount: dataRoom.price,
+        reservation_status_id: 1,
+      },
+      "data a enviar al backend"
+    );
 
     const { data } = await axios.post(
       `https://reservations-uty9.onrender.com/api/hotel-reservations`,
@@ -122,7 +144,7 @@ const Reserve: FC<ReserveProps> = ({
         room_id: Number(reservaData.roomId),
         check_in_date: reservaData.checkin.replace(/\//g, "-"),
         check_out_date: reservaData.checkout.replace(/\//g, "-"),
-        total_amount: price,
+        total_amount: dataRoom.price,
         reservation_status_id: 1,
       }
     );
@@ -139,13 +161,32 @@ const Reserve: FC<ReserveProps> = ({
     setErrors({});
   };
 
+  async function changueRoom({
+    id,
+    price,
+    roomName,
+  }: {
+    id: string;
+    price: string;
+    roomName: string;
+  }) {
+    setDataRoom({
+      id,
+      price,
+      roomName,
+    });
+    // setTimeout(() => {
+    setRoomAvailable(true);
+    // }, 1000);
+  }
+
   if (roomAvailable === null) return null;
 
   return (
-    <section className="absolute top-0 left-0 w-full h-full  backdrop-blur-xs flex flex-col justify-center items-center p-6">
+    <section className="absolute top-0 left-0 w-full h-full  backdrop-blur-xs flex flex-col justify-center items-center p-6 z-20">
       {roomAvailable ? (
         <form
-          onSubmit={handleSubmit}
+          onSubmit={(e) => handleSubmit(e)}
           className="bg-white text-black p-6 rounded-2xl shadow-md w-100 relative"
           noValidate
         >
@@ -155,19 +196,9 @@ const Reserve: FC<ReserveProps> = ({
           >
             <IconX />
           </button>
-          <h2 className="mb-2 text-2xl font-semibold">
-            The room is available!
-          </h2>
 
-          <div className="">
-            <p className="font-semibold text-xl">{roomName}</p>
-            {roomDescription && (
-              <p className="mb-4 text-sm text-gray-700">{roomDescription}</p>
-            )}
-          </div>
-
-          <p className="mb-4">
-            Dates: <strong>{checkin}</strong> a <strong>{checkout}</strong>
+          <p className="mb-6 text-xl">
+            <strong>{checkin}</strong> a <strong>{checkout}</strong>
           </p>
 
           <label className="w-full h-max space-y-2">
@@ -230,18 +261,42 @@ const Reserve: FC<ReserveProps> = ({
           {mensaje && <p className="mt-4 text-green-700">{mensaje}</p>}
         </form>
       ) : (
-        <div className="bg-white text-black px-6 py-16 rounded-2xl shadow-md w-100 text-2xl text-center relative">
+        <div className="bg-white text-black px-6 py-16 rounded-2xl shadow-md w-max relative">
           <button
+            type="button"
             onClick={() => setRoomAvailable(null)}
             className="absolute top-4 right-4 cursor-pointer"
           >
             <IconX />
           </button>
 
-          <p>
-            We&apos;re sorry, the room is not available on those dates. Please
-            try another date.
+          <p className="text-2xl text-center ">
+            We&apos;re sorry, the room is not available on those dates.
           </p>
+
+          {avilabelRooms && (
+            <div>
+              <p className="text-xl font-medium">
+                Rooms available for the same time slot:
+              </p>
+              <div className="space-y-4 flex flex-col justify-center items-center">
+                {avilabelRooms.map((room) => (
+                  <CardRoomRecomended
+                    changueRoom={changueRoom}
+                    capacity={room.capacity}
+                    has_air_conditioning={room.has_air_conditioning}
+                    has_balcony={room.has_balcony}
+                    has_tv={room.has_tv}
+                    has_wifi={room.has_wifi}
+                    id={room.id}
+                    price_per_night={room.price_per_night}
+                    room_type={room.room_type}
+                    key={room.id}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </section>

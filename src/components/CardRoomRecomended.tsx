@@ -1,0 +1,179 @@
+import {
+  IconCarFan,
+  IconChevronDown,
+  IconDeviceTv,
+  IconSnowflake,
+  IconUsers,
+  IconWifi,
+} from "@tabler/icons-react";
+import Image from "next/image";
+import React, { useState } from "react";
+
+import roomImage from "@/assets/tables/1.avif";
+
+export default function CardRoomRecomended({
+  id,
+  room_type,
+  price_per_night,
+  capacity,
+  has_wifi,
+  has_air_conditioning,
+  has_balcony,
+  has_tv,
+  changueRoom,
+}: {
+  id: number;
+  room_type: string;
+  price_per_night: string;
+  capacity: number;
+  has_wifi: boolean;
+  has_air_conditioning: boolean;
+  has_balcony: boolean;
+  has_tv: boolean;
+  changueRoom: ({
+    id,
+    price,
+    roomName,
+  }: {
+    id: string;
+    price: string;
+    roomName: string;
+  }) => void;
+}) {
+  const [seeFeatures, setSeeFeatures] = useState(false);
+
+  return (
+    <div
+      className="w-[600px] min-h-[100px] rounded-2xl flex  justify-between items-center shadow-2xl p-4"
+      key={id}
+    >
+      <div className="flex justify-start items-center gap-4">
+        <Image
+          src={roomImage}
+          width={500}
+          height={500}
+          alt={room_type}
+          className="h-full  w-[160px] object-cover rounded-xl"
+        />
+        <div className="h-full flex flex-col justify-between items-start gap-4">
+          <div className="rounded-full flex justify-between items-center gap-4">
+            <p className="text-xl font-medium">{room_type}</p>
+
+            {/* <p className="bg-green-700 text-white rounded-full text-xs px-2 py-0.5">
+                            Available
+                          </p> */}
+          </div>
+
+          <button
+            type="button"
+            className="bg-primary rounded-full  p-1 flex justify-between items-center gap-4 cursor-pointer"
+            onClick={() =>
+              changueRoom({
+                id: id.toString(),
+                price: price_per_night.toString(),
+                roomName: room_type.toString(),
+              })
+            }
+          >
+            <p className="pl-3 text-white text-base">Book now</p>
+
+            <p className="bg-white text-primary rounded-full text-xs px-2 py-0.5">
+              ${price_per_night}
+            </p>
+          </button>
+        </div>
+      </div>
+
+      <div className="w-max h-full flex flex-col justify-center items-start gap-2 relative">
+        <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
+          <IconUsers className="size-4 opacity-40" />
+          <p className="-mb-1">{capacity}</p>
+        </div>
+
+        {seeFeatures && (
+          <div className="absolute top-[26px] left-1/2 -translate-x-1/2 w-max bg-white rounded-xl p-4 z-10 shadow-2xl">
+            <div className="flex flex-col justify-center items-center gap-2">
+              {has_wifi && (
+                <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
+                  <IconWifi className="size-4  opacity-40" />
+                  <span className="text-sm">Wi-Fi</span>
+                </div>
+              )}
+
+              {has_air_conditioning && (
+                <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
+                  <IconSnowflake className="size-4  opacity-40" />
+                  <span className="text-sm">Air conditioning</span>
+                </div>
+              )}
+
+              {has_balcony && (
+                <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
+                  <IconCarFan className="size-4  opacity-40" />
+                  <span className="text-sm">With balcony</span>
+                </div>
+              )}
+
+              {has_tv && (
+                <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
+                  <IconDeviceTv className="size-4  opacity-40" />
+                  <span className="text-sm">With TV</span>
+                </div>
+              )}
+
+              <div className="w-full flex justify-center items-center">
+                <IconChevronDown
+                  className={`size-4 cursor-pointer ${
+                    seeFeatures ? "-rotate-180" : ""
+                  } transition-all`}
+                  onClick={() => setSeeFeatures(!seeFeatures)}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="h-[60px] overflow-y-hidden relative">
+          <div className="flex flex-col justify-center items-center gap-2">
+            {has_wifi && (
+              <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
+                <IconWifi className="size-4  opacity-40" />
+                <span className="text-sm">Wi-Fi</span>
+              </div>
+            )}
+
+            {has_air_conditioning && (
+              <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
+                <IconSnowflake className="size-4  opacity-40" />
+                <span className="text-sm">Air conditioning</span>
+              </div>
+            )}
+
+            {has_balcony && (
+              <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
+                <IconCarFan className="size-4  opacity-40" />
+                <span className="text-sm">With balcony</span>
+              </div>
+            )}
+
+            {has_tv && (
+              <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
+                <IconDeviceTv className="size-4  opacity-40" />
+                <span className="text-sm">With TV</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="w-full flex justify-center items-center">
+          <IconChevronDown
+            className={`size-4 cursor-pointer ${
+              seeFeatures ? "-rotate-180" : ""
+            } transition-all`}
+            onClick={() => setSeeFeatures(!seeFeatures)}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}

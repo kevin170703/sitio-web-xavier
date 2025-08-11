@@ -1,5 +1,3 @@
-import React, { ReactNode } from "react";
-
 export default function Input({
   label,
   placeholder,
@@ -11,7 +9,7 @@ export default function Input({
   disabled = false,
   required = false,
 }: {
-  label?: ReactNode;
+  label: string;
   placeholder: string;
   type?: "text" | "email" | "password";
   id: string;
@@ -22,26 +20,27 @@ export default function Input({
   required?: boolean;
 }) {
   return (
-    <div className="min-w-max w-full flex flex-col bg-active text-white py-3 px-5 rounded-3xl focus-within:border-primary  border-active bg-white/10 border border-white/10 backdrop-blur-lg">
-      {label && (
-        <label
-          htmlFor={id}
-          className="text-[#999] text-base font-medium text-start mb-1"
-        >
-          {label}
-        </label>
-      )}
+    <label
+      htmlFor={id}
+      className={`min-w-[200px] w-full max-h-max flex flex-col bg-transparent transition-all focus-within:border-primary border rounded-full px-6 py-2 border-primary/30 ${
+        disabled ? "text-[#999] cursor-not-allowed" : "text-black/50"
+      }`}
+    >
+      <label className="text-primary/70 text-sm font-medium text-start">
+        {label}
+      </label>
+
       <input
         required={required}
-        type={type}
         id={id}
+        type={type}
         placeholder={placeholder}
-        className="text-sm font-medium outline-none bg-transparent"
+        className="text-base outline-none font-medium bg-transparent text-black"
         onChange={onChange}
         value={value}
         name={name}
         disabled={disabled}
       />
-    </div>
+    </label>
   );
 }

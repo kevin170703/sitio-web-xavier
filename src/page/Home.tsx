@@ -10,6 +10,8 @@ import {
   IconArrowLeft,
   IconArrowRight,
   IconArrowUp,
+  IconDoor,
+  IconChevronDown,
 } from "@tabler/icons-react";
 
 import Image from "next/image";
@@ -17,6 +19,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import CardTestimonials from "@/components/CardTestimonials";
 import Link from "next/link";
 import axios from "axios";
+import ModalReserveRoom from "@/components/ModalReserveRoom";
+import ModalReserveTable from "@/components/ModalReserveTable";
 
 const variantsTestimonials = {
   enter: (direction: number) => {
@@ -39,12 +43,13 @@ const variantsTestimonials = {
   },
 };
 
-// type FormData = {
-//   check_in_date: string | null; // "YYYY-MM-DD" o null
-//   check_out_date: string | null;
-//   occupancy: number;
-//   room_id: number | null;
-// };
+type FormData = {
+  check_in_date: string | null; // "YYYY-MM-DD" o null
+  check_out_date: string | null;
+  occupancy: number;
+  room_id: number | null;
+  type: string;
+};
 
 interface RoomImage {
   id: number;
@@ -127,6 +132,8 @@ export default function Home() {
 
   const [menu, setMenu] = useState<MenuItem[] | null>(null);
 
+  const [openSelect, setOpenSelect] = useState(false);
+
   const [[indexTestimonial, direction], setIndexTestimonial] = useState([0, 0]);
   const changueIndex = (newDirection: number) => {
     setIndexTestimonial([indexTestimonial + newDirection, newDirection]);
@@ -142,17 +149,18 @@ export default function Home() {
       .replace(/-+/g, "-"); // Evita múltiples guiones seguidos
   }
 
-  // const [formData, setFormData] = useState<FormData>({
-  //   check_in_date: new Date().toISOString().split("T")[0],
-  //   check_out_date: new Date().toISOString().split("T")[0],
-  //   occupancy: 1,
-  //   room_id: null,
-  // });
+  const [formData, setFormData] = useState<FormData>({
+    check_in_date: new Date().toISOString().split("T")[0],
+    check_out_date: new Date().toISOString().split("T")[0],
+    occupancy: 1,
+    room_id: null,
+    type: "room",
+  });
 
-  // const handleSearch = () => {
-  //   console.log("Datos finales:", formData);
-  //   // Aquí puedes enviar `formData` a tu API
-  // };
+  const handleSearch = () => {
+    console.log("Datos finales:", formData);
+    // Aquí puedes enviar `formData` a tu API
+  };
 
   async function getRooms(): Promise<void> {
     try {
@@ -221,44 +229,64 @@ export default function Home() {
         </div>
 
         {/* Search Form */}
-        {/* <div className="bg-white rounded-lg absolute bottom-10  flex justify-between px-10 py-4 items-center  text-black max-w-[1000px] w-full">
-          <InputDataIcon
-            onChange={(date) =>
-              setFormData({
-                ...formData,
-                check_in_date: date ? date.toISOString().split("T")[0] : "",
-              })
-            }
-            initialDate={new Date()}
-            icon={<IconCalendarPlus className="size-8" />}
-            label="Check in"
-          />
+        <div className="bg-white rounded-full absolute bottom-10 flex justify-between px-10 py-4 items-center text-black  max-w-[1300px] gap-20 shadow-2xl">
+          <div className="relative">
+            <div
+              className="cursor-pointer flex justify-center items-center gap-2"
+              onClick={() => setOpenSelect(!openSelect)}
+            >
+              {formData.type === "room" ? (
+                <IconDoor className="" />
+              ) : (
+                <IconSoup className="" />
+              )}
+              <p className="text-xl font-medium">
+                {formData.type === "room" ? "Rooms" : "Tables"}
+              </p>
+              <IconChevronDown
+                className={`${
+                  openSelect ? "rotate-180" : ""
+                } size-3 transition-all -ml-1`}
+              />
+            </div>
 
-          <InputDataIcon
-            onChange={(date) =>
-              setFormData({
-                ...formData,
-                check_out_date: date ? date.toISOString().split("T")[0] : "",
-              })
-            }
-            icon={<IconCalendarMinus className="size-8" />}
-            label="Check out"
-          />
+            {openSelect && (
+              <div className="w-max h-max px-6 py-2 rounded-xl bg-white absolute bottom-[150%] shadow-2xl left-0">
+                <div
+                  className="flex justify-center items-center gap-4 cursor-pointer"
+                  onClick={() => {
+                    setFormData({
+                      ...formData,
+                      type: formData.type !== "room" ? "room" : "table",
+                    });
+                    setOpenSelect(false);
+                  }}
+                >
+                  <div className="rounded-full shadow-xl p-2">
+                    {formData.type !== "room" ? (
+                      <IconDoor className="size-5 text-black/50" />
+                    ) : (
+                      <IconSoup className="size-5 text-black/50" />
+                    )}
+                  </div>
+                  <p className="text-xl font-medium">
+                    {formData.type !== "room" ? "Rooms" : "Tables"}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
 
-          {rooms && <InputRoom rooms={rooms} />}
-
-          <button
-            onClick={() => handleSearch()}
-            className="flex justify-center items-center gap-2 bg-primary text-white px-4 py-2 rounded-xl hover:scale-105 transition-all active:scale-100"
-          >
-            <IconSearch className="size-5" />
-            Search
-          </button>
-        </div> */}
+          {formData.type === "room" ? (
+            <ModalReserveRoom />
+          ) : (
+            <ModalReserveTable />
+          )}
+        </div>
       </section>
 
       {/* About Us Section */}
-      <section className="py-20  flex justify-center items-center gap-10 w-full max-w-[1300px]">
+      <section className="py-20  flex justify-center items-center gap-10 w-full max-w-[1200px]">
         <div className="text-xl w-full max-w-[60%]">
           <label className="text-2xl mb-6 font-secondary text-primary uppercase">
             ABOUT US
@@ -297,7 +325,7 @@ export default function Home() {
       </section>
 
       {/* Rooms Section */}
-      <section id="rooms" className="py-20 space-y-8">
+      <section id="rooms" className="w-full py-20 space-y-8">
         <div className="w-full text-center">
           <label className="text-2xl mb-6 font-secondary text-primary uppercase">
             our rooms
@@ -307,13 +335,13 @@ export default function Home() {
           </h2>
         </div>
 
-        <div className="flex justify-center items-center gap-2">
+        <div className="w-full flex justify-center items-center gap-2">
           {rooms &&
             rooms.map((room) => (
               <Link
                 href={`detail-room/${slugify(room.id.toString())}`}
-                key={room.room_type}
-                className="relative w-[460px] aspect-square group overflow-hidden active:scale-95 transition-all"
+                key={room.id}
+                className="relative w-[24%] aspect-square group overflow-hidden active:scale-95 transition-all"
               >
                 <Image
                   src={room.images[0].image_url}
@@ -374,7 +402,7 @@ export default function Home() {
       </section>
 
       {/* Menu Section */}
-      <section className="py-20 space-y-8">
+      <section className="w-full py-20 space-y-8">
         <div className="w-full text-center">
           <label className="text-2xl mb-6 font-secondary text-primary uppercase">
             our menu
@@ -384,11 +412,11 @@ export default function Home() {
           </h2>
         </div>
 
-        <div className="relative flex flex-wrap justify-center items-center gap-2 max-h-[930px] overflow-hidden">
+        <div className="w-full relative flex flex-wrap justify-center items-center gap-2 max-h-[930px] overflow-hidden">
           <div className="absolute w-full h-full bg-gradient-to-t from-white  to-transparent to-50% z-20"></div>
           {menu &&
             menu.map((food) => (
-              <div key={food.name} className="relative w-[460px] aspect-square">
+              <div key={food.id} className="relative w-[24%] aspect-square">
                 <Image
                   src={food.images[0].image_url}
                   alt={`food ${food.name}`}
@@ -432,7 +460,7 @@ export default function Home() {
           </h2>
         </div>
 
-        <motion.div className="w-full flex flex-col justify-center items-center gap-5 relative max-w-[1300px]">
+        <motion.div className="w-full flex flex-col justify-center items-center gap-5 relative max-w-[1200px]">
           <div className="w-full h-[200px] relative flex justify-center items-center max-md:h-[300px]">
             <AnimatePresence initial={false} custom={direction}>
               {testimoniasls && (
@@ -488,7 +516,7 @@ export default function Home() {
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-2 w-full max-w-[1840px]">
+        <div className="grid md:grid-cols-3 gap-2 w-full max-w-[1840px] px-5">
           <div className="md:col-span-2">
             <Image
               width={1500}
@@ -541,99 +569,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-secondary text-white py-12 w-full flex flex-col justify-center items-center">
-        <section className="w-full max-w-[1300px]">
-          <div className="flex justify-between items-center">
-            <div className="space-y-2">
-              <h2 className="font-secondary text-3xl">
-                Les P&apos;tits Lofts Du Lac
-              </h2>
-              <p className="text-lg leading-5">
-                1287 Maplewood Drive <br /> Toronto, ON M4B 1B3 <br /> Canada
-              </p>
-            </div>
-
-            <div className="flex justify-center items-center gap-24">
-              <div className="flex flex-col justify-center items-start text-white/70">
-                <p className="text-xl font-medium text-white">Contacts</p>
-                <div className="flex flex-col justify-center items-center gap-2">
-                  <Link
-                    href={""}
-                    className="flex justify-center items-center gap-1"
-                  >
-                    Instagram
-                    <IconArrowUp className="size-4 rotate-45 mb-1" />
-                  </Link>
-                </div>
-
-                <div className="flex flex-col justify-center items-center gap-2">
-                  <Link
-                    href={""}
-                    className="flex justify-center items-center gap-1"
-                  >
-                    Facebook
-                    <IconArrowUp className="size-4 rotate-45 mb-1" />
-                  </Link>
-                </div>
-              </div>
-
-              <div className="flex flex-col justify-center items-start text-white/70">
-                <p className="text-xl font-medium text-white">Get in touch</p>
-                <div className="flex flex-col justify-center items-center gap-2">
-                  <Link
-                    href={""}
-                    className="flex justify-center items-center gap-1"
-                  >
-                    (+1) 123 4567 8910
-                    <IconArrowUp className="size-4 rotate-45 mb-1" />
-                  </Link>
-                </div>
-
-                <div className="flex flex-col justify-center items-center gap-2">
-                  <Link
-                    href={""}
-                    className="flex justify-center items-center gap-1"
-                  >
-                    abcde@gmail.com
-                    <IconArrowUp className="size-4 rotate-45 mb-1" />
-                  </Link>
-                </div>
-              </div>
-
-              <div className="flex flex-col justify-center items-start text-white/70">
-                <p className="text-xl font-medium text-white">Legal</p>
-                <div className="flex flex-col justify-center items-center gap-2">
-                  <Link
-                    href={""}
-                    className="flex justify-center items-center gap-1"
-                  >
-                    Terms & condition
-                    <IconArrowUp className="size-4 rotate-45 mb-1" />
-                  </Link>
-                </div>
-
-                <div className="flex flex-col justify-center items-center gap-2">
-                  <Link
-                    href={""}
-                    className="flex justify-center items-center gap-1"
-                  >
-                    Privacy policy
-                    <IconArrowUp className="size-4 rotate-45 mb-1" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-8 pt-8 text-center text-red-200 text-sm">
-            <p>
-              &copy; 2024 Les P&apos;tits Lofts Du Lac. All rights reserved.
-            </p>
-          </div>
-        </section>
-      </footer>
     </div>
   );
 }

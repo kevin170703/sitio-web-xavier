@@ -1,6 +1,8 @@
+import { Table } from "@/page/DetailTable";
 import { IconX } from "@tabler/icons-react";
 import axios from "axios";
 import { useState, FC, FormEvent } from "react";
+import CardTableRecomended from "./CardTableRecomended";
 
 interface ReserveProps {
   roomAvailable: boolean | null;
@@ -9,6 +11,7 @@ interface ReserveProps {
   start_time: string;
   end_time: string;
   number_persons: number;
+  avilabelTables: Table[];
   setRoomAvailable: React.Dispatch<React.SetStateAction<boolean | null>>;
 }
 
@@ -19,8 +22,12 @@ const ReserveTable: FC<ReserveProps> = ({
   start_time,
   end_time,
   number_persons,
+  avilabelTables,
   setRoomAvailable,
 }) => {
+  const [dataTable, setDataTable] = useState({
+    id: id,
+  });
   const [fullName, setFullName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [telefono, setTelefono] = useState<string>("");
@@ -102,26 +109,11 @@ const ReserveTable: FC<ReserveProps> = ({
     }
 
     const reservaData = {
-      tableId: id,
+      tableId: dataTable.id,
       fullName,
       email,
       telefono,
     };
-
-    console.log(
-      {
-        customer_full_name: reservaData.fullName,
-        customer_email: reservaData.email,
-        customer_phone: reservaData.telefono,
-        table_id: Number(reservaData.tableId),
-        reservation_date: date_reservations,
-        start_time: start_time,
-        end_time: end_time,
-        number_of_people: number_persons,
-        reservation_status_id: 1,
-      },
-      " data a enviar al back"
-    );
 
     const { data } = await axios.post(
       `https://reservations-uty9.onrender.com/api/restaurant-reservations`,
@@ -138,8 +130,6 @@ const ReserveTable: FC<ReserveProps> = ({
       }
     );
 
-    console.log(data, "data back");
-
     if (data.success) {
       setMensaje(`Thank you ${fullName}, your reservation has been sent.`);
     }
@@ -150,10 +140,19 @@ const ReserveTable: FC<ReserveProps> = ({
     setErrors({});
   };
 
+  async function changueTable({ id }: { id: string }) {
+    setDataTable({
+      id,
+    });
+    // setTimeout(() => {
+    setRoomAvailable(true);
+    // }, 1000);
+  }
+
   if (roomAvailable === null) return null;
 
   return (
-    <section className="absolute top-0 left-0 w-full h-full  backdrop-blur-xs flex flex-col justify-center items-center p-6">
+    <section className="absolute top-0 left-0 w-full h-full  backdrop-blur-xs flex flex-col justify-center items-center p-6 z-20">
       {roomAvailable ? (
         <form
           onSubmit={handleSubmit}
@@ -235,7 +234,7 @@ const ReserveTable: FC<ReserveProps> = ({
           {mensaje && <p className="mt-4 text-green-700">{mensaje}</p>}
         </form>
       ) : (
-        <div className="bg-white text-black px-6 py-16 rounded-2xl shadow-md w-100 text-2xl text-center relative">
+        <div className="bg-white text-black px-6 py-16 rounded-2xl shadow-md w-max relative">
           <button
             onClick={() => setRoomAvailable(null)}
             className="absolute top-4 right-4 cursor-pointer"
@@ -243,10 +242,27 @@ const ReserveTable: FC<ReserveProps> = ({
             <IconX />
           </button>
 
-          <p>
-            We&apos;re sorry, the room is not available on those dates. Please
-            try another date.
-          </p>
+          <p>We&apos;re sorry, the room is not available on those dates.</p>
+
+          {avilabelTables && (
+            <div>
+              <p className="text-xl font-medium pb-4">
+                Tables available for the same time slot:
+              </p>
+              <div className="space-y-4 flex flex-col justify-center items-center">
+                {avilabelTables.map((table) => (
+                  <CardTableRecomended
+                    location={table.location}
+                    changueTable={changueTable}
+                    capacity={table.capacity}
+                    tableNumber={table.table_number}
+                    id={table.id}
+                    key={table.id}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </section>

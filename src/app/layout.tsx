@@ -4,6 +4,7 @@ import "./globals.css";
 import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 
 const poppins = League_Spartan({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -39,6 +40,7 @@ export default async function RootLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <NavBar />
           {children}
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

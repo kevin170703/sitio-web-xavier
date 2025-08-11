@@ -5,6 +5,8 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+import { IconBowl, IconMoodSad } from "@tabler/icons-react";
+
 interface MenuItem {
   id: number;
   name: string;
@@ -112,14 +114,14 @@ export default function Menu() {
   return (
     <main>
       <section
-        className="bg-primary  h-[55dvh] text-white flex flex-col justify-center items-center bg-no-repeat bg-cover bg-center"
+        className="bg-primary   min-h-[450px] h-[55dvh] text-white flex flex-col justify-center items-center bg-no-repeat bg-cover bg-center"
         style={{
           backgroundImage: `linear-gradient(rgba(242, 177, 52, 0.8), rgba(242, 177, 52, 1)), url('/cozy-restaurant.png')`,
         }}
       >
-        <h1 className="text-8xl font-secondary">Menu</h1>
+        <h1 className="text-8xl font-secondary pt-20">Menu</h1>
 
-        <div className="flex justify-center items-center gap-6 pt-10">
+        <div className="flex justify-center items-center gap-6 pt-20">
           {categories &&
             categories.map((category) => (
               <button
@@ -135,8 +137,8 @@ export default function Menu() {
         </div>
       </section>
 
-      <section className="relative flex flex-wrap justify-center items-center gap-2 py-5">
-        {menuSelectd &&
+      <section className="w-full relative flex flex-wrap justify-center items-center gap-2 py-5">
+        {menuSelectd && menuSelectd.length > 0 ? (
           menuSelectd.map((food) => (
             <CardFood
               main_image={food.images[0].image_url}
@@ -145,7 +147,13 @@ export default function Menu() {
               key={food.id}
               decription={food.description}
             />
-          ))}
+          ))
+        ) : (
+          <div className="flex flex-col items-center justify-center">
+            <IconBowl className="mb-2 size-48 opacity-50" />
+            <p className="text-2xl font-medium">No dishes available</p>
+          </div>
+        )}
       </section>
     </main>
   );

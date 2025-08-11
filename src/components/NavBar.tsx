@@ -83,14 +83,14 @@ export default function NavBar() {
 
       <div className="flex-1 ">
         <div
-          className={`w-full mb-3 pb-2 flex justify-center items-center max-2xl:pr-0 gap-10 border-b border-[#ebebeb] max-lg:hidden ${
+          className={`w-full mb-3 pb-2 flex justify-center items-center max-2xl:pr-0 gap-10 border-b border-[#ebebeb] max-lg:hidden pr-30 ${
             scrolled && "hidden"
           } ${selectLink === "/" ? "text-black" : "text-black"}`}
         >
-          <div className="flex justify-start items-center gap-2">
+          {/* <div className="flex justify-start items-center gap-2">
             <IconClockHour10Filled className={`text-primary w-5 h-auto`} />
             <p className="text-sm max-xl:text-xs">8:00am - 8:00pm</p>
-          </div>
+          </div> */}
 
           <div className="flex justify-start items-center gap-2">
             <IconMapPinFilled className={`text-primary w-5 h-auto`} />
@@ -162,9 +162,12 @@ export default function NavBar() {
           />
 
           <div className="flex justify-end items-center gap-5 max-lg:hidden">
-            <button className="border border-primary flex justify-center items-center gap-2  text-primary px-4 py-2 rounded-xl hover:scale-105 transition-all active:scale-100">
+            <Link
+              href={"/contact"}
+              className="border border-primary flex justify-center items-center gap-2  text-primary px-4 py-2 rounded-xl hover:scale-105 transition-all active:scale-100"
+            >
               Contact us
-            </button>
+            </Link>
 
             {/* <ButtonReservations scrolled={scrolled} /> */}
 

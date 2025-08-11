@@ -39,6 +39,8 @@ export default function DetailRoom() {
 
   const [copied, setCopied] = useState(false);
 
+  const [avilabelRooms, setAvilabelRooms] = useState([]);
+
   const [loaderSearch, setLoaderSearch] = useState(false);
 
   async function getRoom() {
@@ -115,6 +117,8 @@ export default function DetailRoom() {
       }
     );
 
+    setAvilabelRooms(data.data.available_rooms);
+
     setRoomAvailable(data.data.specific_room_available);
     setLoaderSearch(false);
   };
@@ -144,7 +148,7 @@ export default function DetailRoom() {
   else
     return (
       <main className="relative flex flex-col justify-center items-center text-black pb-20 gap-10">
-        <section className="w-full h-[40dvh] overflow-hidden relative flex justify-center items-center">
+        <section className="w-full min-h-[300px] h-[40dvh] overflow-hidden relative flex justify-center items-center">
           <div className="w-full h-full bg-primary/50  text-white flex flex-col justify-center items-center gap-2 pt-30">
             <h1 className="text-5xl">{room?.room_type}</h1>
 
@@ -356,12 +360,12 @@ export default function DetailRoom() {
         {roomAvailable !== null && (
           <section className="fixed top-0 left-0 w-full h-full bg-black/50 backdrop-blur-lg flex flex-col justify-center items-center text-white p-6">
             <Reserve
+              avilabelRooms={avilabelRooms}
               roomAvailable={roomAvailable}
               id={room.id.toString()}
               checkin={formData.check_in_date}
               checkout={formData.check_out_date}
               roomName={room.room_type}
-              roomDescription={room.description}
               price={room.price_per_night}
               setRoomAvailable={setRoomAvailable}
             />

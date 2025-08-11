@@ -17,7 +17,7 @@ import tables1 from "@/assets/tables/1.avif";
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import InputDateTime from "@/components/InputDateTimeProps";
+import InputDateTime from "@/components/InputDateTime";
 import ReserveTable from "@/components/ReserveTable";
 
 export interface Table {
@@ -85,6 +85,8 @@ export default function DetailTable() {
 
   const [tableSelected, setTableSelected] = useState<Table | null>(null);
 
+  const [avilabelTables, setAvilabelTables] = useState([]);
+
   const [dataReserve, setDataReserve] = useState({
     reservation_date: "",
     start_time: "",
@@ -99,7 +101,9 @@ export default function DetailTable() {
         "https://reservations-uty9.onrender.com/api/restaurant-tables"
       );
 
-      const tables = data.data;
+      const tables = data.data.filter(
+        (table: Table) => table.status === "available"
+      );
 
       if (Array.isArray(tables)) {
         setTables(tables);
@@ -156,17 +160,6 @@ export default function DetailTable() {
     const start_time = formatTimeInTZ(checkInDate, timeZone);
     const end_time = formatTimeInTZ(checkOutDate, timeZone);
 
-    console.log(
-      {
-        reservation_date,
-        start_time,
-        end_time,
-        occupancy: formData.occupancy,
-        table_id: tableSelected?.id,
-      },
-      "data al backend detailTable"
-    );
-
     const { data } = await axios.post(
       "https://reservations-uty9.onrender.com/api/restaurant-reservations/check-availability",
       {
@@ -178,6 +171,8 @@ export default function DetailTable() {
       }
     );
 
+    setAvilabelTables(data.data.available_tables);
+
     setDataReserve({
       reservation_date,
       start_time,
@@ -185,8 +180,6 @@ export default function DetailTable() {
       occupancy: 1,
       table_id: tableSelected?.id,
     });
-
-    console.log(data, "data del backend");
 
     setRoomAvailable(data.data.specific_table_available);
     setLoaderSearch(false);
@@ -248,7 +241,7 @@ export default function DetailTable() {
 
   return (
     <main className="flex flex-col justify-center items-center text-black pb-20 gap-10">
-      <section className="w-full h-[40dvh] overflow-hidden relative flex justify-center items-center">
+      <section className="w-full min-h-[300px] h-[40dvh] overflow-hidden relative flex justify-center items-center">
         <div className="w-full h-full bg-primary/50  text-white flex flex-col justify-center items-center gap-2 pt-30">
           <h1 className="text-5xl">Tables</h1>
 
@@ -450,6 +443,7 @@ export default function DetailTable() {
             start_time={dataReserve.start_time}
             end_time={dataReserve.end_time}
             roomAvailable={roomAvailable}
+            avilabelTables={avilabelTables}
             setRoomAvailable={setRoomAvailable}
           />
         </section>
