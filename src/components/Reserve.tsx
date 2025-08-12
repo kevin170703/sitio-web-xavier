@@ -51,25 +51,23 @@ const Reserve: FC<ReserveProps> = ({
     const newErrors: typeof errors = {};
 
     if (!fullName.trim()) {
-      newErrors.fullName = "El nombre completo es obligatorio.";
+      newErrors.fullName = t("reserveRoom.form.errors.fullName.1");
     } else if (fullName.trim().length < 3) {
-      newErrors.fullName =
-        "El nombre completo debe tener al menos 3 caracteres.";
+      newErrors.fullName = t("reserveRoom.form.errors.fullName.2");
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim()) {
-      newErrors.email = "El email es obligatorio.";
+      newErrors.email = t("reserveRoom.form.errors.email.1");
     } else if (!emailRegex.test(email)) {
-      newErrors.email = "El email no es válido.";
+      newErrors.email = t("reserveRoom.form.errors.email.2");
     }
 
     const telefonoRegex = /^[0-9]{7,}$/;
     if (!telefono.trim()) {
-      newErrors.telefono = "El teléfono es obligatorio.";
+      newErrors.telefono = t("reserveRoom.form.errors.phone.1");
     } else if (!telefonoRegex.test(telefono)) {
-      newErrors.telefono =
-        "El teléfono debe tener al menos 7 dígitos numéricos.";
+      newErrors.telefono = t("reserveRoom.form.errors.phone.2");
     }
 
     setErrors(newErrors);
@@ -139,13 +137,17 @@ const Reserve: FC<ReserveProps> = ({
     );
 
     if (data.success) {
-      setMensaje(`Thank you ${fullName}, your reservation has been sent.`);
+      setMensaje(t("reserveRoom.form.successfulReservation"));
     }
 
     setFullName("");
     setEmail("");
     setTelefono("");
     setErrors({});
+
+    setTimeout(() => {
+      setRoomAvailable(null);
+    }, 2000);
   };
 
   async function changueRoom({
@@ -188,54 +190,54 @@ const Reserve: FC<ReserveProps> = ({
             <strong>{checkin}</strong> - <strong>{checkout}</strong>
           </p>
 
-          <label className="w-full h-max space-y-2">
+          <label className="w-full h-max">
             {t("reserveRoom.form.1.name")}
             <input
               type="text"
               value={fullName}
               onChange={handleFullNameChange}
-              className={`w-full border-black/10 rounded-xl outline-none px-4 py-2 border mb-6 ${
-                errors.fullName ? "border-red-500" : "border-gray-300"
+              className={`w-full border-black/10 rounded-xl outline-none px-4 py-2 border ${
+                errors.fullName ? "border-red-500" : "border-gray-300 mb-4"
               }`}
               required
               placeholder={t("reserveRoom.form.1.placeholder")}
             />
             {errors.fullName && (
-              <p className="text-red-600 text-sm mt-1">{errors.fullName}</p>
+              <p className="text-red-600 text-sm mb-4">{errors.fullName}</p>
             )}
           </label>
 
-          <label className="w-full h-max space-y-2">
+          <label className="w-full h-max">
             {t("reserveRoom.form.2.name")}
             <input
               type="email"
               value={email}
               onChange={handleEmailChange}
-              className={`w-full border-black/10 rounded-xl outline-none px-4 py-2 border mb-6 ${
-                errors.email ? "border-red-500" : "border-gray-300"
+              className={`w-full border-black/10 rounded-xl outline-none px-4 py-2 border ${
+                errors.email ? "border-red-500" : "border-gray-300 mb-4"
               }`}
               required
               placeholder={t("reserveRoom.form.2.placeholder")}
             />
             {errors.email && (
-              <p className="text-red-600 text-sm mt-1">{errors.email}</p>
+              <p className="text-red-600 text-sm mb-4">{errors.email}</p>
             )}
           </label>
 
-          <label className="w-full h-max space-y-2">
+          <label className="w-full h-max">
             {t("reserveRoom.form.3.name")}
             <input
               type="tel"
               value={telefono}
               onChange={handleTelefonoChange}
-              className={`w-full border-black/10 rounded-xl outline-none px-4 py-2 border mb-6 ${
-                errors.telefono ? "border-red-500" : "border-gray-300"
+              className={`w-full border-black/10 rounded-xl outline-none px-4 py-2 border ${
+                errors.telefono ? "border-red-500" : "border-gray-300 mb-4"
               }`}
               required
               placeholder={t("reserveRoom.form.3.placeholder")}
             />
             {errors.telefono && (
-              <p className="text-red-600 text-sm mt-1">{errors.telefono}</p>
+              <p className="text-red-600 text-sm mb-4">{errors.telefono}</p>
             )}
           </label>
 

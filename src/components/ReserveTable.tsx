@@ -35,6 +35,8 @@ const ReserveTable: FC<ReserveProps> = ({
   const [email, setEmail] = useState<string>("");
   const [telefono, setTelefono] = useState<string>("");
 
+  const [loaderSearch, setLoaderSearch] = useState(false);
+
   const [errors, setErrors] = useState<{
     fullName?: string;
     email?: string;
@@ -48,25 +50,23 @@ const ReserveTable: FC<ReserveProps> = ({
     const newErrors: typeof errors = {};
 
     if (!fullName.trim()) {
-      newErrors.fullName = "El nombre completo es obligatorio.";
+      newErrors.fullName = t("reserveTable.form.errors.fullName.1");
     } else if (fullName.trim().length < 3) {
-      newErrors.fullName =
-        "El nombre completo debe tener al menos 3 caracteres.";
+      newErrors.fullName = t("reserveTable.form.errors.fullName.2");
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim()) {
-      newErrors.email = "El email es obligatorio.";
+      newErrors.email = t("reserveTable.form.errors.email.1");
     } else if (!emailRegex.test(email)) {
-      newErrors.email = "El email no es válido.";
+      newErrors.email = t("reserveTable.form.errors.email.2");
     }
 
     const telefonoRegex = /^[0-9]{7,}$/;
     if (!telefono.trim()) {
-      newErrors.telefono = "El teléfono es obligatorio.";
+      newErrors.telefono = t("reserveTable.form.errors.phone.1");
     } else if (!telefonoRegex.test(telefono)) {
-      newErrors.telefono =
-        "El teléfono debe tener al menos 7 dígitos numéricos.";
+      newErrors.telefono = t("reserveTable.form.errors.phone.2");
     }
 
     setErrors(newErrors);
@@ -111,6 +111,8 @@ const ReserveTable: FC<ReserveProps> = ({
       return;
     }
 
+    setLoaderSearch(true);
+
     const reservaData = {
       tableId: dataTable.id,
       fullName,
@@ -133,14 +135,20 @@ const ReserveTable: FC<ReserveProps> = ({
       }
     );
 
+    setLoaderSearch(false);
+
     if (data.success) {
-      setMensaje(`Thank you ${fullName}, your reservation has been sent.`);
+      setMensaje(t("reserveTable.form.successfulReservation"));
     }
 
     setFullName("");
     setEmail("");
     setTelefono("");
     setErrors({});
+
+    setTimeout(() => {
+      setRoomAvailable(null);
+    }, 2000);
   };
 
   async function changueTable({ id }: { id: string }) {
@@ -174,54 +182,54 @@ const ReserveTable: FC<ReserveProps> = ({
             - <strong>{end_time}</strong>
           </p>
 
-          <label className="w-full h-max space-y-2">
+          <label className="w-full h-max">
             {t("reserveTable.form.1.name")}
             <input
               type="text"
               value={fullName}
               onChange={handleFullNameChange}
-              className={`w-full border-black/10 rounded-xl outline-none px-4 py-2 border mb-6 ${
-                errors.fullName ? "border-red-500" : "border-gray-300"
+              className={`w-full border-black/10 rounded-xl outline-none px-4 py-2 border ${
+                errors.fullName ? "border-red-500" : "border-gray-300 mb-4"
               }`}
               required
               placeholder={t("reserveTable.form.1.placeholder")}
             />
             {errors.fullName && (
-              <p className="text-red-600 text-sm mt-1">{errors.fullName}</p>
+              <p className="text-red-600 text-sm mb-4">{errors.fullName}</p>
             )}
           </label>
 
-          <label className="w-full h-max space-y-2">
+          <label className="w-full h-max">
             {t("reserveTable.form.2.name")}
             <input
               type="email"
               value={email}
               onChange={handleEmailChange}
-              className={`w-full border-black/10 rounded-xl outline-none px-4 py-2 border mb-6 ${
-                errors.email ? "border-red-500" : "border-gray-300"
+              className={`w-full border-black/10 rounded-xl outline-none px-4 py-2 border ${
+                errors.email ? "border-red-500" : "border-gray-300 mb-4"
               }`}
               required
               placeholder={t("reserveTable.form.2.placeholder")}
             />
             {errors.email && (
-              <p className="text-red-600 text-sm mt-1">{errors.email}</p>
+              <p className="text-red-600 text-sm mb-4">{errors.email}</p>
             )}
           </label>
 
-          <label className="w-full h-max space-y-2">
+          <label className="w-full h-max">
             {t("reserveTable.form.3.name")}
             <input
               type="tel"
               value={telefono}
               onChange={handleTelefonoChange}
-              className={`w-full border-black/10 rounded-xl outline-none px-4 py-2 border mb-6 ${
-                errors.telefono ? "border-red-500" : "border-gray-300"
+              className={`w-full border-black/10 rounded-xl outline-none px-4 py-2 border ${
+                errors.telefono ? "border-red-500" : "border-gray-300 mb-4"
               }`}
               required
               placeholder={t("reserveTable.form.3.placeholder")}
             />
             {errors.telefono && (
-              <p className="text-red-600 text-sm mt-1">{errors.telefono}</p>
+              <p className="text-red-600 text-sm mb-4">{errors.telefono}</p>
             )}
           </label>
 
@@ -231,7 +239,9 @@ const ReserveTable: FC<ReserveProps> = ({
           >
             Book
           </button>
-          {mensaje && <p className="mt-4 text-green-700">{mensaje}</p>}
+          <div className="w-full text-center font-medium ">
+            {mensaje && <p className="mt-4 text-green-700">{mensaje}</p>}
+          </div>
         </form>
       ) : (
         <div className="bg-white text-black px-6 py-16 rounded-2xl shadow-md w-max relative max-w-full">

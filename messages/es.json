@@ -200,6 +200,21 @@
       "3": {
         "name": "Teléfono",
         "placeholder": "Tu teléfono"
+      },
+      "successfulReservation": "Gracias, su reserva ha sido enviada.",
+      "errors": {
+        "fullName": {
+          "1": "El nombre completo es obligatorio.",
+          "2": "El nombre completo debe tener al menos 3 caracteres."
+        },
+        "email": {
+          "1": "El email es obligatorio.",
+          "2": "El email no es válido."
+        },
+        "phone": {
+          "1": "El teléfono es obligatorio.",
+          "2": "El teléfono debe tener al menos 7 dígitos numéricos."
+        }
       }
     },
 
@@ -229,6 +244,21 @@
       "3": {
         "name": "Teléfono",
         "placeholder": "Tu teléfono"
+      },
+      "successfulReservation": "Gracias, su reserva ha sido enviada.",
+      "errors": {
+        "fullName": {
+          "1": "El nombre completo es obligatorio.",
+          "2": "El nombre completo debe tener al menos 3 caracteres."
+        },
+        "email": {
+          "1": "El email es obligatorio.",
+          "2": "El email no es válido."
+        },
+        "phone": {
+          "1": "El teléfono es obligatorio.",
+          "2": "El teléfono debe tener al menos 7 dígitos numéricos."
+        }
       }
     },
 
