@@ -114,26 +114,28 @@ export default function Menu() {
   return (
     <main>
       <section
-        className="bg-primary   min-h-[450px] h-[55dvh] text-white flex flex-col justify-center items-center bg-no-repeat bg-cover bg-center"
+        className="bg-primary min-h-[450px] h-[55dvh] text-white flex flex-col justify-center items-center bg-no-repeat bg-cover bg-center"
         style={{
           backgroundImage: `linear-gradient(rgba(242, 177, 52, 0.8), rgba(242, 177, 52, 1)), url('/cozy-restaurant.png')`,
         }}
       >
         <h1 className="text-8xl font-secondary pt-20">Menu</h1>
 
-        <div className="flex justify-center items-center gap-6 pt-20">
-          {categories &&
-            categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setCategorySelected(category)}
-                className={`cursor-pointer hover:scale-105 transition-all active:scale-100 rounded-full text-lg border border-white px-6 py-2 flex justify-center items-center ${
-                  categorySelected === category ? "bg-white text-primary" : ""
-                }  `}
-              >
-                {category}
-              </button>
-            ))}
+        <div className="w-full max-md:overflow-y-auto">
+          <div className="max-md:w-max flex md:flex-wrap justify-center items-center gap-6 pt-20 px-5">
+            {categories &&
+              categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setCategorySelected(category)}
+                  className={`cursor-pointer hover:scale-105 transition-all active:scale-100 rounded-full text-lg border border-white px-6 py-2 flex justify-center items-center ${
+                    categorySelected === category ? "bg-white text-primary" : ""
+                  }  `}
+                >
+                  {category}
+                </button>
+              ))}
+          </div>
         </div>
       </section>
 

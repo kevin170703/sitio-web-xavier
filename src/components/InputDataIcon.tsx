@@ -71,7 +71,7 @@ export default function InputDataIcon({
 
   return (
     <div
-      className="w-[120px] flex  justify-center items-center relative gap-3"
+      className="w-[140px] flex  justify-center items-center relative gap-3 max-lg:border border-black/40 max-lg:py-2 max-lg:w-[160px] rounded-xl"
       onClick={handleClick}
     >
       <div className="size-8 text-black opacity-30">{icon}</div>
@@ -86,7 +86,7 @@ export default function InputDataIcon({
           ref={datepickerRef}
           dateFormat="yyyy/MM/dd"
           placeholderText="aaaa/mm/dd"
-          className="outline-none w-[120px] text-lg font-medium -mt-1"
+          className="outline-none w-[95px] text-lg font-medium -mt-1"
           calendarClassName="z-50"
           minDate={getMinDate()}
         />

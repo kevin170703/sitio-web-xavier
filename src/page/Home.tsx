@@ -213,24 +213,24 @@ export default function Home() {
     <div className="w-full min-h-screen flex flex-col justify-center items-center overflow-hidden">
       {/* Hero Section */}
       <section
-        className="w-full relative h-screen bg-cover bg-center flex flex-col justify-center items-center "
+        className="w-full relative h-screen max-md:h-[800px]  bg-cover bg-center flex flex-col justify-center items-center "
         style={{
           backgroundImage: `linear-gradient(rgba(242, 177, 52, 0.8), rgba(242, 177, 52, 0.8)), url('/images/bg-hero.jpg')`,
         }}
       >
-        <div className=" text-white text-center ">
-          <h1 className="text-8xl font-light mb-4 font-secondary">
+        <div className=" text-white text-center flex flex-col justify-center items-center max-md:pb-[200px]">
+          <h1 className="text-8xl max-lg:text-7xl max-md:text-4xl  font-light mb-4 font-secondary">
             Les P&apos;tits Lofts Du Lac
           </h1>
-          <p className="text-lg w-full">
+          <p className="text-lg w-full max-w-[90%] text-center">
             Luxury lakeside accommodation with stunning views and exceptional
             service
           </p>
         </div>
 
         {/* Search Form */}
-        <div className="bg-white rounded-full absolute bottom-10 flex justify-between px-10 py-4 items-center text-black  max-w-[1300px] gap-20 shadow-2xl">
-          <div className="relative">
+        <div className="bg-white rounded-full max-xl:rounded-3xl absolute bottom-10 flex justify-center px-10 max-lg:px-4 py-4 items-center text-black w-[90%] max-w-[1300px] max-lg:w-max gap-6 shadow-2xl  max-lg:flex-col ">
+          <div className="relative max-lg:w-full max-lg:border rounded-xl border-black/40 max-lg:py-3">
             <div
               className="cursor-pointer flex justify-center items-center gap-2"
               onClick={() => setOpenSelect(!openSelect)}
@@ -251,7 +251,7 @@ export default function Home() {
             </div>
 
             {openSelect && (
-              <div className="w-max h-max px-6 py-2 rounded-xl bg-white absolute bottom-[150%] shadow-2xl left-0">
+              <div className="w-full min-w-max h-max px-6 py-2 rounded-xl bg-white absolute bottom-[150%] shadow-2xl left-0">
                 <div
                   className="flex justify-center items-center gap-4 cursor-pointer"
                   onClick={() => {
@@ -286,10 +286,10 @@ export default function Home() {
       </section>
 
       {/* About Us Section */}
-      <section className="py-20  flex justify-center items-center gap-10 w-full max-w-[1200px]">
-        <div className="text-xl w-full max-w-[60%]">
+      <section className="py-20  flex justify-center items-center gap-10 w-full max-w-[1200px] px-5 flex-wrap">
+        <div className="text-xl w-full max-w-[55%] max-lg:max-w-full">
           <label className="text-2xl mb-6 font-secondary text-primary uppercase">
-            ABOUT US
+            About us
           </label>
           <h2 className="text-5xl font-semibold mb-2">
             Les P&apos;tits Lofts Du Lac
@@ -313,7 +313,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="relative w-[40%]">
+        <div className="relative w-[40%] max-lg:w-full">
           <Image
             width={1900}
             height={1900}
@@ -327,21 +327,21 @@ export default function Home() {
       {/* Rooms Section */}
       <section id="rooms" className="w-full py-20 space-y-8">
         <div className="w-full text-center">
-          <label className="text-2xl mb-6 font-secondary text-primary uppercase">
+          <label className="text-2xl max-lg:text-xl mb-6 font-secondary text-primary uppercase">
             our rooms
           </label>
-          <h2 className="text-5xl font-semibold mb-6">
+          <h2 className="text-5xl max-lg:text-4xl max-md:text-2xl font-semibold mb-6">
             Rest, relax, and wake up inspired.
           </h2>
         </div>
 
-        <div className="w-full flex justify-center items-center gap-2">
+        <div className="w-full flex flex-wrap justify-center items-center gap-2">
           {rooms &&
             rooms.map((room) => (
               <Link
                 href={`detail-room/${slugify(room.id.toString())}`}
                 key={room.id}
-                className="relative w-[24%] aspect-square group overflow-hidden active:scale-95 transition-all"
+                className="relative max-w-[470px] w-[24%] max-lg:w-[48%] max-md:w-[96%] aspect-square group overflow-hidden active:scale-95 transition-all"
               >
                 <Image
                   src={room.images[0].image_url}
@@ -371,17 +371,17 @@ export default function Home() {
       </section>
 
       {/* Comforts Section */}
-      <section className="w-full py-20 space-y-20">
+      <section className="w-full py-20 space-y-20 px-5 flex flex-col justify-center items-center">
         <div className="w-full text-center">
-          <label className="text-2xl mb-6 font-secondary text-primary uppercase">
+          <label className="text-2xl max-lg:text-xl mb-6 font-secondary text-primary uppercase">
             Comforts
           </label>
-          <h2 className="text-5xl font-semibold mb-6">
+          <h2 className="text-5xl max-lg:text-4xl max-md:text-2xl font-semibold mb-6">
             Little details that make your stay better.
           </h2>
         </div>
 
-        <div className="w-full flex justify-center items-center gap-40 ">
+        <div className="w-full flex max-md:flex-wrap max-md:justify-center gap-x-14 gap-y-10 justify-between items-center max-w-[1200px] max-lg:max-w-[600px] ">
           <div className="flex flex-col items-center text-center">
             <IconWifi strokeWidth={1.5} className="size-20 text-primary" />
             <h3 className="font-medium mb-2">Free WiFi</h3>
@@ -404,10 +404,10 @@ export default function Home() {
       {/* Menu Section */}
       <section className="w-full py-20 space-y-8">
         <div className="w-full text-center">
-          <label className="text-2xl mb-6 font-secondary text-primary uppercase">
+          <label className="text-2xl max-lg:text-xl mb-6 font-secondary text-primary uppercase">
             our menu
           </label>
-          <h2 className="text-5xl font-semibold mb-6">
+          <h2 className="text-5xl max-lg:text-4xl max-md:text-2xl font-semibold mb-6">
             Flavors that tell our story.
           </h2>
         </div>
@@ -416,7 +416,10 @@ export default function Home() {
           <div className="absolute w-full h-full bg-gradient-to-t from-white  to-transparent to-50% z-20"></div>
           {menu &&
             menu.map((food) => (
-              <div key={food.id} className="relative w-[24%] aspect-square">
+              <div
+                key={food.id}
+                className="relative w-[24%] max-lg:w-[48%] max-md:w-[96%] max-w-[470px] aspect-square"
+              >
                 <Image
                   src={food.images[0].image_url}
                   alt={`food ${food.name}`}
@@ -450,17 +453,17 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="w-full flex flex-col justify-center items-center py-20">
+      <section className="w-full flex flex-col justify-center items-center py-20 px-5">
         <div className="w-full text-center">
-          <label className="text-2xl mb-6 font-secondary text-primary uppercase">
+          <label className="text-2xl max-lg:text-xl mb-6 font-secondary text-primary uppercase">
             testimonials
           </label>
-          <h2 className="text-5xl font-semibold mb-6">
+          <h2 className="text-5xl max-lg:text-4xl max-md:text-2xl font-semibold mb-6">
             Stories from guests who felt at home.
           </h2>
         </div>
 
-        <motion.div className="w-full flex flex-col justify-center items-center gap-5 relative max-w-[1200px]">
+        <motion.div className="w-full flex flex-col justify-center items-center gap-5 relative max-w-[1200px] lg:px-5">
           <div className="w-full h-[200px] relative flex justify-center items-center max-md:h-[300px]">
             <AnimatePresence initial={false} custom={direction}>
               {testimoniasls && (
@@ -508,10 +511,10 @@ export default function Home() {
       {/* Our Ambience Section */}
       <section className="py-20 w-full flex flex-col justify-center items-center">
         <div className="w-full text-center">
-          <label className="text-2xl mb-6 font-secondary text-primary uppercase">
+          <label className="text-2xl max-lg:text-xl mb-6 font-secondary text-primary uppercase">
             Spaces
           </label>
-          <h2 className="text-5xl font-semibold mb-6">
+          <h2 className="text-5xl max-lg:text-4xl max-md:text-2xl font-semibold mb-6">
             Designed for moments worth remembering.
           </h2>
         </div>

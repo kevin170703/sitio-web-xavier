@@ -187,7 +187,7 @@ const Reserve: FC<ReserveProps> = ({
       {roomAvailable ? (
         <form
           onSubmit={(e) => handleSubmit(e)}
-          className="bg-white text-black p-6 rounded-2xl shadow-md w-100 relative"
+          className="bg-white text-black p-6 rounded-2xl shadow-md relative w-100 max-w-full"
           noValidate
         >
           <button
@@ -261,7 +261,7 @@ const Reserve: FC<ReserveProps> = ({
           {mensaje && <p className="mt-4 text-green-700">{mensaje}</p>}
         </form>
       ) : (
-        <div className="bg-white text-black px-6 py-16 rounded-2xl shadow-md w-max relative">
+        <div className="bg-white text-black px-6 py-16 rounded-2xl shadow-md w-max max-w-full relative">
           <button
             type="button"
             onClick={() => setRoomAvailable(null)}
@@ -274,7 +274,7 @@ const Reserve: FC<ReserveProps> = ({
             We&apos;re sorry, the room is not available on those dates.
           </p>
 
-          {avilabelRooms && (
+          {avilabelRooms.length >= 1 && (
             <div>
               <p className="text-xl font-medium">
                 Rooms available for the same time slot:

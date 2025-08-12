@@ -119,9 +119,9 @@ export default function ContactForm() {
       <form
         action=""
         onSubmit={hadelSubmit}
-        className="w-full max-w-[40%] max-2xl:max-w-[55%] max-lg:max-w-full flex flex-col justify-start items-start gap-10"
+        className="w-full max-w-[40%] max-2xl:max-w-[55%] max-lg:max-w-full flex flex-col justify-start items-start gap-x-10 gap-y-5 max-lg:px-10 max-md:px-0"
       >
-        <div className="w-full flex max-md:flex-col justify-center items-center gap-4">
+        <div className="w-full flex max-lg:flex-col justify-center items-center gap-4">
           <Input
             label="Name"
             name={"name"}
@@ -142,7 +142,7 @@ export default function ContactForm() {
           />
         </div>
 
-        <div className="w-full flex max-md:flex-col justify-center items-center gap-4">
+        <div className="w-full flex max-lg:flex-col justify-center items-center gap-4">
           <Input
             label="Email"
             name={"email"}

@@ -2,19 +2,24 @@
 
 import {
   IconClockHour10Filled,
+  IconDoor,
   IconExclamationMark,
   IconHome,
   IconMapPinFilled,
   IconMenu2,
   IconMessage,
   IconPhoneFilled,
+  IconSoup,
   IconTrendingUp,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import logo from "@/assets/logo-no-bg.png";
+
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 export default function NavBar() {
   const pathname = usePathname();
@@ -71,19 +76,19 @@ export default function NavBar() {
         
         `}
     >
-      <Link
-        href={"/"}
-        className={`${scrolled ? "h-10 " : "h-12"} pr-10  max-lg:pr-0 `}
-      >
-        Logo
-        {/* <LogoMissim
-          variant={scrolled ? "white" : selectLink === "/" ? "normal" : "white"}
-        /> */}
+      <Link href={"/"} className="">
+        <Image
+          src={logo}
+          width={500}
+          height={500}
+          alt="logo"
+          className={`object-cover ${scrolled ? "w-48" : "w-60"}`}
+        />
       </Link>
 
-      <div className="flex-1 ">
+      <div className=" flex-1">
         <div
-          className={`w-full mb-3 pb-2 flex justify-center items-center max-2xl:pr-0 gap-10 border-b border-[#ebebeb] max-lg:hidden pr-30 ${
+          className={`w-full mb-3 pb-2 flex justify-center items-center max-2xl:pr-0 gap-10 border-b border-[#ebebeb] max-lg:hidden pr-56 ${
             scrolled && "hidden"
           } ${selectLink === "/" ? "text-black" : "text-black"}`}
         >
@@ -105,10 +110,14 @@ export default function NavBar() {
           </div>
         </div>
 
-        <div className="w-full flex justify-between items-center">
-          <div className="flex items-center justify-center gap-36 flex-1 max-2xl:pr-0 ">
+        <div className="w-full flex justify-between items-center ">
+          <div
+            className={`flex items-center justify-center gap-36 flex-1 ${
+              scrolled ? "pr-38" : "pr-56"
+            } `}
+          >
             <nav
-              className={`flex items-center space-x-10 text-sm max-lg:hidden${
+              className={`flex items-center space-x-10 text-sm max-lg:hidden ${
                 selectLink === "/" && !scrolled ? "text-black" : "text-white"
               }`}
             >
@@ -197,8 +206,7 @@ export default function NavBar() {
         >
           <div className="w-full flex justify-between items-center pr-5">
             <div className="w-[70%]">
-              Logo
-              {/* <LogoMissim variant={"white"} /> */}
+              <Image src={logo} width={250} height={250} alt="logo" />
             </div>
 
             {/* <SelectLanguage scrolled={true} selectLink={"/services"} /> */}
@@ -217,32 +225,28 @@ export default function NavBar() {
               Home
             </Link>
 
-            <div
-              onClick={() => setViewServicesPhone(!viewServicesPhone)}
-              className="relative cursor-pointer w-full"
-            >
-              <button
-                className={`flex items-center gap-2 py-2 rounded-l-[16px] w-full active:scale-95 transition-all
-                  ${
-                    pathname?.split("/")[1] === "services"
-                      ? "bg-white text-primary pl-2"
-                      : "bg-transparent"
-                  } `}
-              >
-                <IconTrendingUp className="w-6 h-6" stroke={1.5} />
-              </button>
-            </div>
-
             <Link
-              href={"/about"}
+              href={"/menu"}
               className={`flex items-center gap-2 py-2 rounded-l-[16px] w-full active:scale-95 transition-all ${
-                selectLink === "about"
+                selectLink === "contact"
                   ? "bg-white text-primary pl-2"
                   : "bg-transparent"
               }`}
             >
-              <IconExclamationMark className="w-6 h-6" stroke={1.5} />
-              About
+              <IconSoup className="w-6 h-6" stroke={1.5} />
+              Menu
+            </Link>
+
+            <Link
+              href={"/#rooms"}
+              className={`flex items-center gap-2 py-2 rounded-l-[16px] w-full active:scale-95 transition-all ${
+                selectLink === "contact"
+                  ? "bg-white text-primary pl-2"
+                  : "bg-transparent"
+              }`}
+            >
+              <IconDoor className="w-6 h-6" stroke={1.5} />
+              Rooms
             </Link>
 
             <Link
@@ -254,6 +258,7 @@ export default function NavBar() {
               }`}
             >
               <IconMessage className="w-6 h-6" stroke={1.5} />
+              Contact
             </Link>
           </nav>
         </div>

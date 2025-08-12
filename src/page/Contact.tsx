@@ -6,8 +6,8 @@ import ContactForm from "@/components/ContactForm";
 
 export default function Contact() {
   return (
-    <main className="w-full h-dvh min-h-[900px]">
-      <section className="w-full h-[40%] overflow-hidden relative flex justify-center items-center">
+    <main className="w-full h-dvh min-h-[900px] max-md:space-y-10">
+      <section className="w-full h-[40dvh] overflow-hidden relative flex justify-center items-center">
         <div className="w-full h-full bg-primary/50  text-white flex flex-col justify-center items-center gap-2 pt-30">
           <h1 className="text-5xl">Contact</h1>
 
@@ -19,11 +19,11 @@ export default function Contact() {
           height={900}
           width={1920}
           alt="image detail"
-          className="object-cover absolute -z-10"
+          className="object-cover absolute -z-10 h-full"
         />
       </section>
 
-      <section className="h-[60%] flex justify-center items-center">
+      <section className="h-[60%] flex justify-center items-center ">
         <ContactForm />
       </section>
     </main>

@@ -22,7 +22,7 @@ export default function CardFood({
   return (
     <div
       key={name}
-      className="relative w-[24%] aspect-square "
+      className="relative w-[24%] max-lg:w-[48%] max-md:w-[96%] max-w-[470px] aspect-square "
       onMouseEnter={() => setViewDescription(true)}
       onMouseLeave={() => setViewDescription(false)}
     >

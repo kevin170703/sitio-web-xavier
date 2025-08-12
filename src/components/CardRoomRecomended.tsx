@@ -44,24 +44,20 @@ export default function CardRoomRecomended({
 
   return (
     <div
-      className="w-[600px] min-h-[100px] rounded-2xl flex  justify-between items-center shadow-2xl p-4"
+      className="w-[600px] max-w-full min-h-[100px] rounded-2xl flex max-md:flex-col  justify-between items-center shadow-2xl p-4 gap-y-5"
       key={id}
     >
-      <div className="flex justify-start items-center gap-4">
+      <div className="flex max-md:flex-col justify-start items-center gap-4">
         <Image
           src={roomImage}
           width={500}
           height={500}
           alt={room_type}
-          className="h-full  w-[160px] object-cover rounded-xl"
+          className="h-full max-md:w-full  w-[160px] object-cover rounded-xl"
         />
-        <div className="h-full flex flex-col justify-between items-start gap-4">
+        <div className="w-full h-full flex flex-col justify-between items-start gap-4">
           <div className="rounded-full flex justify-between items-center gap-4">
             <p className="text-xl font-medium">{room_type}</p>
-
-            {/* <p className="bg-green-700 text-white rounded-full text-xs px-2 py-0.5">
-                            Available
-                          </p> */}
           </div>
 
           <button
@@ -84,14 +80,14 @@ export default function CardRoomRecomended({
         </div>
       </div>
 
-      <div className="w-max h-full flex flex-col justify-center items-start gap-2 relative">
+      <div className="w-max max-md:w-full h-full flex flex-col justify-center items-start gap-2 relative">
         <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
           <IconUsers className="size-4 opacity-40" />
           <p className="-mb-1">{capacity}</p>
         </div>
 
         {seeFeatures && (
-          <div className="absolute top-[26px] left-1/2 -translate-x-1/2 w-max bg-white rounded-xl p-4 z-10 shadow-2xl">
+          <div className="max-md:w-[110%] absolute  top-[26px] left-1/2 -translate-x-1/2 w-max bg-white rounded-xl p-4 z-10 shadow-2xl">
             <div className="flex flex-col justify-center items-center gap-2">
               {has_wifi && (
                 <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
@@ -133,7 +129,7 @@ export default function CardRoomRecomended({
           </div>
         )}
 
-        <div className="h-[60px] overflow-y-hidden relative">
+        <div className="max-md:w-full h-[60px] overflow-y-hidden relative">
           <div className="flex flex-col justify-center items-center gap-2">
             {has_wifi && (
               <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">

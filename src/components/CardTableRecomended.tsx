@@ -18,7 +18,7 @@ export default function CardTableRecomended({
 
   return (
     <div
-      className="w-[300px] min-h-[100px] rounded-2xl flex flex-col  justify-center items-center shadow-2xl p-4"
+      className="w-[300px] max-md:w-full min-h-[100px] rounded-2xl flex flex-col  justify-center items-center shadow-2xl p-4"
       key={id}
     >
       <div className="w-max flex justify-start items-center gap-4">

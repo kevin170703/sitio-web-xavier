@@ -253,14 +253,14 @@ export default function DetailTable() {
           height={900}
           width={1920}
           alt="image detail"
-          className="object-cover absolute -z-10"
+          className="object-cover absolute -z-10 h-full"
         />
       </section>
 
-      <section className="w-full max-w-[1300px] flex justify-center items-start gap-2 pt-20 ">
+      <section className="w-full max-lg:flex-col-reverse max-w-[1300px] flex justify-center items-start gap-2 pt-20 px-5 ">
         {/* Fotos secundarias - Izquierda */}
-        <div className="">
-          <div className="grid grid-cols-4 lg:grid-cols-1 gap-2">
+        <div className="max-lg:w-full max-h-[600px] overflow-x-auto">
+          <div className="w-max flex flex-col max-lg:flex-row justify-start items-center gap-2 ">
             {[tables1].map((image, index) => (
               <div
                 key={index}
@@ -299,25 +299,36 @@ export default function DetailTable() {
         </div>
       </section>
 
-      <section className="w-full max-w-[1300px] flex justify-between">
-        <section className="w-[73%] space-y-10 ">
-          <div className="w-full border border-black/8 rounded-3xl p-10">
-            <div className="space-y-4 flex justify-between items-start w-full">
-              <div className="space-y-4">
-                <div className="text-4xl flex justify-start items-center gap-2">
-                  <p>Table number:</p>
-                  <select
-                    name=""
-                    id=""
-                    onChange={(e) => changueTable(e.target.value)}
+      <section className="w-full max-w-[1300px] flex max-lg:flex-col justify-between px-5 gap-y-10">
+        <section className="w-[73%] max-lg:w-full space-y-10 ">
+          <div className="w-full border border-black/8 rounded-3xl p-10 max-md:p-5">
+            <div className="w-full space-y-4 flex justify-between items-start ">
+              <div className="w-full space-y-4">
+                <div className="flex justify-between items-center gap-2 w-full">
+                  <div className="flex justify-start items-center gap-4">
+                    <h2 className="text-4xl max-md:text-2xl">Table number:</h2>
+                    <select
+                      name=""
+                      id=""
+                      onChange={(e) => changueTable(e.target.value)}
+                      className="text-3xl"
+                    >
+                      {tables &&
+                        tables.map((table) => (
+                          <option key={table.id} value={table.id}>
+                            {table.table_number}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+
+                  <button
+                    onClick={handleCopy}
+                    className="flex justify-center items-center gap-4 border border-black/20 w-max px-4 py-2.5 rounded-full cursor-pointer"
                   >
-                    {tables &&
-                      tables.map((table) => (
-                        <option key={table.id} value={table.id}>
-                          {table.table_number}
-                        </option>
-                      ))}
-                  </select>
+                    <IconShare className="text-primary size-6" />
+                    <p>{copied ? "Link copied!" : "Share"}</p>
+                  </button>
                 </div>
 
                 <div className="flex justify-start items-center gap-2 pb-4">
@@ -326,16 +337,6 @@ export default function DetailTable() {
                     108 Avenue de Venise O, Venise-en-Québec, QC J0J 2K0, Canadá
                   </p>
                 </div>
-              </div>
-
-              <div>
-                <button
-                  onClick={handleCopy}
-                  className="flex justify-center items-center gap-4 border border-black/20 w-max px-4 py-2.5 rounded-full cursor-pointer"
-                >
-                  <IconShare className="text-primary size-6" />
-                  <p>{copied ? "Link copied!" : "Share"}</p>
-                </button>
               </div>
             </div>
 
@@ -379,7 +380,7 @@ export default function DetailTable() {
           </div>
         </section>
 
-        <section className="w-[25%] h-max border border-black/10 rounded-3xl p-8 space-y-4">
+        <section className="w-[25%] max-lg:w-full h-max border border-black/10 rounded-3xl p-8 space-y-4">
           <p className="text-xl font-medium">Reservation</p>
 
           <form
