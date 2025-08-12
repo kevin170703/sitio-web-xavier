@@ -4,15 +4,12 @@ import ButtonSend from "@/components/ButtonSend";
 import Input from "@/components/Input";
 import TextArea from "@/components/TextArea";
 import { sendEmail } from "@/services/resend";
-import {
-  IconBrandInstagram,
-  IconBrandWhatsapp,
-  IconMail,
-} from "@tabler/icons-react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 
 export default function ContactForm() {
+  const t = useTranslations();
+
   const [loaderEmail, setLoaderEmail] = useState(false);
   const [isSender, setIsSender] = useState(false);
 
@@ -123,9 +120,9 @@ export default function ContactForm() {
       >
         <div className="w-full flex max-lg:flex-col justify-center items-center gap-4">
           <Input
-            label="Name"
             name={"name"}
-            placeholder="Your name"
+            label={t("contact.inputOne.label")}
+            placeholder={t("contact.inputOne.placeholder")}
             value={dataForm.name}
             onChange={handelChange}
             id="1"
@@ -133,9 +130,9 @@ export default function ContactForm() {
           />
           <Input
             required={true}
-            label="Lastname"
             name={"lastname"}
-            placeholder="Your lastname"
+            label={t("contact.inputTwo.label")}
+            placeholder={t("contact.inputTwo.placeholder")}
             value={dataForm.lastname}
             onChange={handelChange}
             id="lastname"
@@ -144,9 +141,9 @@ export default function ContactForm() {
 
         <div className="w-full flex max-lg:flex-col justify-center items-center gap-4">
           <Input
-            label="Email"
             name={"email"}
-            placeholder="Your email"
+            label={t("contact.inputThree.label")}
+            placeholder={t("contact.inputThree.placeholder")}
             value={dataForm.email}
             onChange={handelChange}
             id="Email"
@@ -155,9 +152,9 @@ export default function ContactForm() {
           />
 
           <Input
-            label="Phone"
             name={"phone"}
-            placeholder="Your phone"
+            label={t("contact.inputFour.label")}
+            placeholder={t("contact.inputFour.placeholder")}
             value={dataForm.phone}
             onChange={handelChange}
             id="phone"
@@ -167,9 +164,9 @@ export default function ContactForm() {
         </div>
 
         <TextArea
-          label="Message"
           name={"message"}
-          placeholder="Your message"
+          label={t("contact.inputFive.label")}
+          placeholder={t("contact.inputFive.placeholder")}
           value={dataForm.message}
           onChange={handelChange}
           id="Message"
@@ -178,7 +175,7 @@ export default function ContactForm() {
 
         <div className="w-full flex justify-start items-center">
           <ButtonSend
-            text="Send"
+            text={t("contact.button")}
             loader={loaderEmail}
             success={isSender}
             disabled={loaderEmail || isSender}

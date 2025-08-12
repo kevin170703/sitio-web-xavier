@@ -21,9 +21,12 @@ import logoWhite from "@/assets/logo-white.png";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export default function NavBar() {
   const pathname = usePathname();
+
+  const t = useTranslations();
 
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -144,7 +147,7 @@ export default function NavBar() {
                 } 
             active:scale-95 transition-all font-medium border-b-2  hover:opacity-70 text-lg`}
               >
-                Home
+                {t("navbar.home")}
               </Link>
 
               <Link
@@ -156,7 +159,7 @@ export default function NavBar() {
                 } 
             active:scale-95 transition-all font-medium border-b-2  hover:opacity-70 text-lg`}
               >
-                Menu
+                {t("navbar.menu")}
               </Link>
 
               <Link
@@ -168,7 +171,7 @@ export default function NavBar() {
                 } 
             active:scale-95 transition-all font-medium border-b-2  hover:opacity-70 text-lg`}
               >
-                Rooms
+                {t("navbar.rooms")}
               </Link>
             </nav>
           </div>
@@ -193,7 +196,7 @@ export default function NavBar() {
                   : "border-primary text-primary"
               }  flex justify-center items-center gap-2  text-primary px-4 py-2 rounded-xl hover:scale-105 transition-all active:scale-100`}
             >
-              Contact us
+              {t("navbar.buttonContact")}
             </Link>
 
             {/* <ButtonReservations scrolled={scrolled} /> */}
@@ -240,7 +243,7 @@ export default function NavBar() {
               }`}
             >
               <IconHome className="w-6 h-6" stroke={1.5} />
-              Home
+              {t("navbar.home")}
             </Link>
 
             <Link
@@ -252,7 +255,7 @@ export default function NavBar() {
               }`}
             >
               <IconSoup className="w-6 h-6" stroke={1.5} />
-              Menu
+              {t("navbar.menu")}
             </Link>
 
             <Link
@@ -264,7 +267,7 @@ export default function NavBar() {
               }`}
             >
               <IconDoor className="w-6 h-6" stroke={1.5} />
-              Rooms
+              {t("navbar.rooms")}
             </Link>
 
             <Link
@@ -276,7 +279,7 @@ export default function NavBar() {
               }`}
             >
               <IconMessage className="w-6 h-6" stroke={1.5} />
-              Contact
+              {t("navbar.buttonContact")}
             </Link>
           </nav>
         </div>

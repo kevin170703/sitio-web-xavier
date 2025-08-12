@@ -21,6 +21,7 @@ import Link from "next/link";
 import axios from "axios";
 import ModalReserveRoom from "@/components/ModalReserveRoom";
 import ModalReserveTable from "@/components/ModalReserveTable";
+import { useTranslations } from "next-intl";
 
 const variantsTestimonials = {
   enter: (direction: number) => {
@@ -103,28 +104,28 @@ export interface MenuItem {
 }
 
 export default function Home() {
-  const testimoniasls = [
+  const t = useTranslations();
+
+  const testimonials = [
     {
       id: "1",
-      name: "Northview Consulting",
-      position: "Facility Manager",
-      testimonial:
-        "We needed to repaint our offices, and Premium Coat did an awesome job. They were professional, knew exactly what we wanted, and finished early. We’d definitely hire them again.",
+      name: t("testimonials.1.name"),
+      testimonial: t("testimonials.1.testimonial"),
     },
     {
       id: "2",
-      name: "Stonebridge Supplies",
-      position: "Operations Director",
-      testimonial:
-        "We hired Premium Coat to paint the metal deck ceiling of our store, and they worked during the night to avoid disrupting our business hours. They were very organized, worked carefully, and made sure everything was ready for us to open the next day without any issues. Great service.",
+      name: t("testimonials.2.name"),
+      testimonial: t("testimonials.2.testimonial"),
     },
-
     {
       id: "3",
-      name: "Diana Cameron",
-      position: "Facility Supervisor",
-      testimonial:
-        "We hired Premium Coat to paint the metal deck ceiling of our store, and they worked during the night to avoid disrupting our business hours. They were very organized, worked carefully, and made sure everything was ready for us to open the next day without any issues. Great service.",
+      name: t("testimonials.3.name"),
+      testimonial: t("testimonials.3.testimonial"),
+    },
+    {
+      id: "4",
+      name: t("testimonials.4.name"),
+      testimonial: t("testimonials.4.testimonial"),
     },
   ];
 
@@ -156,11 +157,6 @@ export default function Home() {
     room_id: null,
     type: "room",
   });
-
-  const handleSearch = () => {
-    console.log("Datos finales:", formData);
-    // Aquí puedes enviar `formData` a tu API
-  };
 
   async function getRooms(): Promise<void> {
     try {
@@ -220,11 +216,10 @@ export default function Home() {
       >
         <div className=" text-white text-center flex flex-col justify-center items-center max-md:pb-[200px]">
           <h1 className="text-8xl max-lg:text-7xl max-md:text-4xl  font-light mb-4 font-secondary">
-            Les P&apos;tits Lofts Du Lac
+            {t("hero.title")}
           </h1>
           <p className="text-lg w-full max-w-[90%] text-center">
-            Luxury lakeside accommodation with stunning views and exceptional
-            service
+            {t("hero.subtitle")}
           </p>
         </div>
 
@@ -289,28 +284,12 @@ export default function Home() {
       <section className="py-20  flex justify-center items-center gap-10 w-full max-w-[1200px] px-5 flex-wrap">
         <div className="text-xl w-full max-w-[55%] max-lg:max-w-full">
           <label className="text-2xl mb-6 font-secondary text-primary uppercase">
-            About us
+            {t("about.tag")}
           </label>
-          <h2 className="text-5xl font-semibold mb-2">
-            Les P&apos;tits Lofts Du Lac
-          </h2>
-          <p className="text-gray-600 mb-4">
-            Welcome to Les P&apos;tits Lofts Du Lac, where luxury meets comfort
-            in the heart of nature. Our boutique accommodation offers stunning
-            lakeside views and personalized service that makes every stay
-            memorable.
-          </p>
-          <p className="text-gray-600 mb-4">
-            Each of our carefully designed lofts combines modern amenities with
-            rustic charm, creating the perfect retreat for couples and families
-            alike. Experience the tranquility of lake life while enjoying
-            world-class hospitality.
-          </p>
-          <p className="text-gray-600">
-            From sunrise coffee on your private balcony to evening dining at our
-            lakeside restaurant, every moment at Les P&apos;tits Lofts is
-            designed to create lasting memories.
-          </p>
+          <h2 className="text-5xl font-semibold mb-2">{t("about.title")}</h2>
+          <p className="text-gray-600 mb-4">{t("about.paragraphs.1")}</p>
+          <p className="text-gray-600 mb-4">{t("about.paragraphs.2")}</p>
+          <p className="text-gray-600">{t("about.paragraphs.3")}</p>
         </div>
 
         <div className="relative w-[40%] max-lg:w-full">
@@ -328,10 +307,10 @@ export default function Home() {
       <section id="rooms" className="w-full py-20 space-y-8">
         <div className="w-full text-center">
           <label className="text-2xl max-lg:text-xl mb-6 font-secondary text-primary uppercase">
-            our rooms
+            {t("sectionRooms.tag")}
           </label>
           <h2 className="text-5xl max-lg:text-4xl max-md:text-2xl font-semibold mb-6">
-            Rest, relax, and wake up inspired.
+            {t("sectionRooms.title")}
           </h2>
         </div>
 
@@ -374,29 +353,29 @@ export default function Home() {
       <section className="w-full py-20 space-y-20 px-5 flex flex-col justify-center items-center">
         <div className="w-full text-center">
           <label className="text-2xl max-lg:text-xl mb-6 font-secondary text-primary uppercase">
-            Comforts
+            {t("sectionConforts.tag")}
           </label>
           <h2 className="text-5xl max-lg:text-4xl max-md:text-2xl font-semibold mb-6">
-            Little details that make your stay better.
+            {t("sectionConforts.title")}
           </h2>
         </div>
 
         <div className="w-full flex max-md:flex-wrap max-md:justify-center gap-x-14 gap-y-10 justify-between items-center max-w-[1200px] max-lg:max-w-[600px] ">
           <div className="flex flex-col items-center text-center">
             <IconWifi strokeWidth={1.5} className="size-20 text-primary" />
-            <h3 className="font-medium mb-2">Free WiFi</h3>
+            <h3 className="font-medium mb-2">{t("sectionConforts.items.1")}</h3>
           </div>
           <div className="flex flex-col items-center text-center">
             <IconGlass strokeWidth={1.5} className="size-20 text-primary" />
-            <h3 className="font-medium mb-2">Welcome Drink</h3>
+            <h3 className="font-medium mb-2">{t("sectionConforts.items.2")}</h3>
           </div>
           <div className="flex flex-col items-center text-center">
             <IconWifi strokeWidth={1.5} className="size-20 text-primary" />
-            <h3 className="font-medium mb-2">Lake Access</h3>
+            <h3 className="font-medium mb-2">{t("sectionConforts.items.3")}</h3>
           </div>
           <div className="flex flex-col items-center text-center">
             <IconGlass strokeWidth={1.5} className="size-20 text-primary" />
-            <h3 className="font-medium mb-2">Fine Dining</h3>
+            <h3 className="font-medium mb-2">{t("sectionConforts.items.4")}</h3>
           </div>
         </div>
       </section>
@@ -405,10 +384,10 @@ export default function Home() {
       <section className="w-full py-20 space-y-8">
         <div className="w-full text-center">
           <label className="text-2xl max-lg:text-xl mb-6 font-secondary text-primary uppercase">
-            our menu
+            {t("sectionMenu.tag")}
           </label>
           <h2 className="text-5xl max-lg:text-4xl max-md:text-2xl font-semibold mb-6">
-            Flavors that tell our story.
+            {t("sectionMenu.title")}
           </h2>
         </div>
 
@@ -456,17 +435,17 @@ export default function Home() {
       <section className="w-full flex flex-col justify-center items-center py-20 px-5">
         <div className="w-full text-center">
           <label className="text-2xl max-lg:text-xl mb-6 font-secondary text-primary uppercase">
-            testimonials
+            {t("testimonials.tag")}
           </label>
           <h2 className="text-5xl max-lg:text-4xl max-md:text-2xl font-semibold mb-6">
-            Stories from guests who felt at home.
+            {t("testimonials.title")}
           </h2>
         </div>
 
         <motion.div className="w-full flex flex-col justify-center items-center gap-5 relative max-w-[1200px] lg:px-5">
           <div className="w-full h-[200px] relative flex justify-center items-center max-md:h-[300px]">
             <AnimatePresence initial={false} custom={direction}>
-              {testimoniasls && (
+              {testimonials && (
                 <motion.div
                   key={indexTestimonial}
                   variants={variantsTestimonials}
@@ -480,8 +459,8 @@ export default function Home() {
                   className="absolute w-max max-lg:w-full"
                 >
                   <CardTestimonials
-                    testimonial={testimoniasls[indexTestimonial].testimonial}
-                    nameUser={testimoniasls[indexTestimonial].name}
+                    testimonial={testimonials[indexTestimonial].testimonial}
+                    nameUser={testimonials[indexTestimonial].name}
                   />
                 </motion.div>
               )}
@@ -499,7 +478,7 @@ export default function Home() {
 
             <button
               onClick={() => changueIndex(1)}
-              disabled={indexTestimonial >= testimoniasls.length - 1}
+              disabled={indexTestimonial >= testimonials.length - 1}
               className="disabled:text-[#ccc] disabled:cursor-default cursor-pointer"
             >
               <IconArrowRight className="size-8" strokeWidth={1.5} />
@@ -512,10 +491,10 @@ export default function Home() {
       <section className="py-20 w-full flex flex-col justify-center items-center">
         <div className="w-full text-center">
           <label className="text-2xl max-lg:text-xl mb-6 font-secondary text-primary uppercase">
-            Spaces
+            {t("sectionSpaces.tag")}
           </label>
           <h2 className="text-5xl max-lg:text-4xl max-md:text-2xl font-semibold mb-6">
-            Designed for moments worth remembering.
+            {t("sectionSpaces.title")}
           </h2>
         </div>
 

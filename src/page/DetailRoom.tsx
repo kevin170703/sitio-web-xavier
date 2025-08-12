@@ -20,6 +20,7 @@ import React, { useEffect, useState } from "react";
 import { Room } from "./Home";
 import { useParams } from "next/navigation";
 import Reserve from "@/components/Reserve";
+import { useTranslations } from "next-intl";
 
 type FormData = {
   check_in_date: string; // "YYYY-MM-DD" o null
@@ -29,6 +30,8 @@ type FormData = {
 };
 
 export default function DetailRoom() {
+  const t = useTranslations();
+
   const { id } = useParams();
 
   const [selectedImage, setSelectedImage] = useState(0);
@@ -219,7 +222,11 @@ export default function DetailRoom() {
                       className="flex justify-center items-center gap-4 border border-black/20 w-max px-4 py-2.5 rounded-full cursor-pointer"
                     >
                       <IconShare className="text-primary size-6" />
-                      <p>{copied ? "Link copied!" : "Share"}</p>
+                      <p>
+                        {copied
+                          ? t("detailRoom.buttonShareCopie")
+                          : t("detailRoom.buttonShare")}
+                      </p>
                     </button>
                   </div>
 
@@ -235,7 +242,7 @@ export default function DetailRoom() {
                     <span className="text-primary text-3xl font-medium font-secondary">
                       ${room.price_per_night}{" "}
                     </span>
-                    / day
+                    / {t("detailRoom.priceFormat")}
                   </p>
                 </div>
 
@@ -251,49 +258,55 @@ export default function DetailRoom() {
                   <div className="w-max flex justify-start items-center gap-14 max-lg:pb-2">
                     <div className="flex items-center gap-1">
                       <IconUser className="text-primary size-6" />
-                      <span>{room.capacity} persons</span>
-                    </div>
-
-                    <div className="flex items-center gap-1">
-                      <IconWifi className="text-primary size-6" />
                       <span>
-                        {room.has_wifi ? "With Wi-Fi" : "Without Wi-Fi"}
+                        {room.capacity} {t("detailRoom.items.1")}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-1">
-                      <IconSnowflake className="text-primary size-6" />
-                      <span>
-                        {room.has_air_conditioning
-                          ? "Air conditioning"
-                          : "No air conditioning"}
-                      </span>
-                    </div>
+                    {room.has_wifi && (
+                      <div className="flex items-center gap-1">
+                        <IconWifi className="text-primary size-6" />
+                        <span>{t("detailRoom.items.2")}</span>
+                      </div>
+                    )}
 
-                    <div className="flex items-center gap-1">
-                      <IconCarFan className="text-primary size-6" />
-                      <span>
-                        {room.has_balcony ? "with balcony" : "Without balcony"}
-                      </span>
-                    </div>
+                    {room.has_air_conditioning && (
+                      <div className="flex items-center gap-1">
+                        <IconSnowflake className="text-primary size-6" />
+                        <span>{t("detailRoom.items.3")}</span>
+                      </div>
+                    )}
 
-                    <div className="flex items-center gap-1">
-                      <IconDeviceTv className="text-primary size-6" />
-                      <span>{room.has_tv ? "With TV" : "Without TV"}</span>
-                    </div>
+                    {room.has_balcony && (
+                      <div className="flex items-center gap-1">
+                        <IconCarFan className="text-primary size-6" />
+                        <span>{t("detailRoom.items.4")}</span>
+                      </div>
+                    )}
+
+                    {room.has_tv && (
+                      <div className="flex items-center gap-1">
+                        <IconDeviceTv className="text-primary size-6" />
+                        <span>{t("detailRoom.items.5")}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="space-y-2">
-              <p className="text-2xl font-medium">Description</p>
+              <p className="text-2xl font-medium">
+                {t("detailRoom.titleDescription")}
+              </p>
 
               <p className="text-black/60">{room.description}</p>
             </div>
 
             <div className="w-full space-y-2">
-              <p className="text-2xl font-medium">Location</p>
+              <p className="text-2xl font-medium">
+                {t("detailRoom.titleLocation")}
+              </p>
 
               <iframe
                 title="Work area"
@@ -307,7 +320,9 @@ export default function DetailRoom() {
           </section>
 
           <section className="w-[25%] max-lg:w-full h-max border border-black/10 rounded-3xl p-8 space-y-4">
-            <p className="text-xl font-medium">Reservation</p>
+            <p className="text-xl font-medium">
+              {t("detailRoom.titleReservations")}
+            </p>
 
             <form
               action=""
@@ -315,7 +330,7 @@ export default function DetailRoom() {
               className="flex flex-col justify-center items-center gap-6"
             >
               <label htmlFor="" className="w-full h-max space-y-2">
-                <p>Number of people*</p>
+                <p>{t("detailRoom.form.peoples")}</p>
                 <input
                   type="text"
                   placeholder={formData.occupancy.toString()}
@@ -327,7 +342,7 @@ export default function DetailRoom() {
               </label>
 
               <label htmlFor="" className="w-full h-max space-y-2">
-                <p>Check in*</p>
+                <p>{t("detailRoom.form.CheckIn")}</p>
 
                 <InputData
                   onChange={handleCheckInChange}
@@ -337,7 +352,7 @@ export default function DetailRoom() {
               </label>
 
               <label htmlFor="" className="w-full h-max space-y-2">
-                <p>Check out*</p>
+                <p>{t("detailRoom.form.CheckOut")}</p>
 
                 <InputData
                   onChange={handleCheckOutChange}
@@ -354,7 +369,7 @@ export default function DetailRoom() {
                 {loaderSearch ? (
                   <IconLoader2 className="animate-spin" />
                 ) : (
-                  "check availability"
+                  t("detailRoom.form.button")
                 )}
               </button>
             </form>

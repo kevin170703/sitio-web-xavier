@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import { IconBowl, IconMoodSad } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 
 interface MenuItem {
   id: number;
@@ -39,6 +40,8 @@ interface Category {
 }
 
 export default function Menu() {
+  const t = useTranslations();
+
   const [categories, setCategorires] = useState(["All"]);
 
   const [categorySelected, setCategorySelected] = useState(categories[0]);
@@ -119,7 +122,7 @@ export default function Menu() {
           backgroundImage: `linear-gradient(rgba(242, 177, 52, 0.8), rgba(242, 177, 52, 1)), url('/cozy-restaurant.png')`,
         }}
       >
-        <h1 className="text-8xl font-secondary pt-20">Menu</h1>
+        <h1 className="text-8xl font-secondary pt-20">{t("menu.title")}</h1>
 
         <div className="w-full max-md:overflow-y-auto">
           <div className="max-md:w-max flex md:flex-wrap justify-center items-center gap-6 pt-20 px-5">
@@ -153,7 +156,7 @@ export default function Menu() {
         ) : (
           <div className="flex flex-col items-center justify-center">
             <IconBowl className="mb-2 size-48 opacity-50" />
-            <p className="text-2xl font-medium">No dishes available</p>
+            <p className="text-2xl font-medium">{t("menu.noFood")}</p>
           </div>
         )}
       </section>

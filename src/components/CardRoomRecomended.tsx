@@ -6,6 +6,7 @@ import {
   IconUsers,
   IconWifi,
 } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -40,6 +41,8 @@ export default function CardRoomRecomended({
     roomName: string;
   }) => void;
 }) {
+  const t = useTranslations();
+
   const [seeFeatures, setSeeFeatures] = useState(false);
 
   return (
@@ -71,7 +74,9 @@ export default function CardRoomRecomended({
               })
             }
           >
-            <p className="pl-3 text-white text-base">Book now</p>
+            <p className="pl-3 text-white text-base">
+              {t("reserveRoom.buttonBook")}
+            </p>
 
             <p className="bg-white text-primary rounded-full text-xs px-2 py-0.5">
               ${price_per_night}
@@ -92,28 +97,28 @@ export default function CardRoomRecomended({
               {has_wifi && (
                 <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
                   <IconWifi className="size-4  opacity-40" />
-                  <span className="text-sm">Wi-Fi</span>
+                  <span className="text-sm">{t("reserveRoom.items.1")}</span>
                 </div>
               )}
 
               {has_air_conditioning && (
                 <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
                   <IconSnowflake className="size-4  opacity-40" />
-                  <span className="text-sm">Air conditioning</span>
+                  <span className="text-sm">{t("reserveRoom.items.2")}</span>
                 </div>
               )}
 
               {has_balcony && (
                 <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
                   <IconCarFan className="size-4  opacity-40" />
-                  <span className="text-sm">With balcony</span>
+                  <span className="text-sm">{t("reserveRoom.items.3")}</span>
                 </div>
               )}
 
               {has_tv && (
                 <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
                   <IconDeviceTv className="size-4  opacity-40" />
-                  <span className="text-sm">With TV</span>
+                  <span className="text-sm">{t("reserveRoom.items.4")}</span>
                 </div>
               )}
 
@@ -134,28 +139,28 @@ export default function CardRoomRecomended({
             {has_wifi && (
               <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
                 <IconWifi className="size-4  opacity-40" />
-                <span className="text-sm">Wi-Fi</span>
+                <span className="text-sm">{t("reserveRoom.items.1")}</span>
               </div>
             )}
 
             {has_air_conditioning && (
               <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
                 <IconSnowflake className="size-4  opacity-40" />
-                <span className="text-sm">Air conditioning</span>
+                <span className="text-sm">{t("reserveRoom.items.2")}</span>
               </div>
             )}
 
             {has_balcony && (
               <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
                 <IconCarFan className="size-4  opacity-40" />
-                <span className="text-sm">With balcony</span>
+                <span className="text-sm">{t("reserveRoom.items.3")}</span>
               </div>
             )}
 
             {has_tv && (
               <div className="w-full flex justify-between items-center gap-2 bg-black/5 rounded-full px-2 py-0.5">
                 <IconDeviceTv className="size-4  opacity-40" />
-                <span className="text-sm">With TV</span>
+                <span className="text-sm">{t("reserveRoom.items.4")}</span>
               </div>
             )}
           </div>

@@ -3,15 +3,18 @@ import React from "react";
 
 import tables1 from "@/assets/tables/1.avif";
 import ContactForm from "@/components/ContactForm";
+import { useTranslations } from "next-intl";
 
 export default function Contact() {
+  const t = useTranslations();
+
   return (
     <main className="w-full h-dvh min-h-[900px] max-md:space-y-10">
       <section className="w-full h-[40dvh] overflow-hidden relative flex justify-center items-center">
         <div className="w-full h-full bg-primary/50  text-white flex flex-col justify-center items-center gap-2 pt-30">
-          <h1 className="text-5xl">Contact</h1>
+          <h1 className="text-5xl">{t("contact.title")}</h1>
 
-          <h2 className="font-secondary">Les P&apos;tits Lofts Du Lac</h2>
+          <h2 className="font-secondary">{t("contact.subtitle")}</h2>
         </div>
 
         <Image

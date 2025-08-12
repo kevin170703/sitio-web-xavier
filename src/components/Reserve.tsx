@@ -3,6 +3,7 @@ import { IconX } from "@tabler/icons-react";
 import { useState, FC, FormEvent } from "react";
 import CardRoomRecomended from "./CardRoomRecomended";
 import axios from "axios";
+import { useTranslations } from "next-intl";
 
 interface ReserveProps {
   roomAvailable: boolean | null;
@@ -25,6 +26,8 @@ const Reserve: FC<ReserveProps> = ({
   setRoomAvailable,
   avilabelRooms,
 }) => {
+  const t = useTranslations();
+
   const [dataRoom, setDataRoom] = useState({
     id: id,
     roomName: roomName,
@@ -186,7 +189,7 @@ const Reserve: FC<ReserveProps> = ({
           </p>
 
           <label className="w-full h-max space-y-2">
-            Full Name:
+            {t("reserveRoom.form.1.name")}
             <input
               type="text"
               value={fullName}
@@ -195,7 +198,7 @@ const Reserve: FC<ReserveProps> = ({
                 errors.fullName ? "border-red-500" : "border-gray-300"
               }`}
               required
-              placeholder="Your full name"
+              placeholder={t("reserveRoom.form.1.placeholder")}
             />
             {errors.fullName && (
               <p className="text-red-600 text-sm mt-1">{errors.fullName}</p>
@@ -255,13 +258,13 @@ const Reserve: FC<ReserveProps> = ({
           </button>
 
           <p className="text-2xl text-center ">
-            We&apos;re sorry, the room is not available on those dates.
+            {t("reserveRoom.notAvailableMessage")}
           </p>
 
           {avilabelRooms.length >= 1 && (
             <div>
               <p className="text-xl font-medium">
-                Rooms available for the same time slot:
+                {t("reserveRoom.availableRoomsMessage")}
               </p>
               <div className="space-y-4 flex flex-col justify-center items-center">
                 {avilabelRooms.map((room) => (
