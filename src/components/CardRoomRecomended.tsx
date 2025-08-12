@@ -9,8 +9,6 @@ import {
 import Image from "next/image";
 import React, { useState } from "react";
 
-import roomImage from "@/assets/tables/1.avif";
-
 export default function CardRoomRecomended({
   id,
   room_type,
@@ -20,6 +18,7 @@ export default function CardRoomRecomended({
   has_air_conditioning,
   has_balcony,
   has_tv,
+  image,
   changueRoom,
 }: {
   id: number;
@@ -30,6 +29,7 @@ export default function CardRoomRecomended({
   has_air_conditioning: boolean;
   has_balcony: boolean;
   has_tv: boolean;
+  image: string;
   changueRoom: ({
     id,
     price,
@@ -49,7 +49,7 @@ export default function CardRoomRecomended({
     >
       <div className="flex max-md:flex-col justify-start items-center gap-4">
         <Image
-          src={roomImage}
+          src={image}
           width={500}
           height={500}
           alt={room_type}

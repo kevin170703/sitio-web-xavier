@@ -68,7 +68,7 @@ export default function InputDateTimeIcon({
 
   return (
     <div
-      className="w-[160px] flex  justify-center items-center relative gap-3"
+      className="w-[170px] flex  justify-center items-center relative gap-3 max-lg:border border-black/40 max-lg:py-2 max-lg:w-[190px] max-md:w-[160px] rounded-xl"
       onClick={handleClick}
     >
       <div className="size-8 text-black opacity-30">{icon}</div>
@@ -84,7 +84,7 @@ export default function InputDateTimeIcon({
           ref={datepickerRef}
           dateFormat="yyyy/MM/dd HH:mm"
           placeholderText="aaaa/mm/dd hh:mm"
-          className="outline-none text-black font-medium w-[120px] -mt-1"
+          className="outline-none text-black font-medium w-[124px] -mt-1 max-md:text-xs max-md:w-[95px] "
           calendarClassName="z-50"
           minDate={getMinDate()}
           showTimeSelect

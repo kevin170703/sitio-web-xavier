@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import logo from "@/assets/logo-no-bg.png";
+import logoWhite from "@/assets/logo-white.png";
 
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
@@ -65,7 +66,7 @@ export default function NavBar() {
         delay: 0.15,
         ease: [0.25, 0.5, 0.75, 1], // Easing personalizado para más fluidez
       }}
-      className={`w-dvw h-max fixed flex  items-center justify-between px-20 max-md:px-5 z-[1000]  top-0
+      className={`w-full h-max fixed flex  items-center justify-between px-20 max-md:px-5 z-[1000]  top-0
         ${
           scrolled
             ? "bg-primary text-white border-white py-4"
@@ -76,17 +77,30 @@ export default function NavBar() {
         
         `}
     >
-      <Link href={"/"} className="">
-        <Image
-          src={logo}
-          width={500}
-          height={500}
-          alt="logo"
-          className={`object-cover ${scrolled ? "w-48" : "w-60"}`}
-        />
-      </Link>
+      <div className="flex justify-between items-center max-lg:w-full">
+        <Link href={"/"} className="">
+          <Image
+            src={scrolled ? logoWhite : logo}
+            width={500}
+            height={500}
+            alt="logo"
+            className={`object-cover ${scrolled ? "w-48" : "w-60"}`}
+          />
+        </Link>
 
-      <div className=" flex-1">
+        <IconMenu2
+          className={`hidden w-10 h-10 max-lg:block ${
+            scrolled
+              ? "text-white"
+              : selectLink === "/"
+              ? "text-black"
+              : "text-white"
+          }`}
+          onClick={() => setOpenMenu(!openMenu)}
+        />
+      </div>
+
+      <div className="flex-1 max-lg:hidden">
         <div
           className={`w-full mb-3 pb-2 flex justify-center items-center max-2xl:pr-0 gap-10 border-b border-[#ebebeb] max-lg:hidden pr-56 ${
             scrolled && "hidden"
@@ -159,7 +173,7 @@ export default function NavBar() {
             </nav>
           </div>
 
-          <IconMenu2
+          {/* <IconMenu2
             className={`hidden w-10 h-10 max-lg:block ${
               scrolled
                 ? "text-white"
@@ -168,12 +182,16 @@ export default function NavBar() {
                 : "text-white"
             }`}
             onClick={() => setOpenMenu(!openMenu)}
-          />
+          /> */}
 
           <div className="flex justify-end items-center gap-5 max-lg:hidden">
             <Link
               href={"/contact"}
-              className="border border-primary flex justify-center items-center gap-2  text-primary px-4 py-2 rounded-xl hover:scale-105 transition-all active:scale-100"
+              className={`border ${
+                scrolled
+                  ? "border-white text-white"
+                  : "border-primary text-primary"
+              }  flex justify-center items-center gap-2  text-primary px-4 py-2 rounded-xl hover:scale-105 transition-all active:scale-100`}
             >
               Contact us
             </Link>
@@ -206,7 +224,7 @@ export default function NavBar() {
         >
           <div className="w-full flex justify-between items-center pr-5">
             <div className="w-[70%]">
-              <Image src={logo} width={250} height={250} alt="logo" />
+              <Image src={logoWhite} width={250} height={250} alt="logo" />
             </div>
 
             {/* <SelectLanguage scrolled={true} selectLink={"/services"} /> */}

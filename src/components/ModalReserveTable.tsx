@@ -201,104 +201,108 @@ export default function ModalReserveTable() {
         <form
           action=""
           onSubmit={(e) => handleSearch(e)}
-          className="flex justify-center items-center gap-6 w-full"
+          className="flex justify-center items-center gap-6 w-full max-lg:flex-col"
         >
-          <div className="w-px h-5 bg-black/20 mr-8"></div>
+          <div className="w-px h-5 bg-black/20 mr-8 max-xl:hidden"></div>
 
-          <div className="flex justify-center items-center gap-20 ">
-            <InputDateTimeIcon
-              text="Check in"
-              icon={<IconCalendarPlus className="size-8" />}
-              onChange={handleCheckInChange}
-              value={new Date(formData.check_in_date)}
-              initialDate={new Date(formData.check_in_date)}
-            />
+          <div className="flex justify-center items-center gap-x-20 gap-y-2 max-lg:flex-col ">
+            <div className="flex justify-center items-center gap-x-20 max-lg:gap-x-2">
+              <InputDateTimeIcon
+                text="Check in"
+                icon={<IconCalendarPlus className="size-8" />}
+                onChange={handleCheckInChange}
+                value={new Date(formData.check_in_date)}
+                initialDate={new Date(formData.check_in_date)}
+              />
 
-            <InputDateTimeIcon
-              text="Check out"
-              icon={<IconCalendarMinus className="size-8" />}
-              onChange={handleCheckOutChange}
-              value={new Date(formData.check_out_date)}
-              hoursToAdd={1}
-              initialDate={new Date(formData.check_out_date)}
-            />
+              <InputDateTimeIcon
+                text="Check out"
+                icon={<IconCalendarMinus className="size-8" />}
+                onChange={handleCheckOutChange}
+                value={new Date(formData.check_out_date)}
+                hoursToAdd={1}
+                initialDate={new Date(formData.check_out_date)}
+              />
+            </div>
 
-            <label
-              htmlFor="input-peoples"
-              className="w-[120px] flex  justify-center items-center relative gap-3"
-            >
-              <IconUsers className="size-8 text-black opacity-30" />
-
-              <div
-                className="flex-1 flex flex-col justify-center items-start cursor-pointer "
-                // onClick={handleClick}
+            <div className="flex justify-center items-center gap-x-20 max-lg:gap-x-2">
+              <label
+                htmlFor="input-peoples"
+                className=" flex  justify-center items-center relative gap-3 w-[100px] max-lg:border border-black/40 max-lg:py-2 max-lg:w-[190px] max-md:w-[160px] rounded-xl"
               >
-                <p className="text-base">People</p>
+                <IconUsers className="size-8 text-black opacity-30" />
 
-                <input
-                  id="input-peoples"
-                  type="text"
-                  placeholder={formData.occupancy.toString()}
-                  required
-                  onChange={(e) => handleNumberChange(e)}
-                  value={formData.occupancy}
-                  className="w-full outline-none text-black text-xl font-medium -mt-1"
-                />
-              </div>
-            </label>
+                <div
+                  className=" flex flex-col justify-center items-start cursor-pointer w-[50px]"
+                  // onClick={handleClick}
+                >
+                  <p className="text-base">People</p>
 
-            <div className="relative w-[120px]">
-              <div
-                className="cursor-pointer flex justify-start items-center gap-2"
-                onClick={() => setOpenSelect(!openSelect)}
-              >
-                <IconSoup className="text-black opacity-30 size-8" />
+                  <input
+                    id="input-peoples"
+                    type="text"
+                    placeholder={formData.occupancy.toString()}
+                    required
+                    onChange={(e) => handleNumberChange(e)}
+                    value={formData.occupancy}
+                    className="w-[60px] outline-none font-medium text-xl -mt-1"
+                  />
+                </div>
+              </label>
 
-                <div className="flex flex-col justify-center items-start">
-                  <p className="text-base">Table</p>
-                  <div className="flex justify-center items-center gap-2 -mt-1">
-                    <p className="text-lg font-medium">
-                      {tableSelected.table_number}
-                    </p>
+              <div className="relative max-lg:border border-black/40 max-lg:py-2 max-lg:w-[190px] max-md:w-[160px] rounded-xl">
+                <div
+                  className="cursor-pointer flex justify-center items-center gap-2"
+                  onClick={() => setOpenSelect(!openSelect)}
+                >
+                  <IconSoup className="text-black opacity-30 size-8" />
 
-                    <IconChevronDown
-                      className={`${
-                        openSelect ? "rotate-180" : ""
-                      } size-4 transition-all`}
-                    />
+                  <div className="flex flex-col justify-center items-start">
+                    <p className="text-base">Table</p>
+                    <div className="flex justify-center items-center gap-2 -mt-1">
+                      <p className="text-lg font-medium">
+                        {tableSelected.table_number}
+                      </p>
+
+                      <IconChevronDown
+                        className={`${
+                          openSelect ? "rotate-180" : ""
+                        } size-4 transition-all`}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {openSelect && (
-                <div className="w-max h-max space-y-4 px-6 py-2 rounded-xl bg-white absolute bottom-[150%] shadow-2xl left-0 z-50">
-                  {tables?.map((table) => (
-                    <div
-                      key={table.id}
-                      className="flex justify-start items-center gap-4 cursor-pointer"
-                      onClick={() => {
-                        setTableSelected(table);
-                        setOpenSelect(false);
-                      }}
-                    >
-                      <div className="rounded-full shadow-xl p-2">
-                        <IconSoup className="size-5 text-black/50" />
+                {openSelect && (
+                  <div className="min-w-max w-full h-max space-y-4 px-6 py-2 rounded-xl bg-white absolute bottom-[150%] shadow-2xl left-0 z-50">
+                    {tables?.map((table) => (
+                      <div
+                        key={table.id}
+                        className="flex justify-start items-center gap-4 cursor-pointer"
+                        onClick={() => {
+                          setTableSelected(table);
+                          setOpenSelect(false);
+                        }}
+                      >
+                        <div className="rounded-full shadow-xl p-2">
+                          <IconSoup className="size-5 text-black/50" />
+                        </div>
+                        <p className="text-xl font-medium">
+                          {table.table_number}
+                        </p>
                       </div>
-                      <p className="text-xl font-medium">
-                        {table.table_number}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
-          <div className="w-px h-5 bg-black/20"></div>
+          <div className="w-px h-5 bg-black/20 max-xl:hidden"></div>
 
           <button
             type="submit"
-            className="w-max rounded-full bg-primary text-white py-3 cursor-pointer flex justify-center items-center px-10"
+            className="w-max max-lg:w-full rounded-full bg-primary text-white py-3 cursor-pointer flex justify-center items-center px-10"
           >
             {loaderSearch ? (
               <IconLoader2 className="animate-spin" />

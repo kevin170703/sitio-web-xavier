@@ -121,20 +121,6 @@ const Reserve: FC<ReserveProps> = ({
       telefono,
     };
 
-    console.log(
-      {
-        customer_full_name: reservaData.fullName,
-        customer_email: reservaData.email,
-        customer_phone: reservaData.telefono,
-        room_id: Number(reservaData.roomId),
-        check_in_date: reservaData.checkin.replace(/\//g, "-"),
-        check_out_date: reservaData.checkout.replace(/\//g, "-"),
-        total_amount: dataRoom.price,
-        reservation_status_id: 1,
-      },
-      "data a enviar al backend"
-    );
-
     const { data } = await axios.post(
       `https://reservations-uty9.onrender.com/api/hotel-reservations`,
       {
@@ -148,8 +134,6 @@ const Reserve: FC<ReserveProps> = ({
         reservation_status_id: 1,
       }
     );
-
-    console.log(data, "data back");
 
     if (data.success) {
       setMensaje(`Thank you ${fullName}, your reservation has been sent.`);
@@ -282,6 +266,7 @@ const Reserve: FC<ReserveProps> = ({
               <div className="space-y-4 flex flex-col justify-center items-center">
                 {avilabelRooms.map((room) => (
                   <CardRoomRecomended
+                    image={room.images[0].image_url}
                     changueRoom={changueRoom}
                     capacity={room.capacity}
                     has_air_conditioning={room.has_air_conditioning}

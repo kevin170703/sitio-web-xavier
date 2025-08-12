@@ -209,20 +209,18 @@ export default function DetailRoom() {
             <div className="w-full border border-black/8 rounded-3xl p-10 max-md:p-5">
               <div className="w-full space-y-4 flex justify-between items-start ">
                 <div className="w-full space-y-4">
-                  <div className="text-4xl flex justify-start items-center gap-2">
+                  <div className="flex justify-between items-center gap-2">
                     <h2 className="text-4xl max-md:text-2xl">
                       {room.room_type}
                     </h2>
 
-                    <div>
-                      <button
-                        onClick={handleCopy}
-                        className="flex justify-center items-center gap-4 border border-black/20 w-max px-4 py-2.5 rounded-full cursor-pointer"
-                      >
-                        <IconShare className="text-primary size-6" />
-                        <p>{copied ? "Link copied!" : "Share"}</p>
-                      </button>
-                    </div>
+                    <button
+                      onClick={handleCopy}
+                      className="flex justify-center items-center gap-4 border border-black/20 w-max px-4 py-2.5 rounded-full cursor-pointer"
+                    >
+                      <IconShare className="text-primary size-6" />
+                      <p>{copied ? "Link copied!" : "Share"}</p>
+                    </button>
                   </div>
 
                   <div className="w-full flex justify-start items-center gap-2 pb-4">
