@@ -185,7 +185,7 @@ const Reserve: FC<ReserveProps> = ({
           </button>
 
           <p className="mb-6 text-xl">
-            <strong>{checkin}</strong> a <strong>{checkout}</strong>
+            <strong>{checkin}</strong> - <strong>{checkout}</strong>
           </p>
 
           <label className="w-full h-max space-y-2">
@@ -206,7 +206,7 @@ const Reserve: FC<ReserveProps> = ({
           </label>
 
           <label className="w-full h-max space-y-2">
-            Email:
+            {t("reserveRoom.form.2.name")}
             <input
               type="email"
               value={email}
@@ -215,7 +215,7 @@ const Reserve: FC<ReserveProps> = ({
                 errors.email ? "border-red-500" : "border-gray-300"
               }`}
               required
-              placeholder="your@email.com"
+              placeholder={t("reserveRoom.form.2.placeholder")}
             />
             {errors.email && (
               <p className="text-red-600 text-sm mt-1">{errors.email}</p>
@@ -223,7 +223,7 @@ const Reserve: FC<ReserveProps> = ({
           </label>
 
           <label className="w-full h-max space-y-2">
-            Phone:
+            {t("reserveRoom.form.3.name")}
             <input
               type="tel"
               value={telefono}
@@ -232,7 +232,7 @@ const Reserve: FC<ReserveProps> = ({
                 errors.telefono ? "border-red-500" : "border-gray-300"
               }`}
               required
-              placeholder="1 1234 5678910"
+              placeholder={t("reserveRoom.form.3.placeholder")}
             />
             {errors.telefono && (
               <p className="text-red-600 text-sm mt-1">{errors.telefono}</p>

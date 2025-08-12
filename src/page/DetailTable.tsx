@@ -19,6 +19,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import InputDateTime from "@/components/InputDateTime";
 import ReserveTable from "@/components/ReserveTable";
+import { useTranslations } from "next-intl";
 
 export interface Table {
   id: number;
@@ -73,6 +74,8 @@ const dataBackend = {
 };
 
 export default function DetailTable() {
+  const t = useTranslations();
+
   const [selectedImage, setSelectedImage] = useState(0);
 
   const [tables, setTables] = useState<Table[] | null>(null);
@@ -160,6 +163,17 @@ export default function DetailTable() {
     const start_time = formatTimeInTZ(checkInDate, timeZone);
     const end_time = formatTimeInTZ(checkOutDate, timeZone);
 
+    console.log(
+      {
+        reservation_date,
+        start_time,
+        end_time,
+        occupancy: formData.occupancy,
+        table_id: tableSelected?.id,
+      },
+      "datos a  enviar al back"
+    );
+
     const { data } = await axios.post(
       "https://reservations-uty9.onrender.com/api/restaurant-reservations/check-availability",
       {
@@ -243,7 +257,7 @@ export default function DetailTable() {
     <main className="flex flex-col justify-center items-center text-black pb-20 gap-10">
       <section className="w-full min-h-[300px] h-[40dvh] overflow-hidden relative flex justify-center items-center">
         <div className="w-full h-full bg-primary/50  text-white flex flex-col justify-center items-center gap-2 pt-30">
-          <h1 className="text-5xl">Tables</h1>
+          <h1 className="text-5xl">{t("detailTable.title")}</h1>
 
           <h2 className="font-secondary">Les P&apos;tits Lofts Du Lac</h2>
         </div>
@@ -327,7 +341,11 @@ export default function DetailTable() {
                     className="flex justify-center items-center gap-4 border border-black/20 w-max px-4 py-2.5 rounded-full cursor-pointer"
                   >
                     <IconShare className="text-primary size-6" />
-                    <p>{copied ? "Link copied!" : "Share"}</p>
+                    <p>
+                      {copied
+                        ? t("detailTable.buttonShareCopie")
+                        : t("detailTable.buttonShare")}
+                    </p>
                   </button>
                 </div>
 
@@ -344,19 +362,23 @@ export default function DetailTable() {
               <div className="flex justify-start items-center gap-x-8 gap-y-6 flex-wrap">
                 <div className="flex items-center gap-1">
                   <IconUser className="text-primary size-6" />
-                  <span>{tableSelected?.capacity} persons</span>
+                  <span>
+                    {tableSelected?.capacity} {t("detailTable.items.1")}
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-1">
                   <IconMapPin className="text-primary size-6" />
-                  <span>{tableSelected?.location} persons</span>
+                  <span>{tableSelected?.location}</span>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="space-y-2">
-            <p className="text-2xl font-medium">Description</p>
+            <p className="text-2xl font-medium">
+              {t("detailTable.titleDescription")}
+            </p>
 
             <p className="text-black/60">
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -367,7 +389,9 @@ export default function DetailTable() {
           </div>
 
           <div className="w-full space-y-2">
-            <p className="text-2xl font-medium">Location</p>
+            <p className="text-2xl font-medium">
+              {t("detailTable.titleLocation")}
+            </p>
 
             <iframe
               title="Work area"
@@ -381,7 +405,10 @@ export default function DetailTable() {
         </section>
 
         <section className="w-[25%] max-lg:w-full h-max border border-black/10 rounded-3xl p-8 space-y-4">
-          <p className="text-xl font-medium">Reservation</p>
+          <p className="text-xl font-medium">
+            {" "}
+            {t("detailRoom.titleReservations")}
+          </p>
 
           <form
             action=""
@@ -389,7 +416,7 @@ export default function DetailTable() {
             className="flex flex-col justify-center items-center gap-6"
           >
             <label htmlFor="" className="w-full h-max space-y-2">
-              <p>Number of people*</p>
+              <p>{t("detailTable.form.peoples")}</p>
               <input
                 type="text"
                 placeholder={formData.occupancy.toString()}
@@ -401,7 +428,7 @@ export default function DetailTable() {
             </label>
 
             <label htmlFor="" className="w-full h-max space-y-2">
-              <p>Check in*</p>
+              <p>{t("detailTable.form.CheckIn")}</p>
 
               <InputDateTime
                 onChange={handleCheckInChange}
@@ -411,7 +438,7 @@ export default function DetailTable() {
             </label>
 
             <label htmlFor="" className="w-full h-max space-y-2">
-              <p>Check out*</p>
+              <p>{t("detailTable.form.CheckOut")}</p>
 
               <InputDateTime
                 onChange={handleCheckOutChange}
@@ -428,7 +455,7 @@ export default function DetailTable() {
               {loaderSearch ? (
                 <IconLoader2 className="animate-spin" />
               ) : (
-                "check availability"
+                t("detailTable.form.button")
               )}
             </button>
           </form>

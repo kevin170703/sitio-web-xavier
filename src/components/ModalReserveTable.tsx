@@ -16,6 +16,7 @@ import InputDataIcon from "./InputDataIcon";
 import InputDateTime from "./InputDateTime";
 import InputDateTimeIcon from "./InputDateTimeIcon";
 import ReserveTable from "./ReserveTable";
+import { useTranslations } from "next-intl";
 
 export interface Table {
   id: number;
@@ -35,6 +36,8 @@ type FormData = {
 };
 
 export default function ModalReserveTable() {
+  const t = useTranslations();
+
   const [loaderSearch, setLoaderSearch] = useState(false);
 
   const [roomAvailable, setRoomAvailable] = useState<null | boolean>(null);
@@ -208,7 +211,7 @@ export default function ModalReserveTable() {
           <div className="flex justify-center items-center gap-x-20 gap-y-2 max-lg:flex-col ">
             <div className="flex justify-center items-center gap-x-20 max-lg:gap-x-2">
               <InputDateTimeIcon
-                text="Check in"
+                text={t("modalReserve.checkin")}
                 icon={<IconCalendarPlus className="size-8" />}
                 onChange={handleCheckInChange}
                 value={new Date(formData.check_in_date)}
@@ -216,7 +219,7 @@ export default function ModalReserveTable() {
               />
 
               <InputDateTimeIcon
-                text="Check out"
+                text={t("modalReserve.checkout")}
                 icon={<IconCalendarMinus className="size-8" />}
                 onChange={handleCheckOutChange}
                 value={new Date(formData.check_out_date)}
@@ -236,7 +239,7 @@ export default function ModalReserveTable() {
                   className=" flex flex-col justify-center items-start cursor-pointer w-[50px]"
                   // onClick={handleClick}
                 >
-                  <p className="text-base">People</p>
+                  <p className="text-base">{t("modalReserve.peoples")}</p>
 
                   <input
                     id="input-peoples"
@@ -258,7 +261,7 @@ export default function ModalReserveTable() {
                   <IconSoup className="text-black opacity-30 size-8" />
 
                   <div className="flex flex-col justify-center items-start">
-                    <p className="text-base">Table</p>
+                    <p className="text-base">{t("modalReserve.tables")}</p>
                     <div className="flex justify-center items-center gap-2 -mt-1">
                       <p className="text-lg font-medium">
                         {tableSelected.table_number}

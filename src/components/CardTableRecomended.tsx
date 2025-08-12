@@ -1,5 +1,6 @@
 import { IconMapPin, IconUsers } from "@tabler/icons-react";
-import React, { useState } from "react";
+import { useTranslations } from "next-intl";
+import React from "react";
 
 export default function CardTableRecomended({
   id,
@@ -14,7 +15,7 @@ export default function CardTableRecomended({
   location: string;
   changueTable: ({ id }: { id: string }) => void;
 }) {
-  const [seeFeatures, setSeeFeatures] = useState(false);
+  const t = useTranslations();
 
   return (
     <div
@@ -23,7 +24,9 @@ export default function CardTableRecomended({
     >
       <div className="w-max flex justify-start items-center gap-4">
         <div className="h-full flex flex-col justify-between items-start gap-4">
-          <p className="text-2xl font-medium">Table {tableNumber}</p>
+          <p className="text-2xl font-medium">
+            {t("reserveTable.table")} {tableNumber}
+          </p>
         </div>
       </div>
 
@@ -93,7 +96,9 @@ export default function CardTableRecomended({
           })
         }
       >
-        <p className="px-4 text-white text-base">Book now</p>
+        <p className="px-4 text-white text-base">
+          {t("reserveTable.buttonBook")}
+        </p>
       </button>
     </div>
   );

@@ -11,6 +11,16 @@
     "subtitle": "Luxury lakeside accommodation with stunning views and exceptional service"
   },
 
+  "modalReserve": {
+    "room": "Rooms",
+    "table": "Tables",
+    "checkin": "Check in",
+    "checkout": "Check out",
+    "peoples": "Peoples",
+    "rooms": "Room",
+    "tables": "Table"
+  },
+
   "about": {
     "tag": "About us",
     "title": "Les P'tits Lofts Du Lac",
@@ -148,7 +158,29 @@
       "peoples": "Number of people*",
       "CheckIn": "Check in*",
       "CheckOut": "Check out*",
-      "button": "check availability"
+      "button": "Check availability"
+    }
+  },
+
+  "detailTable": {
+    "title": "Tables",
+    "titleTable": "Table number:",
+    "buttonShare": "Share",
+    "buttonShareCopie": "Link copied!",
+
+    "items": {
+      "1": "persons"
+    },
+
+    "titleDescription": "Description",
+    "titleLocation": "Location",
+
+    "titleReservations": "Reservation",
+    "form": {
+      "peoples": "Number of people*",
+      "CheckIn": "Check in*",
+      "CheckOut": "Check out*",
+      "button": "Check availability"
     }
   },
 
@@ -170,6 +202,37 @@
         "placeholder": "Your phone"
       }
     },
+
+    "buttonBook": "Book now",
+
+    "items": {
+      "1": "Wi-Fi",
+      "2": "Air conditioning",
+      "3": "Balcony",
+      "4": "TV"
+    }
+  },
+
+  "reserveTable": {
+    "notAvailableMessage": "We're sorry, the table is not available on those dates.",
+    "availableTableMessage": "Tables available for the same time slot:",
+
+    "form": {
+      "1": {
+        "name": "Full name",
+        "placeholder": "Your full name"
+      },
+      "2": {
+        "name": "Email",
+        "placeholder": "your@email.com"
+      },
+      "3": {
+        "name": "Phone",
+        "placeholder": "Your phone"
+      }
+    },
+
+    "table": "table",
 
     "buttonBook": "Book now",
 

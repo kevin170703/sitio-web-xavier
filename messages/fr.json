@@ -1,245 +1,245 @@
 {
   "navbar": {
-    "home": "Inicio",
-    "menu": "Menú",
-    "rooms": "Habitaciones",
-    "buttonContact": "Contáctanos"
+    "home": "Accueil",
+    "menu": "Menu",
+    "rooms": "Chambres",
+    "buttonContact": "Nous contacter"
   },
 
   "hero": {
     "title": "Les P'tits Lofts Du Lac",
-    "subtitle": "Alojamiento de lujo junto al lago con vistas impresionantes y servicio excepcional"
+    "subtitle": "Hébergement de luxe au bord du lac avec des vues imprenables et un service exceptionnel"
   },
 
   "modalReserve": {
-    "room": "Habitaciones",
-    "table": "Mesas",
-    "checkin": "Entrada",
-    "checkout": "Salida",
-    "peoples": "Personas",
-    "rooms": "Habitación",
-    "tables": "Mesa"
+    "room": "Chambres",
+    "table": "Tables",
+    "checkin": "Arrivée",
+    "checkout": "Départ",
+    "peoples": "Personnes",
+    "rooms": "Chambre",
+    "tables": "Table"
   },
 
   "about": {
-    "tag": "Acerca de nosotros",
+    "tag": "À propos de nous",
     "title": "Les P'tits Lofts Du Lac",
     "paragraphs": {
-      "1": "Bienvenidos a Les P'tits Lofts Du Lac, donde el lujo se encuentra con la comodidad en el corazón de la naturaleza. Nuestro alojamiento boutique ofrece vistas impresionantes al lago y un servicio personalizado que hace que cada estadía sea memorable.",
-      "2": "Cada uno de nuestros lofts cuidadosamente diseñados combina comodidades modernas con encanto rústico, creando el refugio perfecto para parejas y familias por igual. Experimenta la tranquilidad de la vida junto al lago mientras disfrutas de hospitalidad de clase mundial.",
-      "3": "Desde el café al amanecer en tu balcón privado hasta la cena nocturna en nuestro restaurante junto al lago, cada momento en Les P'tits Lofts está diseñado para crear recuerdos duraderos."
+      "1": "Bienvenue aux P'tits Lofts Du Lac, où le luxe rencontre le confort au cœur de la nature. Notre hébergement boutique offre des vues imprenables sur le lac et un service personnalisé qui rend chaque séjour mémorable.",
+      "2": "Chacun de nos lofts soigneusement conçus combine les commodités modernes avec le charme rustique, créant la retraite parfaite pour les couples et les familles. Découvrez la tranquillité de la vie au bord du lac tout en profitant d'une hospitalité de classe mondiale.",
+      "3": "Du café au lever du soleil sur votre balcon privé au dîner du soir dans notre restaurant au bord du lac, chaque moment aux P'tits Lofts est conçu pour créer des souvenirs durables."
     }
   },
 
   "sectionRooms": {
-    "tag": "nuestras habitaciones",
-    "title": "Descansa, relájate y despierta inspirado."
+    "tag": "nos chambres",
+    "title": "Reposez-vous, détendez-vous et réveillez-vous inspiré."
   },
 
   "sectionConforts": {
-    "tag": "Comodidades",
-    "title": "Pequeños detalles que mejoran tu estadía.",
+    "tag": "Conforts",
+    "title": "Petits détails qui améliorent votre séjour.",
     "items": {
-      "1": "WiFi gratuito",
-      "2": "Bebida de bienvenida",
-      "3": "WiFi gratuito",
-      "4": "Bebida de bienvenida"
+      "1": "WiFi gratuit",
+      "2": "Boisson de bienvenue",
+      "3": "WiFi gratuit",
+      "4": "Boisson de bienvenue"
     }
   },
 
   "sectionMenu": {
-    "tag": "nuestro menú",
-    "title": "Sabores que cuentan nuestra historia.",
-    "buttonViewAll": "Ver todo"
+    "tag": "notre menu",
+    "title": "Des saveurs qui racontent notre histoire.",
+    "buttonViewAll": "Voir tout"
   },
 
   "testimonials": {
-    "tag": "testimonios",
-    "title": "Historias de huéspedes que se sintieron como en casa.",
+    "tag": "témoignages",
+    "title": "Histoires d'invités qui se sont sentis chez eux.",
     "1": {
       "name": "Daphnée Duclos-Beaudoin",
-      "testimonial": "Fuimos allí a almorzar y fue una experiencia realmente única y agradable. Nos hicieron sentir como en casa, las porciones fueron generosas y el café estuvo excelente. ¡Lo recomiendo ampliamente! 😊",
+      "testimonial": "Nous y sommes allés pour déjeuner et ce fut une expérience vraiment unique et agréable. Ils nous ont fait sentir chez nous, les portions étaient généreuses et le café était excellent. Je le recommande vivement ! 😊",
       "image": "https://www.molokaih.com/assets/SamulProfile-9cf0cab0.avif"
     },
     "2": {
       "name": "Nicole M. Boily",
-      "testimonial": "Todo lo que necesitas para una escapada completa de la ciudad. Relajación. Tranquilidad. Aire fresco. Cabañas bien equipadas. Limpieza.",
+      "testimonial": "Tout ce dont vous avez besoin pour une évasion complète de la ville. Détente. Tranquillité. Air frais. Cabines bien équipées. Propreté.",
       "image": "https://www.molokaih.com/assets/SamulProfile-9cf0cab0.avif"
     },
 
     "3": {
       "name": "Daphnée Duclos-Beaudoin",
-      "testimonial": "Fuimos allí a almorzar y fue una experiencia realmente única y agradable. Nos hicieron sentir como en casa, las porciones fueron generosas y el café estuvo excelente. ¡Lo recomiendo ampliamente! 😊",
+      "testimonial": "Nous y sommes allés pour déjeuner et ce fut une expérience vraiment unique et agréable. Ils nous ont fait sentir chez nous, les portions étaient généreuses et le café était excellent. Je le recommande vivement ! 😊",
       "image": "https://www.molokaih.com/assets/SamulProfile-9cf0cab0.avif"
     },
     "4": {
       "name": "Nicole M. Boily",
-      "testimonial": "Todo lo que necesitas para una escapada completa de la ciudad. Relajación. Tranquilidad. Aire fresco. Cabañas bien equipadas. Limpieza.",
+      "testimonial": "Tout ce dont vous avez besoin pour une évasion complète de la ville. Détente. Tranquillité. Air frais. Cabines bien équipées. Propreté.",
       "image": "https://www.molokaih.com/assets/SamulProfile-9cf0cab0.avif"
     },
 
-    "button": "¡Hablemos!"
+    "button": "Parlons-en !"
   },
 
   "sectionSpaces": {
-    "tag": "Espacios",
-    "title": "Diseñados para momentos que vale la pena recordar."
+    "tag": "Espaces",
+    "title": "Conçus pour des moments qui valent la peine d'être rappelés."
   },
 
   "footer": {
-    "titleSocialMedia": "Contactos",
+    "titleSocialMedia": "Contacts",
 
-    "titleInfoContacts": "Ponte en contacto",
+    "titleInfoContacts": "Entrez en contact",
 
-    "titleLegal": "Legal",
+    "titleLegal": "Légal",
 
-    "LinkPrivacyPolicy": "Política de privacidad",
-    "LinkTermsOfUse": "Términos de uso",
-    "LinkCookiePolicy": "Política de cookies",
+    "LinkPrivacyPolicy": "Politique de confidentialité",
+    "LinkTermsOfUse": "Conditions d'utilisation",
+    "LinkCookiePolicy": "Politique de cookies",
 
-    "develop": "Desarrollo por",
-    "copyright": "© 2025 Les P'tits Lofts Du Lac. Todos los derechos reservados."
+    "develop": "Développement par",
+    "copyright": "© 2025 Les P'tits Lofts Du Lac. Tous droits réservés."
   },
 
   "menu": {
-    "title": "Menú",
-    "noFood": "No hay platos disponibles"
+    "title": "Menu",
+    "noFood": "Aucun plat disponible"
   },
 
   "contact": {
-    "title": "Contacto",
+    "title": "Contact",
     "subtitle": "Les P'tits Lofts Du Lac",
     "inputOne": {
-      "label": "Nombre",
-      "placeholder": "Ingresa tu nombre"
+      "label": "Nom",
+      "placeholder": "Entrez votre nom"
     },
     "inputTwo": {
-      "label": "Apellido",
-      "placeholder": "Tu apellido"
+      "label": "Nom de famille",
+      "placeholder": "Votre nom de famille"
     },
     "inputThree": {
-      "label": "Correo",
-      "placeholder": "tu@email.com"
+      "label": "Email",
+      "placeholder": "votre@email.com"
     },
     "inputFour": {
-      "label": "Teléfono",
-      "placeholder": "Tu teléfono"
+      "label": "Téléphone",
+      "placeholder": "Votre téléphone"
     },
     "inputFive": {
-      "label": "Mensaje",
-      "placeholder": "Tu mensaje"
+      "label": "Message",
+      "placeholder": "Votre message"
     },
 
-    "button": "Enviar",
-    "buttonCalendar": "Programar una llamada",
-    "errorSending": "Error al enviar el mensaje. Por favor intenta de nuevo.",
-    "messageNoResultsCountry": "Sin resultados",
-    "labelInputCountry": "Buscar"
+    "button": "Envoyer",
+    "buttonCalendar": "Planifier un appel",
+    "errorSending": "Erreur lors de l'envoi du message. Veuillez réessayer.",
+    "messageNoResultsCountry": "Aucun résultat",
+    "labelInputCountry": "Rechercher"
   },
 
   "detailRoom": {
-    "buttonShare": "Compartir",
-    "buttonShareCopie": "¡Enlace copiado!",
+    "buttonShare": "Partager",
+    "buttonShareCopie": "Lien copié !",
 
-    "priceFormat": "día",
+    "priceFormat": "jour",
 
     "items": {
-      "1": "personas",
-      "2": "Con Wi-Fi",
-      "3": "Aire acondicionado",
-      "4": "Con balcón",
-      "5": "Con TV"
+      "1": "personnes",
+      "2": "Avec Wi-Fi",
+      "3": "Climatisation",
+      "4": "Avec balcon",
+      "5": "Avec TV"
     },
-    "titleDescription": "Descripción",
-    "titleLocation": "Ubicación",
+    "titleDescription": "Description",
+    "titleLocation": "Emplacement",
 
-    "titleReservations": "Reserva",
+    "titleReservations": "Réservation",
     "form": {
-      "peoples": "Número de personas*",
-      "CheckIn": "Entrada*",
-      "CheckOut": "Salida*",
-      "button": "Verificar disponibilidad"
+      "peoples": "Nombre de personnes*",
+      "CheckIn": "Arrivée*",
+      "CheckOut": "Départ*",
+      "button": "Vérifier la disponibilité"
     }
   },
 
   "detailTable": {
-    "title": "Mesas",
-    "titleTable": "Número de mesa:",
-    "buttonShare": "Compartir",
-    "buttonShareCopie": "¡Enlace copiado!",
+    "title": "Tables",
+    "titleTable": "Numéro de table :",
+    "buttonShare": "Partager",
+    "buttonShareCopie": "Lien copié !",
 
     "items": {
-      "1": "personas"
+      "1": "personnes"
     },
 
-    "titleDescription": "Descripción",
-    "titleLocation": "Ubicación",
+    "titleDescription": "Description",
+    "titleLocation": "Emplacement",
 
-    "titleReservations": "Reserva",
+    "titleReservations": "Réservation",
     "form": {
-      "peoples": "Número de personas*",
-      "CheckIn": "Entrada*",
-      "CheckOut": "Salida*",
-      "button": "Verificar disponibilidad"
+      "peoples": "Nombre de personnes*",
+      "CheckIn": "Arrivée*",
+      "CheckOut": "Départ*",
+      "button": "Vérifier la disponibilité"
     }
   },
 
   "reserveRoom": {
-    "notAvailableMessage": "Lo sentimos, la habitación no está disponible en esas fechas.",
-    "availableRoomsMessage": "Habitaciones disponibles para el mismo horario:",
+    "notAvailableMessage": "Nous sommes désolés, la chambre n'est pas disponible à ces dates.",
+    "availableRoomsMessage": "Chambres disponibles pour le même créneau horaire :",
 
     "form": {
       "1": {
-        "name": "Nombre completo",
-        "placeholder": "Tu nombre completo"
+        "name": "Nom complet",
+        "placeholder": "Votre nom complet"
       },
       "2": {
-        "name": "Correo",
-        "placeholder": "tu@email.com"
+        "name": "Email",
+        "placeholder": "votre@email.com"
       },
       "3": {
-        "name": "Teléfono",
-        "placeholder": "Tu teléfono"
+        "name": "Téléphone",
+        "placeholder": "Votre téléphone"
       }
     },
 
-    "buttonBook": "Reservar ahora",
+    "buttonBook": "Réserver maintenant",
 
     "items": {
       "1": "Wi-Fi",
-      "2": "Aire acondicionado",
-      "3": "Balcón",
+      "2": "Climatisation",
+      "3": "Balcon",
       "4": "TV"
     }
   },
 
   "reserveTable": {
-    "notAvailableMessage": "Lo sentimos, la mesa no está disponible en esas fechas.",
-    "availableTableMessage": "Mesas disponibles para el mismo horario:",
+    "notAvailableMessage": "Nous sommes désolés, la table n'est pas disponible à ces dates.",
+    "availableTableMessage": "Tables disponibles pour le même créneau horaire :",
 
     "form": {
       "1": {
-        "name": "Nombre completo",
-        "placeholder": "Tu nombre completo"
+        "name": "Nom complet",
+        "placeholder": "Votre nom complet"
       },
       "2": {
-        "name": "Correo",
-        "placeholder": "tu@email.com"
+        "name": "Email",
+        "placeholder": "votre@email.com"
       },
       "3": {
-        "name": "Teléfono",
-        "placeholder": "Tu teléfono"
+        "name": "Téléphone",
+        "placeholder": "Votre téléphone"
       }
     },
 
-    "table": "mesa",
+    "table": "table",
 
-    "buttonBook": "Reservar ahora",
+    "buttonBook": "Réserver maintenant",
 
     "items": {
       "1": "Wi-Fi",
-      "2": "Aire acondicionado",
-      "3": "Balcón",
+      "2": "Climatisation",
+      "3": "Balcon",
       "4": "TV"
     }
   },

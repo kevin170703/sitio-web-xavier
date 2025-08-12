@@ -236,7 +236,9 @@ export default function Home() {
                 <IconSoup className="" />
               )}
               <p className="text-xl font-medium">
-                {formData.type === "room" ? "Rooms" : "Tables"}
+                {formData.type === "room"
+                  ? t("modalReserve.room")
+                  : t("modalReserve.table")}
               </p>
               <IconChevronDown
                 className={`${
@@ -265,7 +267,9 @@ export default function Home() {
                     )}
                   </div>
                   <p className="text-xl font-medium">
-                    {formData.type !== "room" ? "Rooms" : "Tables"}
+                    {formData.type !== "room"
+                      ? t("modalReserve.room")
+                      : t("modalReserve.table")}
                   </p>
                 </div>
               </div>

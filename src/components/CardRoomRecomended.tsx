@@ -56,7 +56,7 @@ export default function CardRoomRecomended({
           width={500}
           height={500}
           alt={room_type}
-          className="h-full max-md:w-full  w-[160px] object-cover rounded-xl"
+          className="h-full max-md:w-full  w-[160px] aspect-video object-cover rounded-xl"
         />
         <div className="w-full h-full flex flex-col justify-between items-start gap-4">
           <div className="rounded-full flex justify-between items-center gap-4">

@@ -22,6 +22,7 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import SelectLanguage from "./SelectLanguage";
 
 export default function NavBar() {
   const pathname = usePathname();
@@ -97,7 +98,7 @@ export default function NavBar() {
               ? "text-white"
               : selectLink === "/"
               ? "text-black"
-              : "text-white"
+              : "text-black"
           }`}
           onClick={() => setOpenMenu(!openMenu)}
         />
@@ -135,7 +136,7 @@ export default function NavBar() {
           >
             <nav
               className={`flex items-center space-x-10 text-sm max-lg:hidden ${
-                selectLink === "/" && !scrolled ? "text-black" : "text-white"
+                !scrolled ? "text-black" : "text-white"
               }`}
             >
               <Link
@@ -176,17 +177,6 @@ export default function NavBar() {
             </nav>
           </div>
 
-          {/* <IconMenu2
-            className={`hidden w-10 h-10 max-lg:block ${
-              scrolled
-                ? "text-white"
-                : selectLink === "/"
-                ? "text-black"
-                : "text-white"
-            }`}
-            onClick={() => setOpenMenu(!openMenu)}
-          /> */}
-
           <div className="flex justify-end items-center gap-5 max-lg:hidden">
             <Link
               href={"/contact"}
@@ -199,6 +189,7 @@ export default function NavBar() {
               {t("navbar.buttonContact")}
             </Link>
 
+            <SelectLanguage scrolled={scrolled} selectLink={selectLink} />
             {/* <ButtonReservations scrolled={scrolled} /> */}
 
             {/* <Link href={"/contact"}>
@@ -207,8 +198,6 @@ export default function NavBar() {
                 color={scrolled ? "white" : "primary"}
               />
             </Link> */}
-
-            {/* <SelectLanguage scrolled={scrolled} selectLink={selectLink} /> */}
           </div>
         </div>
       </div>
@@ -230,7 +219,7 @@ export default function NavBar() {
               <Image src={logoWhite} width={250} height={250} alt="logo" />
             </div>
 
-            {/* <SelectLanguage scrolled={true} selectLink={"/services"} /> */}
+            <SelectLanguage scrolled={scrolled} selectLink={selectLink} />
           </div>
 
           <nav className="flex flex-1 w-full flex-col items-start justify-center space-y-4 text-base ">
@@ -249,7 +238,7 @@ export default function NavBar() {
             <Link
               href={"/menu"}
               className={`flex items-center gap-2 py-2 rounded-l-[16px] w-full active:scale-95 transition-all ${
-                selectLink === "contact"
+                selectLink === "menu"
                   ? "bg-white text-primary pl-2"
                   : "bg-transparent"
               }`}
@@ -261,7 +250,7 @@ export default function NavBar() {
             <Link
               href={"/#rooms"}
               className={`flex items-center gap-2 py-2 rounded-l-[16px] w-full active:scale-95 transition-all ${
-                selectLink === "contact"
+                selectLink === "#rooms"
                   ? "bg-white text-primary pl-2"
                   : "bg-transparent"
               }`}

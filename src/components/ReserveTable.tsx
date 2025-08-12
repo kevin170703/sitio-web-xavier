@@ -3,6 +3,7 @@ import { IconX } from "@tabler/icons-react";
 import axios from "axios";
 import { useState, FC, FormEvent } from "react";
 import CardTableRecomended from "./CardTableRecomended";
+import { useTranslations } from "next-intl";
 
 interface ReserveProps {
   roomAvailable: boolean | null;
@@ -25,6 +26,8 @@ const ReserveTable: FC<ReserveProps> = ({
   avilabelTables,
   setRoomAvailable,
 }) => {
+  const t = useTranslations();
+
   const [dataTable, setDataTable] = useState({
     id: id,
   });
@@ -165,17 +168,14 @@ const ReserveTable: FC<ReserveProps> = ({
           >
             <IconX />
           </button>
-          <h2 className="mb-2 text-2xl font-semibold">
-            The table is available!
-          </h2>
 
           <p className="mb-4">
-            Dates: <strong>{date_reservations}</strong> -{" "}
-            <strong>{start_time}</strong> a <strong>{end_time}</strong>
+            <strong>{date_reservations}</strong> | <strong>{start_time}</strong>{" "}
+            - <strong>{end_time}</strong>
           </p>
 
           <label className="w-full h-max space-y-2">
-            Full Name:
+            {t("reserveTable.form.1.name")}
             <input
               type="text"
               value={fullName}
@@ -184,7 +184,7 @@ const ReserveTable: FC<ReserveProps> = ({
                 errors.fullName ? "border-red-500" : "border-gray-300"
               }`}
               required
-              placeholder="Your full name"
+              placeholder={t("reserveTable.form.1.placeholder")}
             />
             {errors.fullName && (
               <p className="text-red-600 text-sm mt-1">{errors.fullName}</p>
@@ -192,7 +192,7 @@ const ReserveTable: FC<ReserveProps> = ({
           </label>
 
           <label className="w-full h-max space-y-2">
-            Email:
+            {t("reserveTable.form.2.name")}
             <input
               type="email"
               value={email}
@@ -201,7 +201,7 @@ const ReserveTable: FC<ReserveProps> = ({
                 errors.email ? "border-red-500" : "border-gray-300"
               }`}
               required
-              placeholder="your@email.com"
+              placeholder={t("reserveTable.form.2.placeholder")}
             />
             {errors.email && (
               <p className="text-red-600 text-sm mt-1">{errors.email}</p>
@@ -209,7 +209,7 @@ const ReserveTable: FC<ReserveProps> = ({
           </label>
 
           <label className="w-full h-max space-y-2">
-            Phone:
+            {t("reserveTable.form.3.name")}
             <input
               type="tel"
               value={telefono}
@@ -218,7 +218,7 @@ const ReserveTable: FC<ReserveProps> = ({
                 errors.telefono ? "border-red-500" : "border-gray-300"
               }`}
               required
-              placeholder="1 1234 5678910"
+              placeholder={t("reserveTable.form.3.placeholder")}
             />
             {errors.telefono && (
               <p className="text-red-600 text-sm mt-1">{errors.telefono}</p>
@@ -242,12 +242,14 @@ const ReserveTable: FC<ReserveProps> = ({
             <IconX />
           </button>
 
-          <p>We&apos;re sorry, the room is not available on those dates.</p>
+          <p className="text-2xl text-center">
+            {t("reserveTable.notAvailableMessage")}
+          </p>
 
           {avilabelTables.length >= 1 && (
             <div>
               <p className="text-xl font-medium pb-4">
-                Tables available for the same time slot:
+                {t("reserveTable.availableTableMessage")}
               </p>
               <div className="space-y-4 flex flex-col justify-center items-center">
                 {avilabelTables.map((table) => (
