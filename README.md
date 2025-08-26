@@ -1,6 +1,6 @@
-# Pro Paint Designers
+# Les P'tits Lofts Du Lac
 
-Official website of **Pro Paint Designers**, developed with modern technologies to provide a fast, accessible, and visually appealing experience.
+Official website of **Les P'tits Lofts Du Lac**, developed with modern technologies to provide a fast, accessible, and visually appealing experience.
 
 ## 🚀 Technologies Used
 
