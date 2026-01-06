@@ -161,7 +161,7 @@ export default function Home() {
   async function getRooms(): Promise<void> {
     try {
       const { data } = await axios.get(
-        "https://reservations-uty9.onrender.com/api/rooms"
+        "https://xavier-backend.molokaih.ca/api/rooms"
       );
 
       const rooms = data.data;
@@ -181,7 +181,7 @@ export default function Home() {
   async function getMenu(): Promise<void> {
     try {
       const { data } = await axios.get(
-        "https://reservations-uty9.onrender.com/api/menu-items"
+        "https://xavier-backend.molokaih.ca/api/menu-items"
       );
 
       console.log(data, "menuuu");

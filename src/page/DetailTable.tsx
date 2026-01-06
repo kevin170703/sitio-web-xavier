@@ -101,7 +101,7 @@ export default function DetailTable() {
   async function getTables(): Promise<void> {
     try {
       const { data } = await axios.get(
-        "https://reservations-uty9.onrender.com/api/restaurant-tables"
+        "https://xavier-backend.molokaih.ca/api/restaurant-tables"
       );
 
       const tables = data.data.filter(
@@ -175,7 +175,7 @@ export default function DetailTable() {
     );
 
     const { data } = await axios.post(
-      "https://reservations-uty9.onrender.com/api/restaurant-reservations/check-availability",
+      "https://xavier-backend.molokaih.ca/api/restaurant-reservations/check-availability",
       {
         reservation_date,
         start_time,

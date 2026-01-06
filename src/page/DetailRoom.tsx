@@ -48,7 +48,7 @@ export default function DetailRoom() {
 
   async function getRoom() {
     const { data } = await axios.get(
-      `https://reservations-uty9.onrender.com/api/rooms/${id}`
+      `https://xavier-backend.molokaih.ca/api/rooms/${id}`
     );
     const room = data.data;
     setRoom(room);
@@ -111,7 +111,7 @@ export default function DetailRoom() {
     setLoaderSearch(true);
 
     const { data } = await axios.post(
-      "https://reservations-uty9.onrender.com/api/hotel-reservations/check-availability",
+      "https://xavier-backend.molokaih.ca/api/hotel-reservations/check-availability",
       {
         check_in_date: formData.check_in_date.replace(/\//g, "-"),
         check_out_date: formData.check_out_date.replace(/\//g, "-"),
