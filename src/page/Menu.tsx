@@ -53,7 +53,7 @@ export default function Menu() {
   async function getMenu(): Promise<void> {
     try {
       const { data } = await axios.get(
-        "https://reservations-uty9.onrender.com/api/menu-items"
+        "xavier-backend.molokaih.ca/api/menu-items"
       );
 
       const menu = data.data;
@@ -73,7 +73,7 @@ export default function Menu() {
   async function getCategories(): Promise<void> {
     try {
       const { data } = await axios.get(
-        "https://reservations-uty9.onrender.com/api/categories"
+        "xavier-backend.molokaih.ca/api/categories"
       );
 
       // Tipamos la data.data como Category[]

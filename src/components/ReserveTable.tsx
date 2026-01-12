@@ -121,7 +121,7 @@ const ReserveTable: FC<ReserveProps> = ({
     };
 
     const { data } = await axios.post(
-      `https://reservations-uty9.onrender.com/api/restaurant-reservations`,
+      `xavier-backend.molokaih.ca/api/restaurant-reservations`,
       {
         customer_full_name: reservaData.fullName,
         customer_email: reservaData.email,

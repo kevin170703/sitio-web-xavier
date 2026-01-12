@@ -103,7 +103,7 @@ export default function ModalReserveTable() {
     const end_time = formatTimeInTZ(checkOutDate, timeZone);
 
     const { data } = await axios.post(
-      "https://reservations-uty9.onrender.com/api/restaurant-reservations/check-availability",
+      "xavier-backend.molokaih.ca/api/restaurant-reservations/check-availability",
       {
         reservation_date,
         start_time,
@@ -169,7 +169,7 @@ export default function ModalReserveTable() {
   async function getTables(): Promise<void> {
     try {
       const { data } = await axios.get(
-        "https://reservations-uty9.onrender.com/api/restaurant-tables"
+        "xavier-backend.molokaih.ca/api/restaurant-tables"
       );
 
       const tables = data.data.filter(
